@@ -1,4 +1,4 @@
-package com.example.multimedia.cocktail_v000;
+package com.example.multimedia.cocktail_knj;
 
 import org.junit.Test;
 

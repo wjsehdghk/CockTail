@@ -2,60 +2,60 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\multimedia\Desktop\COCKTAIL CAPSTONDESIGN\Cocktail_v0.00\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.2.1\jars\classes.jar"
+        jar="C:\Users\multimedia\Desktop\COCKTAIL CAPSTONDESIGN\Cocktail_knj\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\23.2.1\jars\classes.jar"
         jumboMode="false"
         revision="23.0.2"
-        sha1="e4d0cbb0b999604b349062f0214a0a228a7fd151">
-        <dex dex="C:\Users\multimedia\Desktop\COCKTAIL CAPSTONDESIGN\Cocktail_v0.00\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-23.2.1_6a83ab5f8f8b35524b2d9e6889f93330671cdb85.jar" />
+        sha1="3469cb457f10f74c28cbc05f069b6c894f6cbdd0">
+        <dex dex="C:\Users\multimedia\Desktop\COCKTAIL CAPSTONDESIGN\Cocktail_knj\app\build\intermediates\pre-dexed\debug\com.android.support-animated-vector-drawable-23.2.1_76bd10f9adfc1195c027cef55ba7e4c7533162a6.jar" />
     </item>
     <item
-        jar="C:\Users\multimedia\Desktop\COCKTAIL CAPSTONDESIGN\Cocktail_v0.00\app\build\intermediates\exploded-aar\com.android.support\design\23.2.1\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="72961d8b453b46e277702f18de9d210bc019e36e">
-        <dex dex="C:\Users\multimedia\Desktop\COCKTAIL CAPSTONDESIGN\Cocktail_v0.00\app\build\intermediates\pre-dexed\debug\com.android.support-design-23.2.1_6c93bcc61b7fc641d192c83bdd54db70e0b202ba.jar" />
-    </item>
-    <item
-        jar="C:\Users\multimedia\Desktop\COCKTAIL CAPSTONDESIGN\Cocktail_v0.00\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.2.1\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="e3885783ff8926ed9e2fdcd16816c2e1e73e7aee">
-        <dex dex="C:\Users\multimedia\Desktop\COCKTAIL CAPSTONDESIGN\Cocktail_v0.00\app\build\intermediates\pre-dexed\debug\com.android.support-recyclerview-v7-23.2.1_80ba6a540fe0200e3063db78a5c67e4a597cb36e.jar" />
-    </item>
-    <item
-        jar="C:\Users\multimedia\Desktop\COCKTAIL CAPSTONDESIGN\Cocktail_v0.00\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.2.1\jars\libs\internal_impl-23.2.1.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="607a3d0b8013b4ccbfeb0b7cb293351994e021fb">
-        <dex dex="C:\Users\multimedia\Desktop\COCKTAIL CAPSTONDESIGN\Cocktail_v0.00\app\build\intermediates\pre-dexed\debug\internal_impl-23.2.1_19f0fb6051e32f44556ac47c58ff7b61511cd181.jar" />
-    </item>
-    <item
-        jar="C:\Users\multimedia\Desktop\COCKTAIL CAPSTONDESIGN\Cocktail_v0.00\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\23.2.1\jars\classes.jar"
+        jar="C:\Users\multimedia\Desktop\COCKTAIL CAPSTONDESIGN\Cocktail_knj\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\23.2.1\jars\classes.jar"
         jumboMode="false"
         revision="23.0.2"
         sha1="673d77a5bbddd766037f088e775df525c46407f0">
-        <dex dex="C:\Users\multimedia\Desktop\COCKTAIL CAPSTONDESIGN\Cocktail_v0.00\app\build\intermediates\pre-dexed\debug\com.android.support-support-vector-drawable-23.2.1_99ae6b94b8af4ce8e153515e2fecbb16c538797a.jar" />
+        <dex dex="C:\Users\multimedia\Desktop\COCKTAIL CAPSTONDESIGN\Cocktail_knj\app\build\intermediates\pre-dexed\debug\com.android.support-support-vector-drawable-23.2.1_e4899ed54f3384ff28b992708da05d8f9d062c0b.jar" />
+    </item>
+    <item
+        jar="C:\Users\multimedia\Desktop\COCKTAIL CAPSTONDESIGN\Cocktail_knj\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.2.1\jars\libs\internal_impl-23.2.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="607a3d0b8013b4ccbfeb0b7cb293351994e021fb">
+        <dex dex="C:\Users\multimedia\Desktop\COCKTAIL CAPSTONDESIGN\Cocktail_knj\app\build\intermediates\pre-dexed\debug\internal_impl-23.2.1_3ae6b188d4ff081ade0e5f09f631db6b5e06dc28.jar" />
+    </item>
+    <item
+        jar="C:\Users\multimedia\Desktop\COCKTAIL CAPSTONDESIGN\Cocktail_knj\app\build\intermediates\exploded-aar\com.android.support\design\23.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="72961d8b453b46e277702f18de9d210bc019e36e">
+        <dex dex="C:\Users\multimedia\Desktop\COCKTAIL CAPSTONDESIGN\Cocktail_knj\app\build\intermediates\pre-dexed\debug\com.android.support-design-23.2.1_65ee737174003f9732f0bf0a3fffd2a9d5831e09.jar" />
+    </item>
+    <item
+        jar="C:\Users\multimedia\Desktop\COCKTAIL CAPSTONDESIGN\Cocktail_knj\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="e3885783ff8926ed9e2fdcd16816c2e1e73e7aee">
+        <dex dex="C:\Users\multimedia\Desktop\COCKTAIL CAPSTONDESIGN\Cocktail_knj\app\build\intermediates\pre-dexed\debug\com.android.support-recyclerview-v7-23.2.1_240e8ca904016998f6ef16e765cbb22c6de457af.jar" />
+    </item>
+    <item
+        jar="C:\Users\multimedia\Desktop\COCKTAIL CAPSTONDESIGN\Cocktail_knj\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="3be474b1b21b31cf2fa93fe6bd641ae108d96452">
+        <dex dex="C:\Users\multimedia\Desktop\COCKTAIL CAPSTONDESIGN\Cocktail_knj\app\build\intermediates\pre-dexed\debug\com.android.support-support-v4-23.2.1_171192ad96fcb4501260d811d7bd9094ef12bfaa.jar" />
     </item>
     <item
         jar="C:\Users\multimedia\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.2.1\support-annotations-23.2.1.jar"
         jumboMode="false"
         revision="23.0.2"
         sha1="ccb693bc0774fcb637246f7360de25b4af7df318">
-        <dex dex="C:\Users\multimedia\Desktop\COCKTAIL CAPSTONDESIGN\Cocktail_v0.00\app\build\intermediates\pre-dexed\debug\support-annotations-23.2.1_208cf89abd1db69ff5de8f249e35f82f7f019fff.jar" />
+        <dex dex="C:\Users\multimedia\Desktop\COCKTAIL CAPSTONDESIGN\Cocktail_knj\app\build\intermediates\pre-dexed\debug\support-annotations-23.2.1_208cf89abd1db69ff5de8f249e35f82f7f019fff.jar" />
     </item>
     <item
-        jar="C:\Users\multimedia\Desktop\COCKTAIL CAPSTONDESIGN\Cocktail_v0.00\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.2.1\jars\classes.jar"
+        jar="C:\Users\multimedia\Desktop\COCKTAIL CAPSTONDESIGN\Cocktail_knj\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.2.1\jars\classes.jar"
         jumboMode="false"
         revision="23.0.2"
-        sha1="3be474b1b21b31cf2fa93fe6bd641ae108d96452">
-        <dex dex="C:\Users\multimedia\Desktop\COCKTAIL CAPSTONDESIGN\Cocktail_v0.00\app\build\intermediates\pre-dexed\debug\com.android.support-support-v4-23.2.1_da8a61db47e0a78cac3a3ba78bd9ffaf747d6206.jar" />
-    </item>
-    <item
-        jar="C:\Users\multimedia\Desktop\COCKTAIL CAPSTONDESIGN\Cocktail_v0.00\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\23.2.1\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="3469cb457f10f74c28cbc05f069b6c894f6cbdd0">
-        <dex dex="C:\Users\multimedia\Desktop\COCKTAIL CAPSTONDESIGN\Cocktail_v0.00\app\build\intermediates\pre-dexed\debug\com.android.support-animated-vector-drawable-23.2.1_8a99230484dcd43c8a7433fc4c99ba8ab35e3f4d.jar" />
+        sha1="e4d0cbb0b999604b349062f0214a0a228a7fd151">
+        <dex dex="C:\Users\multimedia\Desktop\COCKTAIL CAPSTONDESIGN\Cocktail_knj\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-23.2.1_12e6ca29364b8290192af0ea38167a7c25c2d492.jar" />
     </item>
 
 </items>

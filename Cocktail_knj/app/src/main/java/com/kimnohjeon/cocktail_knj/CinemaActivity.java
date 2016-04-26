@@ -1,4 +1,4 @@
-package com.example.multimedia.cocktail_v000;
+package com.kimnohjeon.cocktail_knj;
 
 import android.content.Intent;
 import android.os.Bundle;
