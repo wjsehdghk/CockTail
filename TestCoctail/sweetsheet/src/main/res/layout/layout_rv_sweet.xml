@@ -17,7 +17,8 @@
         <com.mingle.widget.SweetView
             android:id="@+id/sv"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content">
+        </com.mingle.widget.SweetView>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv"
@@ -40,4 +41,6 @@
             android:src="@drawable/ic_slider_line"/>
 
     </com.mingle.widget.FreeGrowUpParentRelativeLayout>
+
+
 </FrameLayout>

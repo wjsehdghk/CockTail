@@ -34,7 +34,7 @@
             android:paddingRight="8dp"
             android:paddingTop="8dp"
             android:singleLine="true"
-            android:text="删除"
+            android:text="설정"
             android:textSize="18sp"/>
     </RelativeLayout>
 </RelativeLayout>

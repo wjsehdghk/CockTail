@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         rl = (RelativeLayout) findViewById(R.id.rl);
         setupViewpager();
         setupRecyclerView();
@@ -58,15 +60,14 @@ public class MainActivity extends AppCompatActivity {
                 )
         );
 
-        final String[] colors = {"#EA705D", "#96CC7A", "#66BBCC"};
-
+        final String[] colors = {"#5a5b55", "#5a5b55", "#5a5b55"};
 
 
         AHBottomNavigation bottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_navigation);
 
-        AHBottomNavigationItem item1 = new AHBottomNavigationItem("Red", R.drawable.ic_map_24dp, Color.parseColor(colors[0]));
-        AHBottomNavigationItem item2 = new AHBottomNavigationItem("설정", R.drawable.ic_local_restaurant_24dp, Color.parseColor(colors[1]));
-        AHBottomNavigationItem item3 = new AHBottomNavigationItem("Blue", R.drawable.ic_store_mall_directory_24dp, Color.parseColor(colors[2]));
+        final AHBottomNavigationItem item1 = new AHBottomNavigationItem("left", R.drawable.ic_arrow_left, Color.parseColor(colors[0]));
+        final AHBottomNavigationItem item2 = new AHBottomNavigationItem("setting", R.drawable.ic_arrow_up, Color.parseColor(colors[1]));
+        final AHBottomNavigationItem item3 = new AHBottomNavigationItem("right", R.drawable.ic_arrow_right, Color.parseColor(colors[2]));
 
         bottomNavigation.addItem(item1);
         bottomNavigation.addItem(item2);
@@ -96,10 +97,33 @@ public class MainActivity extends AppCompatActivity {
                     }
                     mSweetSheet.toggle();
                 }
+                if (position == 2) {
+                    if (mSweetSheet.isShow()) {
+                        mSweetSheet.dismiss();
+                    }
+                    if (mSweetSheet3.isShow()) {
+                        mSweetSheet3.dismiss();
+                    }
+                    mSweetSheet2.toggle();
+                }
+                if (position == 0) {
+                    if (mSweetSheet.isShow()) {
+                        mSweetSheet.dismiss();
+                    }
+                    if (mSweetSheet2.isShow()) {
+                        mSweetSheet2.dismiss();
+                    }
+                    mSweetSheet3.toggle();
+                }
             }
         });
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     private void setupCustomView() {
@@ -123,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         //添加假数据
         MenuEntity menuEntity1 = new MenuEntity();
         menuEntity1.iconId = R.drawable.ic_account_child;
-        menuEntity1.titleColor = 0xff000000;
+        menuEntity1.titleColor = 0xff96CC7A; //textcolor
         menuEntity1.title = "code";
         MenuEntity menuEntity = new MenuEntity();
         menuEntity.iconId = R.drawable.ic_account_child;
@@ -156,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onItemClick(int position, MenuEntity menuEntity1) {
                 //即时改变当前项的颜色
-                list.get(position).titleColor = 0xff5823ff;
+                list.get(position).titleColor = 0xff96CC7A;
                 ((RecyclerViewDelegate) mSweetSheet.getDelegate()).notifyDataSetChanged();
 
                 //根据返回值, true 会关闭 SweetSheet ,false 则不会.
