@@ -34,11 +34,12 @@ public class MainActivity extends AppCompatActivity {
 
     Toolbar toolbar;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         rl = (RelativeLayout) findViewById(R.id.rl);
         setupViewpager();
@@ -64,9 +65,9 @@ public class MainActivity extends AppCompatActivity {
 
         AHBottomNavigation bottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_navigation);
 
-        AHBottomNavigationItem item1 = new AHBottomNavigationItem("Red", R.drawable.ic_map_24dp, Color.parseColor(colors[0]));
+        AHBottomNavigationItem item1 = new AHBottomNavigationItem("<", R.drawable.cinema_icon, Color.parseColor(colors[0]));
         AHBottomNavigationItem item2 = new AHBottomNavigationItem("설정", R.drawable.ic_local_restaurant_24dp, Color.parseColor(colors[1]));
-        AHBottomNavigationItem item3 = new AHBottomNavigationItem("Blue", R.drawable.ic_store_mall_directory_24dp, Color.parseColor(colors[2]));
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem(">", R.drawable.ic_store_mall_directory_24dp, Color.parseColor(colors[2]));
 
         bottomNavigation.addItem(item1);
         bottomNavigation.addItem(item2);

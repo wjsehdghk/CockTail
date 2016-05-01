@@ -23,7 +23,6 @@ public class SquareFragment extends Fragment {
     private int color;
 
     CardView card;
-
     public SquareFragment() {
         // Required empty public constructor
     }
