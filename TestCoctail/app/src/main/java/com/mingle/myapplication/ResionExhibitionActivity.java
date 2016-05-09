@@ -1,24 +1,18 @@
 package com.mingle.myapplication;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.AudioManager;
-import android.provider.Settings;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
@@ -33,26 +27,20 @@ import com.mingle.sweetpick.ViewPagerDelegate;
 
 import java.util.ArrayList;
 
-public class ResionCinemaActivity extends AppCompatActivity {
-        SeekBar seekBar;
+public class ResionExhibitionActivity extends AppCompatActivity {
         private SweetSheet mSweetSheet;
         private SweetSheet mSweetSheet2;
         private SweetSheet mSweetSheet3;
         private RelativeLayout rl;
         Toolbar toolbar;
-        int now_bright_status;
-        AudioManager audioManager;
-        Button silent;
-        Button virate;
-        Button normal;
         Button homeButton;
+        Button cinemaButton;
         Button libraryButton;
-        Button exhibitButton;
-
 @Override
 protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_resion_cinema);
+        setContentView(R.layout.activity_resion_exhibition);
+
         homeButton=(Button)findViewById(R.id.h_icon);
         homeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -62,7 +50,6 @@ protected void onCreate(Bundle savedInstanceState) {
                         startActivity(home);
                 }
         });
-
         libraryButton=(Button)findViewById(R.id.library_h_icon);
         libraryButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -72,75 +59,17 @@ protected void onCreate(Bundle savedInstanceState) {
                         startActivity(library);
                 }
         });
-        exhibitButton=(Button)findViewById(R.id.exhibition_h_icon);
-        exhibitButton.setOnClickListener(new View.OnClickListener() {
+        cinemaButton=(Button)findViewById(R.id.cinema_icon);
+        cinemaButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                        Intent exhibition=new Intent(getApplicationContext(),ResionExhibitionActivity.class);
-                        exhibition.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(exhibition);
+                        Intent cinema=new Intent(getApplicationContext(),ResionCinemaActivity.class);
+                        cinema.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(cinema);
                 }
         });
 
 
-        /*audioManager=(AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
-        silent=(Button)findViewById(R.id.silent);
-        virate=(Button)findViewById(R.id.veriate);
-        normal=(Button)findViewById(R.id.normal);
-        silent.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                        audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
-                }
-        });
-        virate.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                        audioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
-                }
-        });
-        normal.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                        audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-                }
-        });
-        try{
-
-               now_bright_status = Settings.System.getInt(getContentResolver(),
-
-                   Settings.System.SCREEN_BRIGHTNESS);
-
-
-        }catch(Exception e){
-
-                Log.e("Exception e " + e.getMessage(), null);
-
-        }
-
-        seekBar=(SeekBar)findViewById(R.id.seekbar);
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                @Override
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                        if(progress<10){
-                                progress=10;
-                                seekBar.setProgress(progress);
-                        }
-                        WindowManager.LayoutParams params=getWindow().getAttributes();
-                        params.screenBrightness=(float)progress/100;
-                        params.flags |= WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
-                        getWindow().setAttributes(params);
-                        Settings.System.putInt(getContentResolver(),Settings.System.SCREEN_BRIGHTNESS,progress);
-
-                }
-                @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {
-
-                }
-                @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {
-                }
-        });}*/
         rl = (RelativeLayout) findViewById(R.id.rl);
         setupViewpager();
         setupRecyclerView();
@@ -220,10 +149,10 @@ protected void onCreate(Bundle savedInstanceState) {
 
 
 }
+
         protected void onNewIntent(Intent intent){
                 super.onNewIntent(intent);
         }
-
         @Override
         protected void onResume() {
                 super.onResume();
@@ -311,7 +240,7 @@ protected void onCreate(Bundle savedInstanceState) {
                         @Override
                         public boolean onItemClick(int position, MenuEntity menuEntity1) {
 
-                              //  Toast.makeText(MainActivity.this, menuEntity1.title + "  " + position, Toast.LENGTH_SHORT).show();
+                             //   Toast.makeText(MainActivity.this, menuEntity1.title + "  " + position, Toast.LENGTH_SHORT).show();
                                 return true;
                         }
                 });
@@ -382,6 +311,3 @@ protected void onCreate(Bundle savedInstanceState) {
                 return super.onOptionsItemSelected(item);
         }
 }
-
-
-

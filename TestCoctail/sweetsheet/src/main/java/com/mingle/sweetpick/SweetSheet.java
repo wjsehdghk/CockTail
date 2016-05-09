@@ -171,6 +171,7 @@ public class SweetSheet {
         new MenuInflater(mParentVG.getContext()).inflate(menuRes, menu);
         List<MenuEntity> menuEntities = getMenuEntityFormMenuRes(menu);
 
+
         if(mDelegate != null) {
 
             mDelegate.setMenuList(menuEntities);

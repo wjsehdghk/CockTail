@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:sl="http://schemas.android.com/apk/res-auto"
     package="com.mingle.myapplication">
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"></uses-permission>
 
     <application
         android:allowBackup="true"
@@ -18,6 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ResionCinemaActivity"></activity>
+        <activity android:name=".RegionLibraryActivity"></activity>
+        <activity android:name=".ResionExhibitionActivity"></activity>
     </application>
 
 </manifest>

@@ -21,16 +21,16 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/cinema"
-            android:src="@drawable/cinema"
+            android:id="@+id/exhibition"
+            android:src="@drawable/exhibition"
             sl:scale_left="0"
             sl:scale_top="0"
-            sl:scale_width="1110"
-            sl:scale_height="740"/>
+            sl:scale_width="1085"
+            sl:scale_height="762"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/cinema_icon"
+            android:src="@drawable/exhibition_icon"
             sl:scale_left="240"
             sl:scale_top="450"
             sl:scale_width="600"
@@ -39,7 +39,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/cinema_icon_background"
+            android:src="@drawable/exhibition_icon_background"
             sl:scale_left="240"
             sl:scale_top="450"
             sl:scale_width="600"
@@ -50,7 +50,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="영화관"
+            android:text="전시관"
             sl:scale_left="450"
             sl:scale_top="900"
             sl:scale_width="210"
@@ -60,8 +60,8 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/h_icon"
-            android:background="@drawable/home"
+            android:id="@+id/cinema_icon"
+            android:background="@drawable/cinema_icon"
             sl:scale_left="50"
             sl:scale_top="1010"
             sl:scale_width="300"
@@ -89,8 +89,8 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/exhibition_h_icon"
-            android:background="@drawable/exhibition_icon"
+            android:id="@+id/h_icon"
+            android:background="@drawable/home"
             sl:scale_left="740"
             sl:scale_top="1010"
             sl:scale_width="300"
@@ -99,10 +99,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="홈"
-            sl:scale_left="160"
+            android:text="영화관"
+            sl:scale_left="110"
             sl:scale_top="1320"
-            sl:scale_width="100"
+            sl:scale_width="200"
             sl:scale_height="100"
             sl:scale_textsize="60"/>
         <TextView
@@ -117,10 +117,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="전시관"
-            sl:scale_left="810"
+            android:text="홈"
+            sl:scale_left="860"
             sl:scale_top="1320"
-            sl:scale_width="210"
+            sl:scale_width="90"
             sl:scale_height="100"
             sl:scale_textsize="60"/>
 

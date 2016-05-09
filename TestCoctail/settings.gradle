@@ -1,1 +1,1 @@
-include ':app', 'sweetsheet'
+include ':app', ':mylibrary', 'sweetsheet', ':sample', ':library'

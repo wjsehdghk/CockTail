@@ -1,24 +1,18 @@
 package com.mingle.myapplication;
+
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.SeekBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
@@ -30,34 +24,35 @@ import com.mingle.sweetpick.RecyclerViewDelegate;
 import com.mingle.sweetpick.SweetSheet;
 import com.mingle.sweetpick.ViewPagerDelegate;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
-
+public class RegionLibraryActivity extends AppCompatActivity {
     private SweetSheet mSweetSheet;
     private SweetSheet mSweetSheet2;
     private SweetSheet mSweetSheet3;
     private RelativeLayout rl;
-    Button cinemaButton;
-    Button libraryButton;
-    Button exhibitButton;
     Toolbar toolbar;
 
+    Button homeButton;
+    Button cinemaButton1;
+    Button exhibitButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_resion_library);
 
-        cinemaButton=(Button)findViewById(R.id.cinema_h_icon);
-        libraryButton=(Button)findViewById(R.id.library_h_icon);
-        exhibitButton=(Button)findViewById(R.id.exhibition_h_icon);
+        homeButton=(Button)findViewById(R.id.h_icon);
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent home = new Intent(getApplicationContext(), MainActivity.class);
+                home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(home);
+            }
+        });
 
-
-
-
-        cinemaButton.setOnClickListener(new View.OnClickListener() {
+        cinemaButton1=(Button)findViewById(R.id.cinema_icon);
+        cinemaButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent cinema=new Intent(getApplicationContext(),ResionCinemaActivity.class);
@@ -67,15 +62,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        libraryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent library=new Intent(getApplicationContext(),RegionLibraryActivity.class);
-                library.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(library);
-            }
-        });
 
+
+        exhibitButton=(Button)findViewById(R.id.exhibition_h_icon);
         exhibitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,10 +73,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(exhibition);
             }
         });
-
-
-
-
         rl = (RelativeLayout) findViewById(R.id.rl);
         setupViewpager();
         setupRecyclerView();
@@ -168,9 +153,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    protected void onNewIntent(Intent intent){
-        super.onNewIntent(intent);
-    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -190,7 +173,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
+    protected void onNewIntent(Intent intent){
+        super.onNewIntent(intent);
+    }
     private void setupRecyclerView() {
 
         final ArrayList<MenuEntity> list = new ArrayList<>();
@@ -238,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
                 ((RecyclerViewDelegate) mSweetSheet.getDelegate()).notifyDataSetChanged();
 
                 //根据返回值, true 会关闭 SweetSheet ,false 则不会.
-                Toast.makeText(MainActivity.this, menuEntity1.title + "  " + position, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, menuEntity1.title + "  " + position, Toast.LENGTH_SHORT).show();
                 return false;
             }
         });
@@ -258,7 +243,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onItemClick(int position, MenuEntity menuEntity1) {
 
-                Toast.makeText(MainActivity.this, menuEntity1.title + "  " + position, Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(MainActivity.this, menuEntity1.title + "  " + position, Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
@@ -329,3 +314,4 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+
