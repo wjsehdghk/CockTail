@@ -33,6 +33,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         private SweetSheet mSweetSheet3;
         private RelativeLayout rl;
         Toolbar toolbar;
+        Toolbar bottombar;
         Button homeButton;
         Button cinemaButton;
         Button libraryButton;
@@ -54,7 +55,7 @@ protected void onCreate(Bundle savedInstanceState) {
         libraryButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                        Intent library=new Intent(getApplicationContext(),RegionLibraryActivity.class);
+                        Intent library = new Intent(getApplicationContext(), RegionLibraryActivity.class);
                         library.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(library);
                 }
@@ -81,6 +82,17 @@ protected void onCreate(Bundle savedInstanceState) {
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(getLayoutInflater().inflate(R.layout.actionbar_layout, null),
+                new ActionBar.LayoutParams(
+                        ActionBar.LayoutParams.WRAP_CONTENT,
+                        ActionBar.LayoutParams.MATCH_PARENT,
+                        Gravity.CENTER
+                )
+        );
+        bottombar = (Toolbar) findViewById(R.id.bottombar);
+        setSupportActionBar(bottombar);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(getLayoutInflater().inflate(R.layout.bottombar_layout, null),
                 new ActionBar.LayoutParams(
                         ActionBar.LayoutParams.WRAP_CONTENT,
                         ActionBar.LayoutParams.MATCH_PARENT,
