@@ -45,8 +45,6 @@
             sl:scale_width="493"
             sl:scale_height="490"/>
 
-
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,8 +60,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/cinema_icon"
             android:background="@drawable/cinema_icon"
-            sl:scale_left="50"
-            sl:scale_top="1010"
+            sl:scale_left="88"
+            sl:scale_top="1100"
             sl:scale_width="250"
             sl:scale_height="250"/>
 
@@ -82,20 +80,19 @@
             android:layout_height="wrap_content"
             android:id="@+id/h_icon"
             android:background="@drawable/home"
-            sl:scale_left="740"
-            sl:scale_top="1010"
-            sl:scale_width="300"
-            sl:scale_height="300"/>
+            sl:scale_left="742"
+            sl:scale_top="1100"
+            sl:scale_width="250"
+            sl:scale_height="250"/>
 
-        <TextView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="영화관"
-            sl:scale_left="110"
-            sl:scale_top="1320"
-            sl:scale_width="200"
-            sl:scale_height="100"
-            sl:scale_textsize="60"/>
+            android:src="@drawable/cinema_txt"
+            sl:scale_left="88"
+            sl:scale_top="1380"
+            sl:scale_width="250"
+            sl:scale_height="40"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -106,15 +103,14 @@
             sl:scale_width="250"
             sl:scale_height="40"/>
 
-        <TextView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="홈"
-            sl:scale_left="860"
-            sl:scale_top="1320"
-            sl:scale_width="90"
-            sl:scale_height="100"
-            sl:scale_textsize="60"/>
+            android:src="@drawable/home_txt"
+            sl:scale_left="742"
+            sl:scale_top="1380"
+            sl:scale_width="250"
+            sl:scale_height="40"/>
 
     </com.ssomai.android.scalablelayout.ScalableLayout>
 
@@ -126,17 +122,37 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize" />
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/bottombar"
+        android:elevation="4dp"
+        android:background="@color/colorBottomtab"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <ToggleButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ToggleButton"
+            android:id="@+id/toggleButton"
+            android:layout_alignTop="@+id/toolbar1"/>
+
+
+    </android.support.v7.widget.Toolbar>
+
+
     <com.aurelhubert.ahbottomnavigation.AHBottomNavigation
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="105dp"
         android:layout_gravity="bottom"
         android:background="?attr/colorPrimary"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/toolbar"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
-
-
 
 
 </RelativeLayout>

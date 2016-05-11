@@ -42,6 +42,7 @@ public class RegionLibraryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_resion_library);
 
         homeButton=(Button)findViewById(R.id.h_icon);
+
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,6 +54,7 @@ public class RegionLibraryActivity extends AppCompatActivity {
         });
 
         cinemaButton1=(Button)findViewById(R.id.cinema_icon);
+
         cinemaButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,10 +65,8 @@ public class RegionLibraryActivity extends AppCompatActivity {
             }
         });
 
-
-
-
         exhibitButton=(Button)findViewById(R.id.exhibition_h_icon);
+
         exhibitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,6 +77,7 @@ public class RegionLibraryActivity extends AppCompatActivity {
 
             }
         });
+
         rl = (RelativeLayout) findViewById(R.id.rl);
         setupViewpager();
         setupRecyclerView();

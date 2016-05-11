@@ -87,10 +87,6 @@
             sl:scale_top="1010"
             sl:scale_width="300"
             sl:scale_height="300"/>
-
-
-
-
     </com.ssomai.android.scalablelayout.ScalableLayout>
 
 
@@ -100,7 +96,6 @@
         android:background="?attr/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize" />
-
 
     <com.aurelhubert.ahbottomnavigation.AHBottomNavigation
         android:id="@+id/bottom_navigation"
