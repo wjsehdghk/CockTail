@@ -48,6 +48,7 @@ protected void onCreate(Bundle savedInstanceState) {
                         Intent home = new Intent(getApplicationContext(), MainActivity.class);
                         home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(home);
+                        finish();
                 }
         });
         libraryButton=(Button)findViewById(R.id.library_h_icon);
@@ -57,6 +58,7 @@ protected void onCreate(Bundle savedInstanceState) {
                         Intent library=new Intent(getApplicationContext(),RegionLibraryActivity.class);
                         library.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(library);
+                        finish();
                 }
         });
         cinemaButton=(Button)findViewById(R.id.cinema_icon);
@@ -66,6 +68,7 @@ protected void onCreate(Bundle savedInstanceState) {
                         Intent cinema=new Intent(getApplicationContext(),ResionCinemaActivity.class);
                         cinema.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(cinema);
+                        finish();
                 }
         });
 
