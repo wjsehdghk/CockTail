@@ -40,20 +40,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/exhibition_icon_background"
-            sl:scale_left="294"
+            android:id="@+id/exhibition_backgroud"
+            sl:scale_left="295"
             sl:scale_top="480"
-            sl:scale_width="493"
+            sl:scale_width="490"
             sl:scale_height="490"/>
 
-        <TextView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="전시관"
-            sl:scale_left="450"
+            android:src="@drawable/exhibition_txt"
+            sl:scale_left="295"
             sl:scale_top="990"
-            sl:scale_width="210"
-            sl:scale_height="100"
-            sl:scale_textsize="70"/>
+            sl:scale_width="490"
+            sl:scale_height="70"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -132,14 +132,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
-
-        <ToggleButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ToggleButton"
-            android:id="@+id/toggleButton"
-            android:layout_alignTop="@+id/toolbar1"/>
-
 
     </android.support.v7.widget.Toolbar>
 

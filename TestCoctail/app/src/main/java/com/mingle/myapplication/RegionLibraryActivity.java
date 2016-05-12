@@ -49,6 +49,7 @@ public class RegionLibraryActivity extends AppCompatActivity {
                 Intent home = new Intent(getApplicationContext(), MainActivity.class);
                 home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(home);
+                finish();
             }
         });
 
@@ -60,6 +61,7 @@ public class RegionLibraryActivity extends AppCompatActivity {
                 Intent cinema=new Intent(getApplicationContext(),ResionCinemaActivity.class);
                 cinema.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(cinema);
+                finish();
             }
         });
 
@@ -71,6 +73,7 @@ public class RegionLibraryActivity extends AppCompatActivity {
                 Intent exhibition=new Intent(getApplicationContext(),ResionExhibitionActivity.class);
                 exhibition.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(exhibition);
+                finish();
             }
         });
 

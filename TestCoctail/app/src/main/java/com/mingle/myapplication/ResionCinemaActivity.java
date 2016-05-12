@@ -48,6 +48,7 @@ protected void onCreate(Bundle savedInstanceState) {
                         Intent home = new Intent(getApplicationContext(), MainActivity.class);
                         home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(home);
+                        finish();
                 }
         });
 
@@ -58,6 +59,7 @@ protected void onCreate(Bundle savedInstanceState) {
                         Intent library=new Intent(getApplicationContext(),RegionLibraryActivity.class);
                         library.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(library);
+                        finish();
                 }
         });
         exhibitButton=(Button)findViewById(R.id.exhibition_h_icon);
@@ -67,6 +69,7 @@ protected void onCreate(Bundle savedInstanceState) {
                         Intent exhibition=new Intent(getApplicationContext(),ResionExhibitionActivity.class);
                         exhibition.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(exhibition);
+                        finish();
                 }
         });
 
