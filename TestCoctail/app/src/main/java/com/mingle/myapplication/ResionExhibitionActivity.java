@@ -48,7 +48,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent home = new Intent(getApplicationContext(), MainActivity.class);
-                home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                home.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(home);
                 finish();
             }
@@ -58,17 +58,17 @@ public class ResionExhibitionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent library = new Intent(getApplicationContext(), RegionLibraryActivity.class);
-                library.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                library.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(library);
                 finish();
             }
         });
-        cinemaButton = (Button) findViewById(R.id.cinema_icon);
+        cinemaButton = (Button) findViewById(R.id.cinema_h_icon);
         cinemaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent cinema = new Intent(getApplicationContext(), ResionCinemaActivity.class);
-                cinema.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                cinema.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(cinema);
                 finish();
             }

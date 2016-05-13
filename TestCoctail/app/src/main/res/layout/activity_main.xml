@@ -34,8 +34,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/gif"
-            sl:scale_left="280"
-            sl:scale_top="320"
+            sl:scale_left="270"
+            sl:scale_top="310"
             sl:scale_width="400"
             sl:scale_height="400"/>
 
@@ -53,11 +53,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/cinema_h_icon"
-            android:background="@drawable/effect_button"
-            sl:scale_left="50"
-            sl:scale_top="1010"
-            sl:scale_width="300"
-            sl:scale_height="300"/>
+            android:background="@drawable/cinema_icon"
+            sl:scale_left="88"
+            sl:scale_top="1100"
+            sl:scale_width="250"
+            sl:scale_height="250"/>
         <!--ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -72,21 +72,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/library_h_icon"
-            android:background="@mipmap/ic_library"
-            sl:scale_left="395"
-            sl:scale_top="1010"
-            sl:scale_width="300"
-            sl:scale_height="300"/>
+            android:background="@drawable/library_icon"
+            sl:scale_left="415"
+            sl:scale_top="1100"
+            sl:scale_width="250"
+            sl:scale_height="250"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/exhibition_h_icon"
-            android:background="@mipmap/ic_exhibition"
-            sl:scale_left="740"
-            sl:scale_top="1010"
-            sl:scale_width="300"
-            sl:scale_height="300"/>
+            android:background="@drawable/exhibition_icon"
+            sl:scale_left="742"
+            sl:scale_top="1100"
+            sl:scale_width="250"
+            sl:scale_height="250"/>
     </com.ssomai.android.scalablelayout.ScalableLayout>
 
 

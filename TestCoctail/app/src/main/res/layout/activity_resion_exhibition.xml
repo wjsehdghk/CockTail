@@ -58,7 +58,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/cinema_icon"
+            android:id="@+id/cinema_h_icon"
             android:background="@drawable/cinema_icon"
             sl:scale_left="88"
             sl:scale_top="1100"
@@ -138,7 +138,8 @@
             android:layout_height="wrap_content"
             android:text="ToggleButton"
             android:id="@+id/toggleButton"
-            android:layout_alignTop="@+id/toolbar1"/>
+            android:layout_alignTop="@+id/toolbar1"
+            android:checked="false" />
 
 
     </android.support.v7.widget.Toolbar>
