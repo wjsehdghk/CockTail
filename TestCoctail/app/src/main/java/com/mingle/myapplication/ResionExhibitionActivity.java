@@ -52,7 +52,6 @@ public class ResionExhibitionActivity extends AppCompatActivity {
     Bitmap bitmap2;
     Bitmap bitmap3;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
