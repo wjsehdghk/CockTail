@@ -5,6 +5,15 @@
     </item>
     <item>
         <shape xmlns:android="http://schemas.android.com/apk/res/android">
+            <gradient
+                android:startColor="#80ffffff"
+                android:endColor="#80ffffff"
+                android:angle="45"/>
+            <corners
+                android:topRightRadius="200dp"
+                android:bottomRightRadius="200dp"
+                android:bottomLeftRadius="200dp"
+                android:topLeftRadius="200dp"/>
         </shape>
     </item>
 </layer-list>

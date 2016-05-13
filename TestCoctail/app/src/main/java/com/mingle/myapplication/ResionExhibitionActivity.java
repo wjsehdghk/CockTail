@@ -1,6 +1,8 @@
 package com.mingle.myapplication;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -44,6 +46,12 @@ public class ResionExhibitionActivity extends AppCompatActivity {
     Button libraryButton;
     ToggleButton bottomToggleButton;
     ImageView exhibition_back;
+    ImageView exhibition_icon;
+    ImageView exhibition_edge;
+    Bitmap bitmap;
+    Bitmap bitmap2;
+    Bitmap bitmap3;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,15 +61,23 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         final Animation animAlpha = AnimationUtils.loadAnimation(this, R.anim.anim_alpha);
         final Animation animRotate = AnimationUtils.loadAnimation(this, R.anim.anim_rotate);
 
-        exhibition_back = (ImageView) findViewById(R.id.exhibition_backgroud);
-        exhibition_back.setAnimation(animRotate);
+        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.exhibition);
+        exhibition_back = (ImageView) findViewById(R.id.exhibition_back);
+        exhibition_back.setImageBitmap(bitmap);
+
+        exhibition_edge = (ImageView) findViewById(R.id.exhibition_edge);
+        exhibition_edge.setAnimation(animRotate);
+
+
+        //bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.exhibition_icon);
+        //bitmap3 = BitmapFactory.decodeResource(getResources(), R.drawable.exhibition_icon_background);
 
         homeButton = (Button) findViewById(R.id.h_icon);
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent home = new Intent(getApplicationContext(), MainActivity.class);
-                home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                home.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(home);
                 finish();
             }
@@ -71,7 +87,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent library = new Intent(getApplicationContext(), RegionLibraryActivity.class);
-                library.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                library.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(library);
                 finish();
             }
@@ -81,7 +97,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent cinema = new Intent(getApplicationContext(), ResionCinemaActivity.class);
-                cinema.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                cinema.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(cinema);
                 finish();
             }
@@ -116,15 +132,13 @@ public class ResionExhibitionActivity extends AppCompatActivity {
                         Gravity.CENTER
                 )
         );
-
         bottomToggleButton = (ToggleButton) findViewById(R.id.bottomToggleButton);
         bottomToggleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(bottomToggleButton.isChecked()) {
+                if (bottomToggleButton.isChecked()) {
                     mSweetSheet3.show();
-                }
-                else {
+                } else {
                     mSweetSheet3.dismiss();
                 }
             }
@@ -138,6 +152,14 @@ public class ResionExhibitionActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        bitmap.recycle();
+        bitmap2.recycle();
+        bitmap3.recycle();
     }
 
     private void setupCustomView() {
@@ -158,7 +180,6 @@ public class ResionExhibitionActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView() {
-
         final ArrayList<MenuEntity> list = new ArrayList<>();
         //添加假数据
         MenuEntity menuEntity1 = new MenuEntity();
@@ -166,13 +187,10 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         menuEntity1.titleColor = 0xff96CC7A; //textcolor
         menuEntity1.title = "code";
 
-
         MenuEntity menuEntity = new MenuEntity();
         menuEntity.iconId = R.drawable.ic_account_child;
         menuEntity.titleColor = 0xffb3b3b3;
         menuEntity.title = "QQ";
-
-
 
         list.add(menuEntity1);
         list.add(menuEntity);
@@ -201,7 +219,6 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         });
 
     }
-
     private void setupViewpager() {
 
 
@@ -242,7 +259,6 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
-
 
     }
 

@@ -34,6 +34,8 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
+import io.saeid.fabloading.LoadingView;
+
 public class MainActivity extends AppCompatActivity {
 
     private SweetSheet mSweetSheet;
@@ -44,11 +46,32 @@ public class MainActivity extends AppCompatActivity {
     Button libraryButton;
     Button exhibitButton;
     Toolbar toolbar;
+    LoadingView mLoadingView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+      //  mLoadingView = (LoadingView) findViewById(R.id.loading_view);
+      //  mLoadingView.addAnimation(Color.BLUE,R.drawable.cinema, LoadingView.FROM_TOP);
+
+        //also you can add listener for getting callback (optional)
+       /* mLoadingView.addListener(new LoadingView.LoadingListener() {
+            @Override
+            public void onAnimationStart(int currentItemPosition) {
+            }
+
+            @Override
+            public void onAnimationRepeat(int nextItemPosition) {
+            }
+
+            @Override
+            public void onAnimationEnd(int nextItemPosition) {
+            }
+        });
+*/
+        //mLoadingView.startAnimation();
 
         cinemaButton=(Button)findViewById(R.id.cinema_h_icon);
         libraryButton=(Button)findViewById(R.id.library_h_icon);
@@ -61,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent cinema=new Intent(getApplicationContext(),ResionCinemaActivity.class);
-                cinema.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                cinema.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(cinema);
                 finish();
             }
@@ -72,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent library=new Intent(getApplicationContext(),RegionLibraryActivity.class);
-                library.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                library.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(library);
                 finish();
             }
@@ -82,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent exhibition=new Intent(getApplicationContext(),ResionExhibitionActivity.class);
-                exhibition.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                exhibition.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(exhibition);
                 finish();
             }
