@@ -74,7 +74,6 @@ public class RegionLibraryActivity extends AppCompatActivity {
                 exhibition.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(exhibition);
                 finish();
-
             }
         });
 

@@ -10,10 +10,15 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
@@ -37,11 +42,19 @@ public class ResionExhibitionActivity extends AppCompatActivity {
     Button homeButton;
     Button cinemaButton;
     Button libraryButton;
+    ToggleButton bottomToggleButton;
+    ImageView exhibition_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resion_exhibition);
+
+        final Animation animAlpha = AnimationUtils.loadAnimation(this, R.anim.anim_alpha);
+        final Animation animRotate = AnimationUtils.loadAnimation(this, R.anim.anim_rotate);
+
+        exhibition_back = (ImageView) findViewById(R.id.exhibition_backgroud);
+        exhibition_back.setAnimation(animRotate);
 
         homeButton = (Button) findViewById(R.id.h_icon);
         homeButton.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +76,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
                 finish();
             }
         });
-        cinemaButton = (Button) findViewById(R.id.cinema_h_icon);
+        cinemaButton = (Button) findViewById(R.id.cinema_icon);
         cinemaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,67 +116,17 @@ public class ResionExhibitionActivity extends AppCompatActivity {
                         Gravity.CENTER
                 )
         );
-
-        final String[] colors = {"#5a5b55", "#5a5b55", "#5a5b55"};
-
-
-        AHBottomNavigation bottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_navigation);
-
-        final AHBottomNavigationItem item1 = new AHBottomNavigationItem("left", R.drawable.ic_arrow_left, Color.parseColor(colors[0]));
-        final AHBottomNavigationItem item2 = new AHBottomNavigationItem("setting", R.drawable.ic_arrow_up, Color.parseColor(colors[1]));
-        final AHBottomNavigationItem item3 = new AHBottomNavigationItem("right", R.drawable.ic_arrow_right, Color.parseColor(colors[2]));
-
-
-        bottomNavigation.addItem(item1);
-        bottomNavigation.addItem(item2);
-        bottomNavigation.addItem(item3);
-
-        bottomNavigation.setDefaultBackgroundColor(Color.parseColor("#FEFEFE"));
-        bottomNavigation.setAccentColor(Color.parseColor("#F63D2B"));
-        bottomNavigation.setInactiveColor(Color.parseColor("#747474"));
-
-        //  Enables Reveal effect
-        bottomNavigation.setColored(true);
-
-        bottomNavigation.setCurrentItem(0);
-
-        bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
+        bottomToggleButton = (ToggleButton) findViewById(R.id.bottomToggleButton);
+        bottomToggleButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onTabSelected(int position, boolean wasSelected) {
-                // Do something cool here...
-
-                //fragment.updateColor(Color.parseColor(colors[position]));
-                if (position == 1) {
-                    if (mSweetSheet2.isShow()) {
-                        mSweetSheet2.dismiss();
-                    }
-                    if (mSweetSheet3.isShow()) {
-                        mSweetSheet3.dismiss();
-                    }
-                    mSweetSheet.toggle();
-                }
-                if (position == 2) {
-                    if (mSweetSheet.isShow()) {
-                        mSweetSheet.dismiss();
-                    }
-                    if (mSweetSheet3.isShow()) {
-                        mSweetSheet3.dismiss();
-                    }
-                    mSweetSheet2.toggle();
-                }
-                if (position == 0) {
-                    if (mSweetSheet.isShow()) {
-                        mSweetSheet.dismiss();
-                    }
-                    if (mSweetSheet2.isShow()) {
-                        mSweetSheet2.dismiss();
-                    }
-                    mSweetSheet3.toggle();
+            public void onClick(View v) {
+                if (bottomToggleButton.isChecked()) {
+                    mSweetSheet3.show();
+                } else {
+                    mSweetSheet3.dismiss();
                 }
             }
         });
-
-
     }
 
     protected void onNewIntent(Intent intent) {
@@ -181,7 +144,9 @@ public class ResionExhibitionActivity extends AppCompatActivity {
                 CustomDelegate.AnimationType.DuangLayoutAnimation);
         View view = LayoutInflater.from(this).inflate(R.layout.layout_custom_view, null, false);
         customDelegate.setCustomView(view);
+        customDelegate.setSweetSheetColor(getResources().getColor(R.color.colorBottomtab));
         mSweetSheet3.setDelegate(customDelegate);
+        mSweetSheet3.setBackgroundEffect(new BlurEffect(8));
         view.findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -191,7 +156,6 @@ public class ResionExhibitionActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView() {
-
         final ArrayList<MenuEntity> list = new ArrayList<>();
         //添加假数据
         MenuEntity menuEntity1 = new MenuEntity();
@@ -199,23 +163,12 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         menuEntity1.titleColor = 0xff96CC7A; //textcolor
         menuEntity1.title = "code";
 
-
         MenuEntity menuEntity = new MenuEntity();
         menuEntity.iconId = R.drawable.ic_account_child;
         menuEntity.titleColor = 0xffb3b3b3;
         menuEntity.title = "QQ";
+
         list.add(menuEntity1);
-        list.add(menuEntity);
-        list.add(menuEntity);
-        list.add(menuEntity);
-        list.add(menuEntity);
-        list.add(menuEntity);
-        list.add(menuEntity);
-        list.add(menuEntity);
-        list.add(menuEntity);
-        list.add(menuEntity);
-        list.add(menuEntity);
-        list.add(menuEntity);
         list.add(menuEntity);
 
         // SweetSheet 控件,根据 rl 确认位置
@@ -242,7 +195,6 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         });
 
     }
-
     private void setupViewpager() {
 
 
@@ -283,7 +235,6 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
-
 
     }
 

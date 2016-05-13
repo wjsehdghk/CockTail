@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:gravity="center_vertical">
 
-    <TextView
+    <!--TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -12,5 +12,15 @@
         android:textColor="#ffffffff"
         android:textSize="22sp"
         android:id="@+id/textView"
-        android:gravity="center" />
+        android:gravity="center" /-->
+
+    <ToggleButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textOn="CLOSE"
+        android:textOff="SETTING"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:id="@+id/bottomToggleButton"
+        android:background="#00000000"/>
 </LinearLayout>
