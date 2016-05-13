@@ -47,19 +47,19 @@ public class RegionLibraryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent home = new Intent(getApplicationContext(), MainActivity.class);
-                home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                home.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(home);
                 finish();
             }
         });
 
-        cinemaButton1=(Button)findViewById(R.id.cinema_icon);
+        cinemaButton1=(Button)findViewById(R.id.cinema_h_icon);
 
         cinemaButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent cinema=new Intent(getApplicationContext(),ResionCinemaActivity.class);
-                cinema.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                cinema.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(cinema);
                 finish();
             }
@@ -71,7 +71,7 @@ public class RegionLibraryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent exhibition=new Intent(getApplicationContext(),ResionExhibitionActivity.class);
-                exhibition.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                exhibition.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(exhibition);
                 finish();
             }

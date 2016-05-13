@@ -61,7 +61,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent home = new Intent(getApplicationContext(), MainActivity.class);
-                home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                home.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(home);
                 finish();
             }
@@ -71,7 +71,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent library = new Intent(getApplicationContext(), RegionLibraryActivity.class);
-                library.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                library.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(library);
                 finish();
             }
@@ -81,7 +81,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent cinema = new Intent(getApplicationContext(), ResionCinemaActivity.class);
-                cinema.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                cinema.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(cinema);
                 finish();
             }
@@ -116,15 +116,13 @@ public class ResionExhibitionActivity extends AppCompatActivity {
                         Gravity.CENTER
                 )
         );
-
         bottomToggleButton = (ToggleButton) findViewById(R.id.bottomToggleButton);
         bottomToggleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(bottomToggleButton.isChecked()) {
+                if (bottomToggleButton.isChecked()) {
                     mSweetSheet3.show();
-                }
-                else {
+                } else {
                     mSweetSheet3.dismiss();
                 }
             }
@@ -158,7 +156,6 @@ public class ResionExhibitionActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView() {
-
         final ArrayList<MenuEntity> list = new ArrayList<>();
         //添加假数据
         MenuEntity menuEntity1 = new MenuEntity();
@@ -166,13 +163,10 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         menuEntity1.titleColor = 0xff96CC7A; //textcolor
         menuEntity1.title = "code";
 
-
         MenuEntity menuEntity = new MenuEntity();
         menuEntity.iconId = R.drawable.ic_account_child;
         menuEntity.titleColor = 0xffb3b3b3;
         menuEntity.title = "QQ";
-
-
 
         list.add(menuEntity1);
         list.add(menuEntity);
@@ -201,7 +195,6 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         });
 
     }
-
     private void setupViewpager() {
 
 
@@ -242,7 +235,6 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
-
 
     }
 

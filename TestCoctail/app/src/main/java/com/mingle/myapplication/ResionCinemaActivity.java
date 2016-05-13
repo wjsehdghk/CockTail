@@ -46,7 +46,7 @@ protected void onCreate(Bundle savedInstanceState) {
                 @Override
                 public void onClick(View v) {
                         Intent home = new Intent(getApplicationContext(), MainActivity.class);
-                        home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        home.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         startActivity(home);
                         finish();
                 }
@@ -57,7 +57,7 @@ protected void onCreate(Bundle savedInstanceState) {
                 @Override
                 public void onClick(View v) {
                         Intent library=new Intent(getApplicationContext(),RegionLibraryActivity.class);
-                        library.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        library.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         startActivity(library);
                         finish();
                 }
@@ -67,7 +67,7 @@ protected void onCreate(Bundle savedInstanceState) {
                 @Override
                 public void onClick(View v) {
                         Intent exhibition=new Intent(getApplicationContext(),ResionExhibitionActivity.class);
-                        exhibition.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        exhibition.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         startActivity(exhibition);
                         finish();
                 }
