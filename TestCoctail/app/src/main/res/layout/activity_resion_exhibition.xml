@@ -22,45 +22,47 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/exhibition_back"
-
             sl:scale_left="0"
             sl:scale_top="0"
             sl:scale_width="1085"
-            sl:scale_height="762"/>
+            sl:scale_height="759"/>
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/exhibition_icon"
+            android:src="@android:drawable/ic_menu_report_image"
             android:id="@+id/exhibition_icon"
             sl:scale_left="318"
             sl:scale_top="503"
             sl:scale_width="451"
-            sl:scale_height="450"
-            />
+            sl:scale_height="450"/>
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/exhibition_icon_background"
             android:id="@+id/exhibition_edge"
             sl:scale_left="295"
             sl:scale_top="480"
             sl:scale_width="490"
             sl:scale_height="490"/>
 
-        <ImageView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/exhibition_txt"
-            sl:scale_left="295"
+            android:id="@+id/exhibition_txt"
+            android:text="전시장"
+            android:textColor="@color/black"
+            sl:scale_textsize="70"
+            sl:scale_left="430"
             sl:scale_top="990"
-            sl:scale_width="490"
-            sl:scale_height="70"/>
+            sl:scale_width="230"
+            sl:scale_height="80"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/cinema_icon"
-            android:background="@drawable/cinema_icon"
+            android:id="@+id/cinema_btn"
+            android:background="@drawable/effect_cin_button"
             sl:scale_left="88"
             sl:scale_top="1100"
             sl:scale_width="250"
@@ -69,8 +71,8 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/library_h_icon"
-            android:background="@drawable/library_icon"
+            android:id="@+id/library_btn"
+            android:background="@drawable/effect_lib_button"
             sl:scale_left="415"
             sl:scale_top="1100"
             sl:scale_width="250"
@@ -79,39 +81,51 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/h_icon"
-            android:background="@drawable/effect_button"
+            android:id="@+id/home_btn"
+            android:background="@drawable/effect_home_button"
             sl:scale_left="742"
             sl:scale_top="1100"
             sl:scale_width="250"
             sl:scale_height="250"/>
 
-        <ImageView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/cinema_txt"
-            sl:scale_left="88"
-            sl:scale_top="1380"
-            sl:scale_width="250"
-            sl:scale_height="40"/>
+            android:id="@+id/cinema_txt"
+            android:text="영화관"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            sl:scale_textsize="42"
+            sl:scale_left="150"
+            sl:scale_top="1370"
+            sl:scale_width="135"
+            sl:scale_height="60"/>
 
-        <ImageView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/library_txt"
-            sl:scale_left="415"
-            sl:scale_top="1380"
-            sl:scale_width="250"
-            sl:scale_height="40"/>
+            android:id="@+id/library_txt"
+            android:text="도서관"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            sl:scale_textsize="42"
+            sl:scale_left="475"
+            sl:scale_top="1370"
+            sl:scale_width="135"
+            sl:scale_height="60"/>
 
-        <ImageView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/home_txt"
-            sl:scale_left="742"
-            sl:scale_top="1380"
-            sl:scale_width="250"
-            sl:scale_height="40"/>
+            android:id="@+id/home_txt"
+            android:text="홈"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            sl:scale_textsize="42"
+            sl:scale_left="845"
+            sl:scale_top="1370"
+            sl:scale_width="50"
+            sl:scale_height="60"/>
 
     </com.ssomai.android.scalablelayout.ScalableLayout>
 

@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:background="@android:color/darker_gray"
+        android:background="@android:color/white"
         sl:scale_base_width="1080"
         sl:scale_base_height="1660"
         android:layout_alignParentBottom="true"
@@ -25,8 +25,9 @@
             android:src="@drawable/cinema"
             sl:scale_left="0"
             sl:scale_top="0"
-            sl:scale_width="1110"
-            sl:scale_height="762"/>
+            sl:scale_width="1130"
+            sl:scale_height="755"/>
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,16 +37,15 @@
             sl:scale_width="600"
             sl:scale_height="450"
             />
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/cinema_icon_background"
+            android:src="@drawable/cinema_edge"
             sl:scale_left="240"
             sl:scale_top="450"
             sl:scale_width="600"
             sl:scale_height="450"/>
-
-
 
         <TextView
             android:layout_width="wrap_content"
@@ -66,15 +66,6 @@
             sl:scale_top="1010"
             sl:scale_width="300"
             sl:scale_height="300"/>
-        <!--ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/library_h_icon"
-            android:src="@drawable/library_icon"
-            sl:scale_left="395"
-            sl:scale_top="1010"
-            sl:scale_width="300"
-            sl:scale_height="300"/-->
 
         <Button
             android:layout_width="wrap_content"
@@ -124,10 +115,6 @@
             sl:scale_height="100"
             sl:scale_textsize="60"/>
 
-
-
-
-
     </com.ssomai.android.scalablelayout.ScalableLayout>
 
 
@@ -138,17 +125,16 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize" />
 
-    <com.aurelhubert.ahbottomnavigation.AHBottomNavigation
-        android:id="@+id/bottom_navigation"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/bottombar"
+        android:elevation="4dp"
+        android:background="@color/colorBottomtab"
         android:layout_width="match_parent"
-        android:layout_height="105dp"
+        android:layout_height="50dp"
         android:layout_gravity="bottom"
-        android:background="?attr/colorPrimary"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-
-
+        android:layout_alignParentStart="true">
+    </android.support.v7.widget.Toolbar>
 
 </RelativeLayout>

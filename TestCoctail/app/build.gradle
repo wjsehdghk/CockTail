@@ -24,11 +24,8 @@ dependencies {
     compile 'com.android.support:design:23.2.1'
     compile 'com.android.support:support-v4:23.2.1'
     compile 'com.ssomai:android.scalablelayout:2.1.0'
-    compile 'com.aurelhubert:ahbottomnavigation:0.1.2'
     //compile 'com.felipecsl:gifimageview:2.0.0'
     compile project(':sweetsheet')
-    compile 'com.android.support:cardview-v7:23.2.1'
-    compile 'io.saeid:fab-loading:0.6.0'
     compile 'net.colindodd:toggleimagebutton:1.2'
 
 }

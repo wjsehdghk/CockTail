@@ -14,9 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.ToggleButton;
 
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.mingle.entity.MenuEntity;
 import com.mingle.sweetpick.BlurEffect;
 import com.mingle.sweetpick.CustomDelegate;
@@ -33,127 +32,95 @@ public class ResionCinemaActivity extends AppCompatActivity {
         private SweetSheet mSweetSheet3;
         private RelativeLayout rl;
         Toolbar toolbar;
+        Toolbar bottombar;
+        ToggleButton bottomToggleButton;
         Button homeButton;
         Button libraryButton;
         Button exhibitButton;
 
-@Override
-protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_resion_cinema);
-        homeButton=(Button)findViewById(R.id.h_icon);
-        homeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                        Intent home = new Intent(getApplicationContext(), MainActivity.class);
-                        home.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                        startActivity(home);
-                        finish();
-                }
-        });
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+                super.onCreate(savedInstanceState);
+                setContentView(R.layout.activity_resion_cinema);
+                homeButton=(Button)findViewById(R.id.h_icon);
+                homeButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                                Intent home = new Intent(getApplicationContext(), MainActivity.class);
+                                home.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                startActivity(home);
+                                finish();
+                        }
+                });
 
-        libraryButton=(Button)findViewById(R.id.library_h_icon);
-        libraryButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                        Intent library=new Intent(getApplicationContext(),RegionLibraryActivity.class);
-                        library.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                        startActivity(library);
-                        finish();
-                }
-        });
-        exhibitButton=(Button)findViewById(R.id.exhibition_h_icon);
-        exhibitButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                        Intent exhibition=new Intent(getApplicationContext(),ResionExhibitionActivity.class);
-                        exhibition.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                        startActivity(exhibition);
-                        finish();
-                }
-        });
-
-
-
-        rl = (RelativeLayout) findViewById(R.id.rl);
-        setupViewpager();
-        setupRecyclerView();
-        setupCustomView();
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        //noinspection ConstantConditions
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(getLayoutInflater().inflate(R.layout.actionbar_layout, null),
-                new ActionBar.LayoutParams(
-                        ActionBar.LayoutParams.WRAP_CONTENT,
-                        ActionBar.LayoutParams.MATCH_PARENT,
-                        Gravity.CENTER
-                )
-        );
-
-        final String[] colors = {"#5a5b55", "#5a5b55", "#5a5b55"};
+                libraryButton=(Button)findViewById(R.id.library_h_icon);
+                libraryButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                                Intent library=new Intent(getApplicationContext(),RegionLibraryActivity.class);
+                                library.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                startActivity(library);
+                                finish();
+                        }
+                });
+                exhibitButton=(Button)findViewById(R.id.exhibition_h_icon);
+                exhibitButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                                Intent exhibition=new Intent(getApplicationContext(),ResionExhibitionActivity.class);
+                                exhibition.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                startActivity(exhibition);
+                                finish();
+                        }
+                });
 
 
-        AHBottomNavigation bottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_navigation);
 
-        final AHBottomNavigationItem item1 = new AHBottomNavigationItem("left", R.drawable.ic_arrow_left, Color.parseColor(colors[0]));
-        final AHBottomNavigationItem item2 = new AHBottomNavigationItem("setting", R.drawable.ic_arrow_up, Color.parseColor(colors[1]));
-        final AHBottomNavigationItem item3 = new AHBottomNavigationItem("right", R.drawable.ic_arrow_right, Color.parseColor(colors[2]));
+                rl = (RelativeLayout) findViewById(R.id.rl);
+                setupViewpager();
+                setupRecyclerView();
+                setupCustomView();
+
+                toolbar = (Toolbar) findViewById(R.id.toolbar);
+                setSupportActionBar(toolbar);
+                //noinspection ConstantConditions
+                getSupportActionBar().setDisplayShowCustomEnabled(true);
+                getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+                getSupportActionBar().setCustomView(getLayoutInflater().inflate(R.layout.actionbar_layout, null),
+                        new ActionBar.LayoutParams(
+                                ActionBar.LayoutParams.WRAP_CONTENT,
+                                ActionBar.LayoutParams.MATCH_PARENT,
+                                Gravity.CENTER
+                        )
+                );
+
+                final String[] colors = {"#5a5b55", "#5a5b55", "#5a5b55"};
 
 
-        bottomNavigation.addItem(item1);
-        bottomNavigation.addItem(item2);
-        bottomNavigation.addItem(item3);
-
-        bottomNavigation.setDefaultBackgroundColor(Color.parseColor("#FEFEFE"));
-        bottomNavigation.setAccentColor(Color.parseColor("#F63D2B"));
-        bottomNavigation.setInactiveColor(Color.parseColor("#747474"));
-
-        //  Enables Reveal effect
-        bottomNavigation.setColored(true);
-
-        bottomNavigation.setCurrentItem(0);
-
-        bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
-                @Override
-                public void onTabSelected(int position, boolean wasSelected) {
-                        // Do something cool here...
-
-                        //fragment.updateColor(Color.parseColor(colors[position]));
-                        if (position == 1) {
-                                if (mSweetSheet2.isShow()) {
-                                        mSweetSheet2.dismiss();
-                                }
-                                if (mSweetSheet3.isShow()) {
+                bottombar = (Toolbar) findViewById(R.id.bottombar);
+                setSupportActionBar(bottombar);
+                getSupportActionBar().setDisplayShowCustomEnabled(true);
+                getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+                getSupportActionBar().setCustomView(getLayoutInflater().inflate(R.layout.bottombar_layout, null),
+                        new ActionBar.LayoutParams(
+                                ActionBar.LayoutParams.WRAP_CONTENT,
+                                ActionBar.LayoutParams.MATCH_PARENT,
+                                Gravity.CENTER
+                        )
+                );
+                bottomToggleButton = (ToggleButton) findViewById(R.id.bottomToggleButton);
+                bottomToggleButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                                if (bottomToggleButton.isChecked()) {
+                                        mSweetSheet3.show();
+                                } else {
                                         mSweetSheet3.dismiss();
                                 }
-                                mSweetSheet.toggle();
                         }
-                        if (position == 2) {
-                                if (mSweetSheet.isShow()) {
-                                        mSweetSheet.dismiss();
-                                }
-                                if (mSweetSheet3.isShow()) {
-                                        mSweetSheet3.dismiss();
-                                }
-                                mSweetSheet2.toggle();
-                        }
-                        if (position == 0) {
-                                if (mSweetSheet.isShow()) {
-                                        mSweetSheet.dismiss();
-                                }
-                                if (mSweetSheet2.isShow()) {
-                                        mSweetSheet2.dismiss();
-                                }
-                                mSweetSheet3.toggle();
-                        }
-                }
-        });
+                });
 
-
-}
+        }
         protected void onNewIntent(Intent intent){
                 super.onNewIntent(intent);
         }
@@ -245,11 +212,10 @@ protected void onCreate(Bundle savedInstanceState) {
                         @Override
                         public boolean onItemClick(int position, MenuEntity menuEntity1) {
 
-                              //  Toast.makeText(MainActivity.this, menuEntity1.title + "  " + position, Toast.LENGTH_SHORT).show();
+                                //  Toast.makeText(MainActivity.this, menuEntity1.title + "  " + position, Toast.LENGTH_SHORT).show();
                                 return true;
                         }
                 });
-
 
         }
 
@@ -273,46 +239,11 @@ protected void onCreate(Bundle savedInstanceState) {
                         super.onBackPressed();
                 }
 
-
         }
 
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
 
-        /*
-        int id = item.getItemId();
-        if (id == R.id.action_recyclerView) {
-            if (mSweetSheet2.isShow()) {
-                mSweetSheet2.dismiss();
-            }
-            if (mSweetSheet3.isShow()) {
-                mSweetSheet3.dismiss();
-            }
-            mSweetSheet.toggle();
-
-            return true;
-        }
-        if (id == R.id.action_viewpager) {
-            if (mSweetSheet.isShow()) {
-                mSweetSheet.dismiss();
-            }
-            if (mSweetSheet3.isShow()) {
-                mSweetSheet3.dismiss();
-            }
-            mSweetSheet2.toggle();
-            return true;
-        }
-        if (id == R.id.action_custom) {
-            if (mSweetSheet.isShow()) {
-                mSweetSheet.dismiss();
-            }
-            if (mSweetSheet2.isShow()) {
-                mSweetSheet2.dismiss();
-            }
-            mSweetSheet3.toggle();
-            return true;
-        }
-        */
                 return super.onOptionsItemSelected(item);
         }
 }

@@ -1,8 +1,5 @@
 package com.mingle.myapplication;
 import android.content.Intent;
-import android.graphics.Color;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,16 +9,11 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.SeekBar;
-import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.mingle.entity.MenuEntity;
 import com.mingle.sweetpick.BlurEffect;
 import com.mingle.sweetpick.CustomDelegate;
@@ -29,12 +21,8 @@ import com.mingle.sweetpick.DimEffect;
 import com.mingle.sweetpick.RecyclerViewDelegate;
 import com.mingle.sweetpick.SweetSheet;
 import com.mingle.sweetpick.ViewPagerDelegate;
-
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
-import io.saeid.fabloading.LoadingView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,42 +30,22 @@ public class MainActivity extends AppCompatActivity {
     private SweetSheet mSweetSheet2;
     private SweetSheet mSweetSheet3;
     private RelativeLayout rl;
+    ToggleButton bottomToggleButton;
     Button cinemaButton;
     Button libraryButton;
     Button exhibitButton;
     Toolbar toolbar;
-    LoadingView mLoadingView;
+    Toolbar bottombar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-      //  mLoadingView = (LoadingView) findViewById(R.id.loading_view);
-      //  mLoadingView.addAnimation(Color.BLUE,R.drawable.cinema, LoadingView.FROM_TOP);
-
-        //also you can add listener for getting callback (optional)
-       /* mLoadingView.addListener(new LoadingView.LoadingListener() {
-            @Override
-            public void onAnimationStart(int currentItemPosition) {
-            }
-
-            @Override
-            public void onAnimationRepeat(int nextItemPosition) {
-            }
-
-            @Override
-            public void onAnimationEnd(int nextItemPosition) {
-            }
-        });
-*/
-        //mLoadingView.startAnimation();
-
         cinemaButton=(Button)findViewById(R.id.cinema_h_icon);
         libraryButton=(Button)findViewById(R.id.library_h_icon);
         exhibitButton=(Button)findViewById(R.id.exhibition_h_icon);
-
-
 
 
         cinemaButton.setOnClickListener(new View.OnClickListener() {
@@ -104,15 +72,12 @@ public class MainActivity extends AppCompatActivity {
         exhibitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent exhibition=new Intent(getApplicationContext(),ResionExhibitionActivity.class);
+                Intent exhibition = new Intent(getApplicationContext(), ResionExhibitionActivity.class);
                 exhibition.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(exhibition);
                 finish();
             }
         });
-
-
-
 
         rl = (RelativeLayout) findViewById(R.id.rl);
         setupViewpager();
@@ -132,67 +97,32 @@ public class MainActivity extends AppCompatActivity {
                 )
         );
 
-        final String[] colors = {"#5a5b55", "#5a5b55", "#5a5b55"};
-
-
-        AHBottomNavigation bottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_navigation);
-
-        final AHBottomNavigationItem item1 = new AHBottomNavigationItem("left", R.drawable.ic_arrow_left, Color.parseColor(colors[0]));
-        final AHBottomNavigationItem item2 = new AHBottomNavigationItem("setting", R.drawable.ic_arrow_up, Color.parseColor(colors[1]));
-        final AHBottomNavigationItem item3 = new AHBottomNavigationItem("right", R.drawable.ic_arrow_right, Color.parseColor(colors[2]));
-
-
-        bottomNavigation.addItem(item1);
-        bottomNavigation.addItem(item2);
-        bottomNavigation.addItem(item3);
-
-        bottomNavigation.setDefaultBackgroundColor(Color.parseColor("#FEFEFE"));
-        bottomNavigation.setAccentColor(Color.parseColor("#F63D2B"));
-        bottomNavigation.setInactiveColor(Color.parseColor("#747474"));
-
-        //  Enables Reveal effect
-        bottomNavigation.setColored(true);
-
-        bottomNavigation.setCurrentItem(0);
-
-        bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
+        bottombar = (Toolbar) findViewById(R.id.bottombar);
+        setSupportActionBar(bottombar);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(getLayoutInflater().inflate(R.layout.bottombar_layout, null),
+                new ActionBar.LayoutParams(
+                        ActionBar.LayoutParams.WRAP_CONTENT,
+                        ActionBar.LayoutParams.MATCH_PARENT,
+                        Gravity.CENTER
+                )
+        );
+        bottomToggleButton = (ToggleButton) findViewById(R.id.bottomToggleButton);
+        bottomToggleButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onTabSelected(int position, boolean wasSelected) {
-                // Do something cool here...
-
-                //fragment.updateColor(Color.parseColor(colors[position]));
-                if (position == 1) {
-                    if (mSweetSheet2.isShow()) {
-                        mSweetSheet2.dismiss();
-                    }
-                    if (mSweetSheet3.isShow()) {
-                        mSweetSheet3.dismiss();
-                    }
-                    mSweetSheet.toggle();
-                }
-                if (position == 2) {
-                    if (mSweetSheet.isShow()) {
-                        mSweetSheet.dismiss();
-                    }
-                    if (mSweetSheet3.isShow()) {
-                        mSweetSheet3.dismiss();
-                    }
-                    mSweetSheet2.toggle();
-                }
-                if (position == 0) {
-                    if (mSweetSheet.isShow()) {
-                        mSweetSheet.dismiss();
-                    }
-                    if (mSweetSheet2.isShow()) {
-                        mSweetSheet2.dismiss();
-                    }
-                    mSweetSheet3.toggle();
+            public void onClick(View v) {
+                if (bottomToggleButton.isChecked()) {
+                    mSweetSheet3.show();
+                } else {
+                    mSweetSheet3.dismiss();
                 }
             }
         });
 
-
     }
+
+
 
     protected void onNewIntent(Intent intent){
         super.onNewIntent(intent);
@@ -225,8 +155,6 @@ public class MainActivity extends AppCompatActivity {
         menuEntity1.iconId = R.drawable.ic_account_child;
         menuEntity1.titleColor = 0xff96CC7A; //textcolor
         menuEntity1.title = "code";
-
-
 
         MenuEntity menuEntity = new MenuEntity();
         menuEntity.iconId = R.drawable.ic_account_child;

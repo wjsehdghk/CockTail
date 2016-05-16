@@ -3,7 +3,6 @@ package com.mingle.myapplication;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -12,18 +11,16 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
+
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
+
 import android.widget.ToggleButton;
 
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.mingle.entity.MenuEntity;
 import com.mingle.sweetpick.BlurEffect;
 import com.mingle.sweetpick.CustomDelegate;
@@ -57,21 +54,24 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resion_exhibition);
 
-        final Animation animAlpha = AnimationUtils.loadAnimation(this, R.anim.anim_alpha);
+        //final Animation animAlpha = AnimationUtils.loadAnimation(this, R.anim.anim_alpha);
         final Animation animRotate = AnimationUtils.loadAnimation(this, R.anim.anim_rotate);
 
         bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.exhibition);
+        bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.exhibition_edge);
+        bitmap3 = BitmapFactory.decodeResource(getResources(), R.drawable.exhibition_icon);
+
         exhibition_back = (ImageView) findViewById(R.id.exhibition_back);
-        exhibition_back.setImageBitmap(bitmap);
-
         exhibition_edge = (ImageView) findViewById(R.id.exhibition_edge);
+        exhibition_icon = (ImageView)findViewById(R.id.exhibition_icon);
+
+        exhibition_back.setImageBitmap(bitmap);
+        exhibition_edge.setImageBitmap(bitmap2);
         exhibition_edge.setAnimation(animRotate);
+        exhibition_icon.setImageBitmap(bitmap3);
 
 
-        //bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.exhibition_icon);
-        //bitmap3 = BitmapFactory.decodeResource(getResources(), R.drawable.exhibition_icon_background);
-
-        homeButton = (Button) findViewById(R.id.h_icon);
+        homeButton = (Button) findViewById(R.id.home_btn);
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,7 +81,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
                 finish();
             }
         });
-        libraryButton = (Button) findViewById(R.id.library_h_icon);
+        libraryButton = (Button) findViewById(R.id.library_btn);
         libraryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,7 +91,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
                 finish();
             }
         });
-        cinemaButton = (Button) findViewById(R.id.cinema_icon);
+        cinemaButton = (Button) findViewById(R.id.cinema_btn);
         cinemaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,8 +104,9 @@ public class ResionExhibitionActivity extends AppCompatActivity {
 
 
         rl = (RelativeLayout) findViewById(R.id.rl);
-        setupViewpager();
-        setupRecyclerView();
+
+        //setupViewpager();
+        //setupRecyclerView();
         setupCustomView();
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -151,6 +152,14 @@ public class ResionExhibitionActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        bitmap.recycle();
+        bitmap2.recycle();
+        bitmap3.recycle();
     }
 
     @Override
@@ -248,13 +257,8 @@ public class ResionExhibitionActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        if (mSweetSheet.isShow() || mSweetSheet2.isShow()) {
-            if (mSweetSheet.isShow()) {
-                mSweetSheet.dismiss();
-            }
-            if (mSweetSheet2.isShow()) {
-                mSweetSheet2.dismiss();
-            }
+        if (mSweetSheet3.isShow()) {
+            mSweetSheet3.dismiss();
         } else {
             super.onBackPressed();
         }
@@ -264,40 +268,6 @@ public class ResionExhibitionActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        /*
-        int id = item.getItemId();
-        if (id == R.id.action_recyclerView) {
-            if (mSweetSheet2.isShow()) {
-                mSweetSheet2.dismiss();
-            }
-            if (mSweetSheet3.isShow()) {
-                mSweetSheet3.dismiss();
-            }
-            mSweetSheet.toggle();
-
-            return true;
-        }
-        if (id == R.id.action_viewpager) {
-            if (mSweetSheet.isShow()) {
-                mSweetSheet.dismiss();
-            }
-            if (mSweetSheet3.isShow()) {
-                mSweetSheet3.dismiss();
-            }
-            mSweetSheet2.toggle();
-            return true;
-        }
-        if (id == R.id.action_custom) {
-            if (mSweetSheet.isShow()) {
-                mSweetSheet.dismiss();
-            }
-            if (mSweetSheet2.isShow()) {
-                mSweetSheet2.dismiss();
-            }
-            mSweetSheet3.toggle();
-            return true;
-        }
-        */
         return super.onOptionsItemSelected(item);
     }
 }

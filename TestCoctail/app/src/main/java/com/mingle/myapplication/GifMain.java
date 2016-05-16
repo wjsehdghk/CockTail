@@ -46,7 +46,7 @@ public class GifMain extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec){
         setMeasuredDimension(movieWidth,movieHeight);
     }
-    public  int getMovieWidth(){
+    public int getMovieWidth(){
         return movieWidth;
     }
     public int getMovieHeight(){
