@@ -1,5 +1,4 @@
 package com.mingle.myapplication;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -29,7 +28,6 @@ import com.mingle.sweetpick.SweetSheet;
 import com.mingle.sweetpick.ViewPagerDelegate;
 
 import java.util.ArrayList;
-
 public class RegionLibraryActivity extends AppCompatActivity {
     private SweetSheet mSweetSheet;
     private SweetSheet mSweetSheet2;
@@ -47,7 +45,6 @@ public class RegionLibraryActivity extends AppCompatActivity {
     Bitmap bitmap;
     Bitmap bitmap2;
     Bitmap bitmap3;
-
 
 
     @Override
@@ -191,14 +188,11 @@ public class RegionLibraryActivity extends AppCompatActivity {
     private void setupRecyclerView() {
 
         final ArrayList<MenuEntity> list = new ArrayList<>();
-        //添加假数据
+
         MenuEntity menuEntity1 = new MenuEntity();
         menuEntity1.iconId = R.drawable.ic_account_child;
         menuEntity1.titleColor = 0xff96CC7A; //textcolor
         menuEntity1.title = "code";
-
-
-
         MenuEntity menuEntity = new MenuEntity();
         menuEntity.iconId = R.drawable.ic_account_child;
         menuEntity.titleColor = 0xffb3b3b3;

@@ -31,6 +31,7 @@ public class ResionCinemaActivity extends AppCompatActivity {
         private SweetSheet mSweetSheet2;
         private SweetSheet mSweetSheet3;
         private RelativeLayout rl;
+        Intent intent;
         Toolbar toolbar;
         Toolbar bottombar;
         ToggleButton bottomToggleButton;
@@ -42,6 +43,7 @@ public class ResionCinemaActivity extends AppCompatActivity {
         protected void onCreate(Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.activity_resion_cinema);
+
                 homeButton=(Button)findViewById(R.id.h_icon);
                 homeButton.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -52,6 +54,7 @@ public class ResionCinemaActivity extends AppCompatActivity {
                                 finish();
                         }
                 });
+
 
                 libraryButton=(Button)findViewById(R.id.library_h_icon);
                 libraryButton.setOnClickListener(new View.OnClickListener() {
@@ -93,9 +96,6 @@ public class ResionCinemaActivity extends AppCompatActivity {
                                 Gravity.CENTER
                         )
                 );
-
-                final String[] colors = {"#5a5b55", "#5a5b55", "#5a5b55"};
-
 
                 bottombar = (Toolbar) findViewById(R.id.bottombar);
                 setSupportActionBar(bottombar);
