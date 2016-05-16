@@ -3,6 +3,8 @@
     xmlns:sl="http://schemas.android.com/apk/res-auto"
     package="com.mingle.myapplication">
     <uses-permission android:name="android.permission.WRITE_SETTINGS"></uses-permission>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-sdk android:minSdkVersion="11"
         android:targetSdkVersion="21"/>
     <application
@@ -20,6 +22,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:name=".CallService">
+            <intent-filter>
+                <action android:name="wjsehdghk"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </service>
         <activity android:name=".ResionCinemaActivity"></activity>
         <activity android:name=".RegionLibraryActivity"></activity>
         <activity android:name=".ResionExhibitionActivity"></activity>

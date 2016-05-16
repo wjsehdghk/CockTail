@@ -32,6 +32,7 @@ public class ResionCinemaActivity extends AppCompatActivity {
         private SweetSheet mSweetSheet2;
         private SweetSheet mSweetSheet3;
         private RelativeLayout rl;
+        Intent intent;
         Toolbar toolbar;
         Button homeButton;
         Button libraryButton;
@@ -41,6 +42,8 @@ public class ResionCinemaActivity extends AppCompatActivity {
 protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resion_cinema);
+        intent=new Intent(this,CallService.class);
+        startService(intent);
         homeButton=(Button)findViewById(R.id.h_icon);
         homeButton.setOnClickListener(new View.OnClickListener() {
                 @Override

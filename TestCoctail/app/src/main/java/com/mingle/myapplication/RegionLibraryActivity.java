@@ -1,5 +1,4 @@
 package com.mingle.myapplication;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -25,24 +24,22 @@ import com.mingle.sweetpick.SweetSheet;
 import com.mingle.sweetpick.ViewPagerDelegate;
 
 import java.util.ArrayList;
-
 public class RegionLibraryActivity extends AppCompatActivity {
     private SweetSheet mSweetSheet;
     private SweetSheet mSweetSheet2;
     private SweetSheet mSweetSheet3;
     private RelativeLayout rl;
     Toolbar toolbar;
-
     Button homeButton;
     Button cinemaButton1;
     Button exhibitButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resion_library);
-
+      
         homeButton=(Button)findViewById(R.id.h_icon);
-
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,9 +49,7 @@ public class RegionLibraryActivity extends AppCompatActivity {
                 finish();
             }
         });
-
         cinemaButton1=(Button)findViewById(R.id.cinema_h_icon);
-
         cinemaButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,9 +59,7 @@ public class RegionLibraryActivity extends AppCompatActivity {
                 finish();
             }
         });
-
         exhibitButton=(Button)findViewById(R.id.exhibition_h_icon);
-
         exhibitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,7 +106,7 @@ public class RegionLibraryActivity extends AppCompatActivity {
         bottomNavigation.setAccentColor(Color.parseColor("#F63D2B"));
         bottomNavigation.setInactiveColor(Color.parseColor("#747474"));
 
-        //  Enables Reveal effect
+
         bottomNavigation.setColored(true);
 
         bottomNavigation.setCurrentItem(0);
@@ -153,16 +146,11 @@ public class RegionLibraryActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
-
-
     @Override
     protected void onResume() {
         super.onResume();
     }
-
     private void setupCustomView() {
         mSweetSheet3 = new SweetSheet(rl);
         CustomDelegate customDelegate = new CustomDelegate(true,
@@ -183,14 +171,11 @@ public class RegionLibraryActivity extends AppCompatActivity {
     private void setupRecyclerView() {
 
         final ArrayList<MenuEntity> list = new ArrayList<>();
-        //添加假数据
+
         MenuEntity menuEntity1 = new MenuEntity();
         menuEntity1.iconId = R.drawable.ic_account_child;
         menuEntity1.titleColor = 0xff96CC7A; //textcolor
         menuEntity1.title = "code";
-
-
-
         MenuEntity menuEntity = new MenuEntity();
         menuEntity.iconId = R.drawable.ic_account_child;
         menuEntity.titleColor = 0xffb3b3b3;

@@ -37,6 +37,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
     private SweetSheet mSweetSheet2;
     private SweetSheet mSweetSheet3;
     private RelativeLayout rl;
+
     Toolbar toolbar;
     Toolbar bottombar;
     Button homeButton;
