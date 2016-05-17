@@ -9,8 +9,9 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="COCKTAIL"
-        android:textColor="#ffffffff"
-        android:textSize="22sp"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:textStyle="bold"
         android:id="@+id/textView"
         android:gravity="center" />
 </LinearLayout>

@@ -1,6 +1,8 @@
 package com.mingle.myapplication;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.support.v7.app.ActionBar;
@@ -12,7 +14,10 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ToggleButton;
 
@@ -31,20 +36,41 @@ public class ResionCinemaActivity extends AppCompatActivity {
         private SweetSheet mSweetSheet2;
         private SweetSheet mSweetSheet3;
         private RelativeLayout rl;
-        Intent intent;
+
         Toolbar toolbar;
         Toolbar bottombar;
-        ToggleButton bottomToggleButton;
         Button homeButton;
-        Button libraryButton;
         Button exhibitButton;
+        Button libraryButton;
+        ToggleButton bottomToggleButton;
+        ImageView cinema_back;
+        ImageView cinema_icon;
+        ImageView cinema_edge;
+        Bitmap bitmap;
+        Bitmap bitmap2;
+        Bitmap bitmap3;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.activity_resion_cinema);
 
-                homeButton=(Button)findViewById(R.id.h_icon);
+                final Animation animRotate = AnimationUtils.loadAnimation(this, R.anim.anim_rotate);
+
+                bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cinema);
+                bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.cinema_edge);
+                bitmap3 = BitmapFactory.decodeResource(getResources(), R.drawable.cinema_icon);
+
+                cinema_back = (ImageView) findViewById(R.id.cinema_back);
+                cinema_edge = (ImageView) findViewById(R.id.cinema_edge);
+                cinema_icon = (ImageView)findViewById(R.id.cinema_icon);
+
+                cinema_back.setImageBitmap(bitmap);
+                cinema_edge.setImageBitmap(bitmap2);
+                cinema_edge.setAnimation(animRotate);
+                cinema_icon.setImageBitmap(bitmap3);
+
+                homeButton=(Button)findViewById(R.id.home_btn);
                 homeButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -56,7 +82,7 @@ public class ResionCinemaActivity extends AppCompatActivity {
                 });
 
 
-                libraryButton=(Button)findViewById(R.id.library_h_icon);
+                libraryButton=(Button)findViewById(R.id.library_btn);
                 libraryButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -66,11 +92,11 @@ public class ResionCinemaActivity extends AppCompatActivity {
                                 finish();
                         }
                 });
-                exhibitButton=(Button)findViewById(R.id.exhibition_h_icon);
+                exhibitButton=(Button)findViewById(R.id.exhibition_btn);
                 exhibitButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                                Intent exhibition=new Intent(getApplicationContext(),ResionExhibitionActivity.class);
+                                Intent exhibition = new Intent(getApplicationContext(), ResionExhibitionActivity.class);
                                 exhibition.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                                 startActivity(exhibition);
                                 finish();
@@ -78,10 +104,7 @@ public class ResionCinemaActivity extends AppCompatActivity {
                 });
 
 
-
                 rl = (RelativeLayout) findViewById(R.id.rl);
-                setupViewpager();
-                setupRecyclerView();
                 setupCustomView();
 
                 toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -130,13 +153,31 @@ public class ResionCinemaActivity extends AppCompatActivity {
                 super.onResume();
         }
 
+        @Override
+        protected void onPause() {
+                super.onPause();
+                bitmap.recycle();
+                bitmap2.recycle();
+                bitmap3.recycle();
+        }
+
+        @Override
+        protected void onDestroy() {
+                super.onDestroy();
+                bitmap.recycle();
+                bitmap2.recycle();
+                bitmap3.recycle();
+        }
+
         private void setupCustomView() {
                 mSweetSheet3 = new SweetSheet(rl);
                 CustomDelegate customDelegate = new CustomDelegate(true,
                         CustomDelegate.AnimationType.DuangLayoutAnimation);
                 View view = LayoutInflater.from(this).inflate(R.layout.layout_custom_view, null, false);
                 customDelegate.setCustomView(view);
+                customDelegate.setSweetSheetColor(getResources().getColor(R.color.colorBottomtab));
                 mSweetSheet3.setDelegate(customDelegate);
+                mSweetSheet3.setBackgroundEffect(new BlurEffect(8));
                 view.findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -228,13 +269,8 @@ public class ResionCinemaActivity extends AppCompatActivity {
         @Override
         public void onBackPressed() {
 
-                if (mSweetSheet.isShow() || mSweetSheet2.isShow()) {
-                        if (mSweetSheet.isShow()) {
-                                mSweetSheet.dismiss();
-                        }
-                        if (mSweetSheet2.isShow()) {
-                                mSweetSheet2.dismiss();
-                        }
+                if (mSweetSheet3.isShow()) {
+                        mSweetSheet3.dismiss();
                 } else {
                         super.onBackPressed();
                 }

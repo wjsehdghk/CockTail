@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent cinema=new Intent(getApplicationContext(),ResionCinemaActivity.class);
                 cinema.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(cinema);
-                finish();
+
             }
         });
 
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent library=new Intent(getApplicationContext(),RegionLibraryActivity.class);
                 library.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(library);
-                finish();
+
             }
         });
 
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent exhibition = new Intent(getApplicationContext(), ResionExhibitionActivity.class);
                 exhibition.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(exhibition);
-                finish();
+
             }
         });
 
@@ -143,6 +143,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mSweetSheet3.dismiss();
+            }
+        });
+        view.findViewById(R.id.introbutton).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), IntroActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(intent);
+                finish();
             }
         });
     }

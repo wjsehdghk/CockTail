@@ -266,13 +266,8 @@ public class RegionLibraryActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        if (mSweetSheet.isShow() || mSweetSheet2.isShow()) {
-            if (mSweetSheet.isShow()) {
-                mSweetSheet.dismiss();
-            }
-            if (mSweetSheet2.isShow()) {
-                mSweetSheet2.dismiss();
-            }
+        if (mSweetSheet3.isShow()) {
+            mSweetSheet3.dismiss();
         } else {
             super.onBackPressed();
         }

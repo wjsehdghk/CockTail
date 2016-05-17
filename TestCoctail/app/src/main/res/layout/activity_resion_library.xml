@@ -46,15 +46,17 @@
             sl:scale_width="490"
             sl:scale_height="490"/>
 
-        <ImageView
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/library_txt"
-            android:src="@drawable/library_txt"
+            android:text="도서관"
+            android:background="#00000000"
+            sl:scale_textsize="70"
             sl:scale_left="295"
             sl:scale_top="990"
             sl:scale_width="490"
-            sl:scale_height="70"/>
+            sl:scale_height="80"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -86,35 +88,41 @@
             sl:scale_width="250"
             sl:scale_height="250"/>
 
-        <ImageView
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/cinema_txt"
-            android:src="@drawable/cinema_txt"
+            android:text="영화관"
+            android:background="#00000000"
+            sl:scale_textsize="40"
             sl:scale_left="88"
-            sl:scale_top="1380"
+            sl:scale_top="1370"
             sl:scale_width="250"
-            sl:scale_height="40"/>
+            sl:scale_height="60"/>
 
-        <ImageView
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/home_txt"
-            android:src="@drawable/home_txt"
+            android:text="홈"
+            android:background="#00000000"
+            sl:scale_textsize="40"
             sl:scale_left="415"
             sl:scale_top="1380"
             sl:scale_width="250"
-            sl:scale_height="40"/>
+            sl:scale_height="60"/>
 
-        <ImageView
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/exhibition_txt"
-            android:src="@drawable/exhibition_txt"
+            android:text="전시장"
+            android:background="#00000000"
+            sl:scale_textsize="40"
             sl:scale_left="742"
             sl:scale_top="1380"
             sl:scale_width="250"
-            sl:scale_height="40"/>
+            sl:scale_height="60"/>
 
     </com.ssomai.android.scalablelayout.ScalableLayout>
 
