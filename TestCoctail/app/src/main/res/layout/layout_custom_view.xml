@@ -12,9 +12,17 @@
             android:layout_height="wrap_content"
             android:text="New CheckBox"/>
 
-        <ImageView
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBar"
+        android:layout_below="@+id/checkBox"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center_horizontal"/>
+
+    <ImageView
             android:id="@+id/imageView"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="15dp"
             android:layout_below="@+id/checkBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -22,8 +30,8 @@
 
         <Button
             android:layout_below="@+id/imageView"
-            android:id="@+id/button"
-            android:layout_marginTop="8dp"
+            android:id="@+id/introbutton"
+            android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="New Button"/>
@@ -31,7 +39,7 @@
         <Button
             android:layout_below="@+id/button"
             android:id="@+id/button2"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="dismiss"/>

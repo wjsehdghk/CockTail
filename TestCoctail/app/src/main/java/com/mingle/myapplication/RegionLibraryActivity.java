@@ -1,6 +1,8 @@
 package com.mingle.myapplication;
 import android.content.Intent;
-import android.graphics.Color;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -10,11 +12,13 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ToggleButton;
 
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.mingle.entity.MenuEntity;
 import com.mingle.sweetpick.BlurEffect;
 import com.mingle.sweetpick.CustomDelegate;
@@ -30,16 +34,41 @@ public class RegionLibraryActivity extends AppCompatActivity {
     private SweetSheet mSweetSheet3;
     private RelativeLayout rl;
     Toolbar toolbar;
+    Toolbar bottombar;
     Button homeButton;
-    Button cinemaButton1;
+    Button cinemaButton;
     Button exhibitButton;
+    ToggleButton bottomToggleButton;
+    ImageView library_back;
+    ImageView library_icon;
+    ImageView library_edge;
+    Bitmap bitmap;
+    Bitmap bitmap2;
+    Bitmap bitmap3;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resion_library);
-      
-        homeButton=(Button)findViewById(R.id.h_icon);
+
+        final Animation animRotate = AnimationUtils.loadAnimation(this, R.anim.anim_rotate);
+
+        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.library);
+        bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.library_edge);
+        bitmap3 = BitmapFactory.decodeResource(getResources(), R.drawable.library_icon);
+
+        library_back = (ImageView) findViewById(R.id.library_back);
+        library_edge = (ImageView) findViewById(R.id.library_edge);
+        library_icon = (ImageView)findViewById(R.id.library_icon);
+
+        library_back.setImageBitmap(bitmap);
+        library_edge.setImageBitmap(bitmap2);
+        library_edge.setAnimation(animRotate);
+        library_icon.setImageBitmap(bitmap3);
+
+
+        homeButton = (Button) findViewById(R.id.home_btn);
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,17 +78,19 @@ public class RegionLibraryActivity extends AppCompatActivity {
                 finish();
             }
         });
-        cinemaButton1=(Button)findViewById(R.id.cinema_h_icon);
-        cinemaButton1.setOnClickListener(new View.OnClickListener() {
+
+        cinemaButton = (Button) findViewById(R.id.cinema_btn);
+        cinemaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent cinema=new Intent(getApplicationContext(),ResionCinemaActivity.class);
+                Intent cinema = new Intent(getApplicationContext(), ResionCinemaActivity.class);
                 cinema.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(cinema);
                 finish();
             }
         });
-        exhibitButton=(Button)findViewById(R.id.exhibition_h_icon);
+
+        exhibitButton=(Button)findViewById(R.id.exhibition_btn);
         exhibitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,8 +102,8 @@ public class RegionLibraryActivity extends AppCompatActivity {
         });
 
         rl = (RelativeLayout) findViewById(R.id.rl);
-        setupViewpager();
-        setupRecyclerView();
+        //setupViewpager();
+        //setupRecyclerView();
         setupCustomView();
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -88,76 +119,64 @@ public class RegionLibraryActivity extends AppCompatActivity {
                 )
         );
 
-        final String[] colors = {"#5a5b55", "#5a5b55", "#5a5b55"};
-
-
-        AHBottomNavigation bottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_navigation);
-
-        final AHBottomNavigationItem item1 = new AHBottomNavigationItem("left", R.drawable.ic_arrow_left, Color.parseColor(colors[0]));
-        final AHBottomNavigationItem item2 = new AHBottomNavigationItem("setting", R.drawable.ic_arrow_up, Color.parseColor(colors[1]));
-        final AHBottomNavigationItem item3 = new AHBottomNavigationItem("right", R.drawable.ic_arrow_right, Color.parseColor(colors[2]));
-
-
-        bottomNavigation.addItem(item1);
-        bottomNavigation.addItem(item2);
-        bottomNavigation.addItem(item3);
-
-        bottomNavigation.setDefaultBackgroundColor(Color.parseColor("#FEFEFE"));
-        bottomNavigation.setAccentColor(Color.parseColor("#F63D2B"));
-        bottomNavigation.setInactiveColor(Color.parseColor("#747474"));
-
-
-        bottomNavigation.setColored(true);
-
-        bottomNavigation.setCurrentItem(0);
-
-        bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
+        bottombar = (Toolbar) findViewById(R.id.bottombar);
+        setSupportActionBar(bottombar);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(getLayoutInflater().inflate(R.layout.bottombar_layout, null),
+                new ActionBar.LayoutParams(
+                        ActionBar.LayoutParams.WRAP_CONTENT,
+                        ActionBar.LayoutParams.MATCH_PARENT,
+                        Gravity.CENTER
+                )
+        );
+        bottomToggleButton = (ToggleButton) findViewById(R.id.bottomToggleButton);
+        bottomToggleButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onTabSelected(int position, boolean wasSelected) {
-                // Do something cool here...
-
-                //fragment.updateColor(Color.parseColor(colors[position]));
-                if (position == 1) {
-                    if (mSweetSheet2.isShow()) {
-                        mSweetSheet2.dismiss();
-                    }
-                    if (mSweetSheet3.isShow()) {
-                        mSweetSheet3.dismiss();
-                    }
-                    mSweetSheet.toggle();
-                }
-                if (position == 2) {
-                    if (mSweetSheet.isShow()) {
-                        mSweetSheet.dismiss();
-                    }
-                    if (mSweetSheet3.isShow()) {
-                        mSweetSheet3.dismiss();
-                    }
-                    mSweetSheet2.toggle();
-                }
-                if (position == 0) {
-                    if (mSweetSheet.isShow()) {
-                        mSweetSheet.dismiss();
-                    }
-                    if (mSweetSheet2.isShow()) {
-                        mSweetSheet2.dismiss();
-                    }
-                    mSweetSheet3.toggle();
+            public void onClick(View v) {
+                if (bottomToggleButton.isChecked()) {
+                    mSweetSheet3.show();
+                } else {
+                    mSweetSheet3.dismiss();
                 }
             }
         });
     }
+
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        bitmap.recycle();
+        bitmap2.recycle();
+        bitmap3.recycle();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        bitmap.recycle();
+        bitmap2.recycle();
+        bitmap3.recycle();
+    }
+
     private void setupCustomView() {
         mSweetSheet3 = new SweetSheet(rl);
         CustomDelegate customDelegate = new CustomDelegate(true,
                 CustomDelegate.AnimationType.DuangLayoutAnimation);
         View view = LayoutInflater.from(this).inflate(R.layout.layout_custom_view, null, false);
         customDelegate.setCustomView(view);
+        customDelegate.setSweetSheetColor(getResources().getColor(R.color.colorBottomtab));
         mSweetSheet3.setDelegate(customDelegate);
+        mSweetSheet3.setBackgroundEffect(new BlurEffect(8));
         view.findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,9 +184,7 @@ public class RegionLibraryActivity extends AppCompatActivity {
             }
         });
     }
-    protected void onNewIntent(Intent intent){
-        super.onNewIntent(intent);
-    }
+
     private void setupRecyclerView() {
 
         final ArrayList<MenuEntity> list = new ArrayList<>();
@@ -249,57 +266,17 @@ public class RegionLibraryActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        if (mSweetSheet.isShow() || mSweetSheet2.isShow()) {
-            if (mSweetSheet.isShow()) {
-                mSweetSheet.dismiss();
-            }
-            if (mSweetSheet2.isShow()) {
-                mSweetSheet2.dismiss();
-            }
+        if (mSweetSheet3.isShow()) {
+            mSweetSheet3.dismiss();
         } else {
             super.onBackPressed();
         }
-
 
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        /*
-        int id = item.getItemId();
-        if (id == R.id.action_recyclerView) {
-            if (mSweetSheet2.isShow()) {
-                mSweetSheet2.dismiss();
-            }
-            if (mSweetSheet3.isShow()) {
-                mSweetSheet3.dismiss();
-            }
-            mSweetSheet.toggle();
-
-            return true;
-        }
-        if (id == R.id.action_viewpager) {
-            if (mSweetSheet.isShow()) {
-                mSweetSheet.dismiss();
-            }
-            if (mSweetSheet3.isShow()) {
-                mSweetSheet3.dismiss();
-            }
-            mSweetSheet2.toggle();
-            return true;
-        }
-        if (id == R.id.action_custom) {
-            if (mSweetSheet.isShow()) {
-                mSweetSheet.dismiss();
-            }
-            if (mSweetSheet2.isShow()) {
-                mSweetSheet2.dismiss();
-            }
-            mSweetSheet3.toggle();
-            return true;
-        }
-        */
         return super.onOptionsItemSelected(item);
     }
 }

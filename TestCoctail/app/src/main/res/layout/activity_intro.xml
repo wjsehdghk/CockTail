@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:sl="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mingle.myapplication.IntroActivity">
+
+    <com.ssomai.android.scalablelayout.ScalableLayout
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@android:color/white"
+        sl:scale_base_width="1080"
+        sl:scale_base_height="1920"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="에티켓을 지킵시다!"
+            android:textColor="@color/black"
+            sl:scale_textsize="110"
+            sl:scale_left="130"
+            sl:scale_top="900"
+            sl:scale_width="950"
+            sl:scale_height="180"/>
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|top"
+            android:src="#89c201"
+            sl:scale_height="960"
+            sl:scale_left="0"
+            sl:scale_top="0"
+            sl:scale_width="1150" />
+
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:src="#5a5b55"
+            sl:scale_height="960"
+            sl:scale_left="0"
+            sl:scale_top="960"
+            sl:scale_width="1150" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="COCKTAIL"
+            android:textColor="@color/white"
+            android:id="@+id/textView2"
+            sl:scale_textsize="150"
+            sl:scale_left="230"
+            sl:scale_top="780"
+            sl:scale_width="750"
+            sl:scale_height="180"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="KimNohJeon"
+            android:textColor="@color/white"
+            android:id="@+id/textView3"
+            sl:scale_textsize="50"
+            sl:scale_left="430"
+            sl:scale_top="970"
+            sl:scale_width="300"
+            sl:scale_height="70"/>
+
+    </com.ssomai.android.scalablelayout.ScalableLayout>
+
+
+
+
+</RelativeLayout>
