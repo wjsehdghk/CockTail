@@ -1,9 +1,15 @@
 package com.mingle.myapplication;
+
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothManager;
+import android.content.Context;
 import android.content.Intent;
+import android.os.RemoteException;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,17 +20,25 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.mingle.entity.MenuEntity;
-import com.mingle.sweetpick.BlurEffect;
+
+import com.mingle.myapplication.service.RECOBackgroundMonitoringService;
 import com.mingle.sweetpick.CustomDelegate;
-import com.mingle.sweetpick.DimEffect;
-import com.mingle.sweetpick.RecyclerViewDelegate;
 import com.mingle.sweetpick.SweetSheet;
-import com.mingle.sweetpick.ViewPagerDelegate;
+import com.perples.recosdk.RECOBeacon;
+import com.perples.recosdk.RECOBeaconRegion;
 import java.util.ArrayList;
+import java.util.Collection;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends RECOActivity {
+
+    public static final String RECO_UUID = "24DDF411-8CF1-440C-87CD-E368DAF9C93E";
+    private static final int REQUEST_ENABLE_BT = 1;
+
+    private BluetoothManager mBluetoothManager;
+    private BluetoothAdapter mBluetoothAdapter;
+
+    private ArrayList<RECOBeacon> mRangedBeacons;
 
     private SweetSheet mSweetSheet;
     private SweetSheet mSweetSheet2;
@@ -42,6 +56,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+        mBluetoothAdapter = mBluetoothManager.getAdapter();
+
+        if(mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
+            Intent enableBTIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBTIntent, REQUEST_ENABLE_BT);
+        }
+
+        mRecoManager.setRangingListener(this);
+        mRecoManager.bind(this);
+
+        Intent monitorService = new Intent(this, RECOBackgroundMonitoringService.class);
+        startService(monitorService);
+
 
         cinemaButton=(Button)findViewById(R.id.cinema_h_icon);
         libraryButton=(Button)findViewById(R.id.library_h_icon);
@@ -80,8 +109,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         rl = (RelativeLayout) findViewById(R.id.rl);
-        setupViewpager();
-        setupRecyclerView();
+
         setupCustomView();
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -120,9 +148,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
     }
-
-
 
     protected void onNewIntent(Intent intent){
         super.onNewIntent(intent);
@@ -135,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
     private void setupCustomView() {
         mSweetSheet3 = new SweetSheet(rl);
         CustomDelegate customDelegate = new CustomDelegate(true,
-                CustomDelegate.AnimationType.DuangLayoutAnimation);
+                CustomDelegate.AnimationType.AlphaAnimation);
         View view = LayoutInflater.from(this).inflate(R.layout.layout_custom_view, null, false);
         customDelegate.setCustomView(view);
         mSweetSheet3.setDelegate(customDelegate);
@@ -145,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
                 mSweetSheet3.dismiss();
             }
         });
-        view.findViewById(R.id.introbutton).setOnClickListener(new View.OnClickListener(){
+        view.findViewById(R.id.intro_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), IntroActivity.class);
@@ -156,78 +184,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void setupRecyclerView() {
-
-        final ArrayList<MenuEntity> list = new ArrayList<>();
-        //添加假数据
-        MenuEntity menuEntity1 = new MenuEntity();
-        menuEntity1.iconId = R.drawable.ic_account_child;
-        menuEntity1.titleColor = 0xff96CC7A; //textcolor
-        menuEntity1.title = "code";
-
-        MenuEntity menuEntity = new MenuEntity();
-        menuEntity.iconId = R.drawable.ic_account_child;
-        menuEntity.titleColor = 0xffb3b3b3;
-        menuEntity.title = "QQ";
-        list.add(menuEntity1);
-        list.add(menuEntity);
-        list.add(menuEntity);
-        list.add(menuEntity);
-        list.add(menuEntity);
-        list.add(menuEntity);
-        list.add(menuEntity);
-        list.add(menuEntity);
-        list.add(menuEntity);
-        list.add(menuEntity);
-        list.add(menuEntity);
-        list.add(menuEntity);
-        list.add(menuEntity);
-
-        // SweetSheet 控件,根据 rl 确认位置
-        mSweetSheet = new SweetSheet(rl);
-
-        //设置数据源 (数据源支持设置 list 数组,也支持从菜单中获取)
-        mSweetSheet.setMenuList(list);
-        //根据设置不同的 Delegate 来显示不同的风格.
-        mSweetSheet.setDelegate(new RecyclerViewDelegate(true));
-        //根据设置不同Effect 来显示背景效果BlurEffect:模糊效果.DimEffect 变暗效果
-        mSweetSheet.setBackgroundEffect(new BlurEffect(8));
-        //设置点击事件
-        mSweetSheet.setOnMenuItemClickListener(new SweetSheet.OnMenuItemClickListener() {
-            @Override
-            public boolean onItemClick(int position, MenuEntity menuEntity1) {
-                //即时改变当前项的颜色
-                list.get(position).titleColor = 0xff96CC7A;
-                ((RecyclerViewDelegate) mSweetSheet.getDelegate()).notifyDataSetChanged();
-
-                //根据返回值, true 会关闭 SweetSheet ,false 则不会.
-                Toast.makeText(MainActivity.this, menuEntity1.title + "  " + position, Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
-
-    }
-
-    private void setupViewpager() {
-
-
-        mSweetSheet2 = new SweetSheet(rl);
-
-        //从menu 中设置数据源
-        mSweetSheet2.setMenuList(R.menu.menu_sweet);
-        mSweetSheet2.setDelegate(new ViewPagerDelegate());
-        mSweetSheet2.setBackgroundEffect(new DimEffect(0.5f));
-        mSweetSheet2.setOnMenuItemClickListener(new SweetSheet.OnMenuItemClickListener() {
-            @Override
-            public boolean onItemClick(int position, MenuEntity menuEntity1) {
-
-                Toast.makeText(MainActivity.this, menuEntity1.title + "  " + position, Toast.LENGTH_SHORT).show();
-                return true;
-            }
-        });
-
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -255,40 +211,80 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        /*
-        int id = item.getItemId();
-        if (id == R.id.action_recyclerView) {
-            if (mSweetSheet2.isShow()) {
-                mSweetSheet2.dismiss();
-            }
-            if (mSweetSheet3.isShow()) {
-                mSweetSheet3.dismiss();
-            }
-            mSweetSheet.toggle();
-
-            return true;
-        }
-        if (id == R.id.action_viewpager) {
-            if (mSweetSheet.isShow()) {
-                mSweetSheet.dismiss();
-            }
-            if (mSweetSheet3.isShow()) {
-                mSweetSheet3.dismiss();
-            }
-            mSweetSheet2.toggle();
-            return true;
-        }
-        if (id == R.id.action_custom) {
-            if (mSweetSheet.isShow()) {
-                mSweetSheet.dismiss();
-            }
-            if (mSweetSheet2.isShow()) {
-                mSweetSheet2.dismiss();
-            }
-            mSweetSheet3.toggle();
-            return true;
-        }
-        */
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onServiceConnect() {
+        Log.i("RECORangingActivity", "onServiceConnect()");
+        this.start(mRegions);
+        //Write the code when RECOBeaconManager is bound to RECOBeaconService
+    }
+
+    @Override
+    public void didRangeBeaconsInRegion(Collection<RECOBeacon> recoBeacons, RECOBeaconRegion recoRegion) {
+        Log.i("RECORangingActivity", "didRangeBeaconsInRegion() region: " + recoRegion.getUniqueIdentifier() + ", number of beacons ranged: " + recoBeacons.size());
+        updateAllBeacons(recoBeacons);
+
+        //Write the code when the beacons in the region is received
+        //Toast.makeText(this, "didRBIR", Toast.LENGTH_LONG).show();
+    }
+
+    public void updateAllBeacons(Collection<RECOBeacon> beacons) {
+        synchronized (beacons) {
+            mRangedBeacons = new ArrayList<RECOBeacon>(beacons);
+        }
+
+        try {
+            RECOBeacon recoBeacon = mRangedBeacons.get(0);
+            //Toast.makeText(this, "Beacon Major" + recoBeacon.getMajor(), Toast.LENGTH_LONG).show();
+
+            //SharedPreferenceUtil.getInstance().putSharedPreference(this, "KEY_CINEMA_MODE", 2);
+            //SharedPreferenceUtil.getInstance().putSharedPreference(this, "KEY_CINEMA_BRIGHTNESS", 90);
+
+        } catch (NullPointerException e) {
+            Toast.makeText(this, "없습니다.", Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+
+        }
+    }
+
+    protected void start(ArrayList<RECOBeaconRegion> regions) {
+
+        /**
+         * There is a known android bug that some android devices scan BLE devices only once. (link: http://code.google.com/p/android/issues/detail?id=65863)
+         * To resolve the bug in our SDK, you can use setDiscontinuousScan() method of the RECOBeaconManager.
+         * This method is to set whether the device scans BLE devices continuously or discontinuously.
+         * The default is set as FALSE. Please set TRUE only for specific devices.
+         *
+         * mRecoManager.setDiscontinuousScan(true);
+         */
+
+        for(RECOBeaconRegion region : regions) {
+            try {
+                mRecoManager.startRangingBeaconsInRegion(region);
+            } catch (RemoteException e) {
+                Log.i("RECORangingActivity", "Remote Exception");
+                e.printStackTrace();
+            } catch (NullPointerException e) {
+                Log.i("RECORangingActivity", "Null Pointer Exception");
+                e.printStackTrace();
+            }
+        }
+    }
+
+    protected void stop(ArrayList<RECOBeaconRegion> regions) {
+        for(RECOBeaconRegion region : regions) {
+            try {
+                mRecoManager.stopRangingBeaconsInRegion(region);
+            } catch (RemoteException e) {
+                Log.i("RECORangingActivity", "Remote Exception");
+                e.printStackTrace();
+            } catch (NullPointerException e) {
+                Log.i("RECORangingActivity", "Null Pointer Exception");
+                e.printStackTrace();
+            }
+        }
+    }
+
 }

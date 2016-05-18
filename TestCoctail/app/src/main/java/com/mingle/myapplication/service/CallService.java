@@ -1,4 +1,4 @@
-package com.mingle.myapplication;
+package com.mingle.myapplication.service;
 
 import android.app.Service;
 import android.content.Context;
@@ -45,6 +45,7 @@ public class CallService extends Service {
                         call = true;
                         mAudioManager.setRingerMode(mAudioManager.RINGER_MODE_SILENT);
                         break;
+                    default: break;
                 }
                 super.onCallStateChanged(state, incomingNumber);
             }

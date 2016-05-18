@@ -3,8 +3,6 @@ package com.mingle.myapplication;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.media.AudioManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.ToggleButton;
 
 import com.mingle.entity.MenuEntity;
+import com.mingle.myapplication.service.CallService;
 import com.mingle.sweetpick.BlurEffect;
 import com.mingle.sweetpick.CustomDelegate;
 import com.mingle.sweetpick.DimEffect;
@@ -143,6 +142,9 @@ public class ResionCinemaActivity extends AppCompatActivity {
                         }
                 });
 
+                Intent callService = new Intent(this, CallService.class);
+                startService(callService);
+
         }
         protected void onNewIntent(Intent intent){
                 super.onNewIntent(intent);
@@ -156,9 +158,6 @@ public class ResionCinemaActivity extends AppCompatActivity {
         @Override
         protected void onPause() {
                 super.onPause();
-                bitmap.recycle();
-                bitmap2.recycle();
-                bitmap3.recycle();
         }
 
         @Override
@@ -172,7 +171,7 @@ public class ResionCinemaActivity extends AppCompatActivity {
         private void setupCustomView() {
                 mSweetSheet3 = new SweetSheet(rl);
                 CustomDelegate customDelegate = new CustomDelegate(true,
-                        CustomDelegate.AnimationType.DuangLayoutAnimation);
+                        CustomDelegate.AnimationType.AlphaAnimation);
                 View view = LayoutInflater.from(this).inflate(R.layout.layout_custom_view, null, false);
                 customDelegate.setCustomView(view);
                 customDelegate.setSweetSheetColor(getResources().getColor(R.color.colorBottomtab));
@@ -184,6 +183,7 @@ public class ResionCinemaActivity extends AppCompatActivity {
                                 mSweetSheet3.dismiss();
                         }
                 });
+                mSweetSheet3.setBackgroundClickEnable(false);
         }
 
         private void setupRecyclerView() {
@@ -203,17 +203,7 @@ public class ResionCinemaActivity extends AppCompatActivity {
                 menuEntity.title = "QQ";
                 list.add(menuEntity1);
                 list.add(menuEntity);
-                list.add(menuEntity);
-                list.add(menuEntity);
-                list.add(menuEntity);
-                list.add(menuEntity);
-                list.add(menuEntity);
-                list.add(menuEntity);
-                list.add(menuEntity);
-                list.add(menuEntity);
-                list.add(menuEntity);
-                list.add(menuEntity);
-                list.add(menuEntity);
+
 
                 // SweetSheet 控件,根据 rl 确认位置
                 mSweetSheet = new SweetSheet(rl);
@@ -274,6 +264,7 @@ public class ResionCinemaActivity extends AppCompatActivity {
                 } else {
                         super.onBackPressed();
                 }
+                bottomToggleButton.setChecked(false);
 
         }
 

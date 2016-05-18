@@ -86,7 +86,7 @@ public class SweetView extends View {
 
                     mAnimationListener.onContentShow();
                 }
-            }, 600);
+            }, 300);
         }
 
         ValueAnimator valueAnimator=ValueAnimator.ofInt(0, mMaxArcHeight);
@@ -142,7 +142,7 @@ public class SweetView extends View {
             case NONE:
                 currentPointY = mMaxArcHeight;
                 break;
-            case  STATUS_SMOOTH_UP:
+            case STATUS_SMOOTH_UP:
             case STATUS_UP:
                 currentPointY=getHeight()-(int) ((getHeight()-mMaxArcHeight)* Math.min(1,(mArcHeight-mMaxArcHeight /4 )* 2.0 / mMaxArcHeight * 1.3));
                 break;

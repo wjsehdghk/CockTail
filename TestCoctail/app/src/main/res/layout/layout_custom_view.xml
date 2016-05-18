@@ -1,47 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="vertical">
 
-        <CheckBox
-            android:layout_marginTop="30dp"
-            android:id="@+id/checkBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New CheckBox"/>
-
-    <SeekBar
+    <ScrollView
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="0dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="밝기"
+                android:textColor="@color/white"
+                android:layout_gravity="center_horizontal"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/round_corner">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/imageView4"
+                    android:src="@android:mipmap/sym_def_app_icon"
+                    android:layout_weight="1" />
+                <SeekBar
+                    android:id="@+id/seekBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="7" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="모드변경"
+                android:textColor="@color/white"
+                android:layout_gravity="center_horizontal"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/round_corner">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/imageView5"
+                    android:src="@android:mipmap/sym_def_app_icon"
+                    android:layout_weight="1" />
+                <info.hoang8f.widget.FButton
+                    android:id="@+id/intro_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    fbutton:buttonColor="@color/colorPrimary"
+                    fbutton:shadowColor="#7f8c8d"
+                    fbutton:shadowEnabled="true"
+                    fbutton:shadowHeight="5dp"
+                    fbutton:cornerRadius="5dp"
+                    android:layout_weight="7"
+                    android:text="모드">
+                </info.hoang8f.widget.FButton>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="소리"
+                android:textColor="@color/white"
+                android:layout_gravity="center_horizontal"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/round_corner">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/imageView6"
+                    android:src="@android:mipmap/sym_def_app_icon"
+                    android:layout_weight="1" />
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="dismiss"
+                    android:layout_weight="7" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/round_corner">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/imageView7"
+                    android:src="@android:mipmap/sym_def_app_icon"
+                    android:layout_weight="1" />
+                <com.mingle.myapplication.TriToggleButton
+                    android:id="@+id/triToggleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="tritoggle"
+                    android:layout_weight="7">
+                </com.mingle.myapplication.TriToggleButton>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/seekBar"
-        android:layout_below="@+id/checkBox"
-        android:layout_marginTop="8dp"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/scrollView"
+        android:orientation="horizontal">
 
-    <ImageView
-            android:id="@+id/imageView"
-            android:layout_marginTop="15dp"
-            android:layout_below="@+id/checkBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"/>
+    </LinearLayout>
 
-        <Button
-            android:layout_below="@+id/imageView"
-            android:id="@+id/introbutton"
-            android:layout_marginTop="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="New Button"/>
-
-        <Button
-            android:layout_below="@+id/button"
-            android:id="@+id/button2"
-            android:layout_marginTop="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="dismiss"/>
-
-    </RelativeLayout>
+</RelativeLayout>

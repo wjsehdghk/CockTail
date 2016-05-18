@@ -29,7 +29,6 @@ public class SweetSheet {
         RecyclerView,Viewpager,Custom
     }
 
-
     private ViewGroup mParentVG;
     private Delegate mDelegate;
     private Effect mEffect=new NoneEffect();

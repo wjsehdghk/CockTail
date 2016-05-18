@@ -155,9 +155,6 @@ public class RegionLibraryActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        bitmap.recycle();
-        bitmap2.recycle();
-        bitmap3.recycle();
     }
 
     @Override
@@ -171,7 +168,7 @@ public class RegionLibraryActivity extends AppCompatActivity {
     private void setupCustomView() {
         mSweetSheet3 = new SweetSheet(rl);
         CustomDelegate customDelegate = new CustomDelegate(true,
-                CustomDelegate.AnimationType.DuangLayoutAnimation);
+                CustomDelegate.AnimationType.AlphaAnimation);
         View view = LayoutInflater.from(this).inflate(R.layout.layout_custom_view, null, false);
         customDelegate.setCustomView(view);
         customDelegate.setSweetSheetColor(getResources().getColor(R.color.colorBottomtab));
@@ -181,8 +178,10 @@ public class RegionLibraryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mSweetSheet3.dismiss();
+                bottomToggleButton.setChecked(false);
             }
         });
+        mSweetSheet3.setBackgroundClickEnable(false);
     }
 
     private void setupRecyclerView() {
@@ -199,17 +198,7 @@ public class RegionLibraryActivity extends AppCompatActivity {
         menuEntity.title = "QQ";
         list.add(menuEntity1);
         list.add(menuEntity);
-        list.add(menuEntity);
-        list.add(menuEntity);
-        list.add(menuEntity);
-        list.add(menuEntity);
-        list.add(menuEntity);
-        list.add(menuEntity);
-        list.add(menuEntity);
-        list.add(menuEntity);
-        list.add(menuEntity);
-        list.add(menuEntity);
-        list.add(menuEntity);
+
 
         // SweetSheet 控件,根据 rl 确认位置
         mSweetSheet = new SweetSheet(rl);
@@ -271,6 +260,7 @@ public class RegionLibraryActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+        bottomToggleButton.setChecked(false);
 
     }
 
