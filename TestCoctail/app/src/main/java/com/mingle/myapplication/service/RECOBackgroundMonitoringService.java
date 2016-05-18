@@ -176,7 +176,7 @@ public class RECOBackgroundMonitoringService extends Service implements RECOMoni
 		if(!mRegions.isEmpty()) {
 				aManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
 				//Settings.System.putInt(getContentResolver(), "screen_brightness", 100);
-				Toast.makeText(RECOBackgroundMonitoringService.this, "종북", Toast.LENGTH_SHORT).show();
+				Toast.makeText(RECOBackgroundMonitoringService.this, "영화관 안 입니다.", Toast.LENGTH_SHORT).show();
 		} else {
 			Toast.makeText(RECOBackgroundMonitoringService.this, "공백", Toast.LENGTH_SHORT).show();
 		}

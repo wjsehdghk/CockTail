@@ -1,10 +1,14 @@
 package com.mingle.myapplication;
 
+import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.RemoteException;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,10 +34,18 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 
-public class MainActivity extends RECOActivity {
+public class MainActivity extends RECOActivity
+        implements ActivityCompat.OnRequestPermissionsResultCallback{
 
     public static final String RECO_UUID = "24DDF411-8CF1-440C-87CD-E368DAF9C93E";
     private static final int REQUEST_ENABLE_BT = 1;
+    private static final int ACCESS_FINE_LOCATION_REQUEST_CODE = 1;
+    // 필요한 권한들
+    private static  String[] PERMISSIONS_CONTACT = {
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.SEND_SMS,
+            Manifest.permission.READ_PHONE_STATE};
 
     private BluetoothManager mBluetoothManager;
     private BluetoothAdapter mBluetoothAdapter;
@@ -64,6 +76,10 @@ public class MainActivity extends RECOActivity {
             Intent enableBTIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBTIntent, REQUEST_ENABLE_BT);
         }
+
+        m_checkPermission();
+
+
 
         mRecoManager.setRangingListener(this);
         mRecoManager.bind(this);
@@ -148,8 +164,44 @@ public class MainActivity extends RECOActivity {
             }
         });
 
+    }
 
+    private void m_checkPermission() {
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED ) {
+            //권한이 없을 경우
 
+            //최초 인지, 재요청인지 확인
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION) ||
+                    ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION) ||
+                    ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.SEND_SMS) ||
+                    ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_PHONE_STATE) ) {
+                // 임의로 취소 시킨 경우 권한 재요청
+                ActivityCompat.requestPermissions(this, PERMISSIONS_CONTACT,  ACCESS_FINE_LOCATION_REQUEST_CODE);
+            } else {
+                //최초로 권한을 요청하는 경우
+                ActivityCompat.requestPermissions(this, PERMISSIONS_CONTACT, ACCESS_FINE_LOCATION_REQUEST_CODE);
+            }
+        } else {
+            //사용 권한이 있음 확인
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case ACCESS_FINE_LOCATION_REQUEST_CODE: {
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted
+                } else {
+                   // permissions denied
+                }
+                return;
+            }
+        }
     }
 
     protected void onNewIntent(Intent intent){
@@ -194,13 +246,9 @@ public class MainActivity extends RECOActivity {
     @Override
     public void onBackPressed() {
 
-        if (mSweetSheet.isShow() || mSweetSheet2.isShow()) {
-            if (mSweetSheet.isShow()) {
-                mSweetSheet.dismiss();
-            }
-            if (mSweetSheet2.isShow()) {
-                mSweetSheet2.dismiss();
-            }
+        if (mSweetSheet3.isShow()) {
+            mSweetSheet3.dismiss();
+            bottomToggleButton.setChecked(false);
         } else {
             super.onBackPressed();
         }
