@@ -27,7 +27,7 @@ public class Member {
 		this.coffeePoint = coffeePoint;
 	}
 	
-	public Member(String memberID, String password) {
+	public Member(String memberId, String password) {
 		super();
 		this.memberId = memberId;
 		this.password = password;

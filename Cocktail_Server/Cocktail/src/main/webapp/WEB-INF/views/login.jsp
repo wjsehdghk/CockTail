@@ -16,7 +16,7 @@
         <h2>로그인 성공 </h2>
         아이디 : ${sessionScope.userLoginInfo.memberId}
  
-        <a href="bookList">대여</a>
+        <a href="bookList"></a>
         <a href="logout">로그아웃</a>
         <a href="borrowList">대여 목록</a>
     </c:when>
