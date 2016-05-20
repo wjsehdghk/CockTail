@@ -219,12 +219,6 @@ public class MainActivity extends RECOActivity
         View view = LayoutInflater.from(this).inflate(R.layout.layout_custom_view, null, false);
         customDelegate.setCustomView(view);
         mSweetSheet3.setDelegate(customDelegate);
-        view.findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mSweetSheet3.dismiss();
-            }
-        });
         view.findViewById(R.id.intro_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

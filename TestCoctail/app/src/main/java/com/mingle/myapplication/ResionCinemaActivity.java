@@ -177,12 +177,6 @@ public class ResionCinemaActivity extends AppCompatActivity {
                 customDelegate.setSweetSheetColor(getResources().getColor(R.color.colorBottomtab));
                 mSweetSheet3.setDelegate(customDelegate);
                 mSweetSheet3.setBackgroundEffect(new BlurEffect(8));
-                view.findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                                mSweetSheet3.dismiss();
-                        }
-                });
                 mSweetSheet3.setBackgroundClickEnable(false);
         }
 

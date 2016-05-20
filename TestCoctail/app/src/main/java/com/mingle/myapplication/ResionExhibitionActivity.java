@@ -1,5 +1,6 @@
 package com.mingle.myapplication;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -18,12 +19,14 @@ import android.view.MenuItem;
 
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import android.widget.SeekBar;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -59,6 +62,8 @@ public class ResionExhibitionActivity extends AppCompatActivity {
     AudioManager audioManager;
 
     public static int state=-1;
+
+    SeekBar seekBar;
 
 
     @Override
@@ -160,6 +165,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         });
 
 
+
     }
 
     protected void onNewIntent(Intent intent) {
@@ -192,27 +198,53 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         CustomDelegate customDelegate = new CustomDelegate(true,
                 CustomDelegate.AnimationType.AlphaAnimation);
         View view = LayoutInflater.from(this).inflate(R.layout.layout_custom_view, null, false);
+
         customDelegate.setCustomView(view);
         customDelegate.setSweetSheetColor(getResources().getColor(R.color.colorBottomtab));
         mSweetSheet3.setDelegate(customDelegate);
         mSweetSheet3.setBackgroundEffect(new BlurEffect(8));
-        view.findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mSweetSheet3.dismiss();
-                bottomToggleButton.setChecked(false);
-            }
-        });
         mSweetSheet3.setBackgroundClickEnable(false);
         view.findViewById(R.id.triToggleButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (state) {
-                    case 0: audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT); break;
-                    case 1: audioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE); break;
-                    case 2: audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL); break;
-                    default:break;
+                    case 0:
+                        audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+                        break;
+                    case 1:
+                        audioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
+                        break;
+                    case 2:
+                        audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+                        break;
+                    default:
+                        break;
                 }
+            }
+        });
+        seekBar =(SeekBar)view.findViewById(R.id.custom_seek);
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if(progress<10){
+                    progress=10;
+                    seekBar.setProgress(progress);
+                }
+
+                WindowManager.LayoutParams params = getWindow().getAttributes();
+                params.screenBrightness = (float) progress / 100;
+                getWindow().setAttributes(params);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
             }
         });
 
@@ -259,6 +291,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         });
 
     }
+
     private void setupViewpager() {
 
 

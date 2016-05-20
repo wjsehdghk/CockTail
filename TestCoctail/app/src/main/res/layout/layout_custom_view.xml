@@ -1,157 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fbutton="http://schemas.android.com/apk/res-auto"
+    xmlns:sl="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:background="@color/colorBottomtab">
 
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/scrollView">
+        android:id="@+id/scrollView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-        <LinearLayout
+        <com.ssomai.android.scalablelayout.ScalableLayout
+            android:id="@+id/custom_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="0dp">
+            sl:scale_base_height="1650"
+            sl:scale_base_width="1000">
+
+
+
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="밝기"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/white"
-                android:layout_gravity="center_horizontal"/>
+                sl:scale_height="100"
+                sl:scale_left="425"
+                sl:scale_textsize="70"
+                sl:scale_top="50"
+                sl:scale_width="150" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                android:padding="5dp"
-                android:layout_marginBottom="15dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/round_corner">
-
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/imageView4"
-                    android:src="@android:mipmap/sym_def_app_icon"
-                    android:layout_weight="1" />
-                <SeekBar
-                    android:id="@+id/seekBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="7" />
+                android:background="@drawable/round_corner"
+                sl:scale_height="105"
+                sl:scale_left="100"
+                sl:scale_top="160"
+                sl:scale_width="800">
             </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@android:mipmap/sym_def_app_icon"
+                sl:scale_height="100"
+                sl:scale_left="100"
+                sl:scale_top="163"
+                sl:scale_width="150" />
+
+            <SeekBar
+                android:id="@+id/custom_seek"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                sl:scale_height="100"
+                sl:scale_left="250"
+                sl:scale_top="163"
+                sl:scale_width="650" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="모드변경"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/white"
-                android:layout_gravity="center_horizontal"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                android:padding="5dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/round_corner">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/imageView5"
-                    android:src="@android:mipmap/sym_def_app_icon"
-                    android:layout_weight="1" />
-                <info.hoang8f.widget.FButton
-                    android:id="@+id/intro_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    fbutton:buttonColor="@color/colorPrimary"
-                    fbutton:shadowColor="#7f8c8d"
-                    fbutton:shadowEnabled="true"
-                    fbutton:shadowHeight="5dp"
-                    fbutton:cornerRadius="5dp"
-                    android:layout_weight="7"
-                    android:text="모드">
-                </info.hoang8f.widget.FButton>
-            </LinearLayout>
-
+                sl:scale_height="100"
+                sl:scale_left="155"
+                sl:scale_textsize="70"
+                sl:scale_top="290"
+                sl:scale_width="270" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="전화무음"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="소리"
                 android:textColor="@color/white"
-                android:layout_gravity="center_horizontal"/>
+                sl:scale_height="100"
+                sl:scale_left="575"
+                sl:scale_textsize="70"
+                sl:scale_top="290"
+                sl:scale_width="270" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                android:padding="5dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/round_corner">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/imageView6"
-                    android:src="@android:mipmap/sym_def_app_icon"
-                    android:layout_weight="1" />
-                <Button
-                    android:id="@+id/button2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="dismiss"
-                    android:layout_weight="7" />
+                android:background="@drawable/round_corner"
+                sl:scale_height="100"
+                sl:scale_left="155"
+                sl:scale_top="400"
+                sl:scale_width="270">
             </LinearLayout>
+
+            <com.mingle.myapplication.TriToggleButton
+                android:id="@+id/triToggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                sl:scale_height="100"
+                sl:scale_left="240"
+                sl:scale_top="400"
+                sl:scale_width="100">
+            </com.mingle.myapplication.TriToggleButton>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                android:padding="5dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/round_corner">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/imageView7"
-                    android:src="@android:mipmap/sym_def_app_icon"
-                    android:layout_weight="1" />
-                <com.mingle.myapplication.TriToggleButton
-                    android:id="@+id/triToggleButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="tritoggle"
-                    android:layout_weight="7">
-                </com.mingle.myapplication.TriToggleButton>
+                android:background="@drawable/round_corner"
+                sl:scale_height="105"
+                sl:scale_left="575"
+                sl:scale_top="400"
+                sl:scale_width="270">
             </LinearLayout>
 
-        </LinearLayout>
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/switch1"
+                sl:scale_height="100"
+                sl:scale_left="670"
+                sl:scale_top="400"
+                sl:scale_width="170"/>
+
+
+            <info.hoang8f.widget.FButton
+                android:id="@+id/intro_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="7"
+                android:text="모드"
+                fbutton:buttonColor="@color/colorPrimary"
+                fbutton:cornerRadius="5dp"
+                fbutton:shadowColor="#7f8c8d"
+                fbutton:shadowEnabled="true"
+                fbutton:shadowHeight="5dp"
+                sl:scale_height="50"
+                sl:scale_left="0"
+                sl:scale_top="0"
+                sl:scale_width="50">
+            </info.hoang8f.widget.FButton>
+
+        </com.ssomai.android.scalablelayout.ScalableLayout>
     </ScrollView>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/scrollView"
-        android:orientation="horizontal">
 
-    </LinearLayout>
+
 
 </RelativeLayout>

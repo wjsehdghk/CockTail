@@ -25,7 +25,7 @@ import java.util.List;
  * @date 2015/8/5.
  * @github: https://github.com/zzz40500
  */
-public class RecyclerViewDelegate extends Delegate  {
+public class  RecyclerViewDelegate extends Delegate  {
 
     private SweetView mSweetView;
     private RecyclerView mRV;

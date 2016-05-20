@@ -13,19 +13,19 @@ public class TriToggleButton extends Button {
     public TriToggleButton(Context context) {
         super(context);
         _state = 0;
-        this.setText("1");
+
     }
 
     public TriToggleButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         _state = 0;
-        this.setText("1");
+
     }
 
     public TriToggleButton(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         _state = 0;
-        this.setText("1");
+
     }
 
     private static final int[] STATE_ONE_SET = { R.attr.state_one };
@@ -65,11 +65,11 @@ public class TriToggleButton extends Button {
         //TODO
         switch(_state)
         {
-            case 0: this.setText("무음"); ResionExhibitionActivity.state = 0;
+            case 0:  ResionExhibitionActivity.state = 0; this.setBackgroundResource(R.drawable.ic_volume_off_black_24dp);
                 break;
-            case 1: this.setText("진동"); ResionExhibitionActivity.state = 1;
+            case 1:  ResionExhibitionActivity.state = 1; this.setBackgroundResource(R.drawable.ic_vibration_24dp);
                 break;
-            case 2: this.setText("소리"); ResionExhibitionActivity.state = 2;
+            case 2:  ResionExhibitionActivity.state = 2; this.setBackgroundResource(R.drawable.ic_volume_up_black_24dp);
                 break;
             default: this.setText("N/A"); // Should never happen, but just in case
                 break;

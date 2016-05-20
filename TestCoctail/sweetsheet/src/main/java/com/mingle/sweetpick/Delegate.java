@@ -179,7 +179,7 @@ public abstract class Delegate implements View.OnClickListener {
             public void run() {
                 dismiss();
             }
-        }, 300);
+        }, 200);
     }
 
     protected SweetSheet.Status getStatus() {
