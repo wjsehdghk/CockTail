@@ -13,9 +13,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.knj.cocktail.domain.Member;
 import com.knj.cocktail.service.MemberService;
 
-
 @Controller
 public class MemberController {
+
 
 	private MemberService memberService;
 
@@ -24,7 +24,10 @@ public class MemberController {
 		this.memberService = memberService;
 	}
 	
-	
+	@RequestMapping("home")
+	public String showHome(Model model) {
+		return "home";
+	}
 	@RequestMapping("logout")
 	public ModelAndView doLogout(Model model,HttpSession session) {
 		ModelAndView mv = new ModelAndView("redirect:/login");
@@ -35,6 +38,7 @@ public class MemberController {
 	public String showLogin(Model model) {
 		return "login";
 	}
+	
 	@RequestMapping("loginProcess")
 	public ModelAndView loginProcess(Member member, HttpSession session, HttpServletRequest request) throws Exception {
         ModelAndView mv = new ModelAndView();

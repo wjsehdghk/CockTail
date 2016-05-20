@@ -7,5 +7,5 @@
 
 
 	<context:annotation-config></context:annotation-config>
-	<context:component-scan base-package="com.knj.cocktail.dao"></context:component-scan>
+	<context:component-scan base-package="com.knj.cocktail.service"></context:component-scan>
 </beans>
