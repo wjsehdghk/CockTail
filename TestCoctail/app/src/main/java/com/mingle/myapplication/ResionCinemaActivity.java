@@ -21,22 +21,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
+import android.widget.Switch;
 import android.widget.ToggleButton;
-
-import com.mingle.entity.MenuEntity;
 import com.mingle.myapplication.service.CallService;
 import com.mingle.sweetpick.BlurEffect;
 import com.mingle.sweetpick.CustomDelegate;
-import com.mingle.sweetpick.DimEffect;
-import com.mingle.sweetpick.RecyclerViewDelegate;
 import com.mingle.sweetpick.SweetSheet;
-import com.mingle.sweetpick.ViewPagerDelegate;
 
-import java.util.ArrayList;
+
+
 
 public class ResionCinemaActivity extends AppCompatActivity {
-        private SweetSheet mSweetSheet;
-        private SweetSheet mSweetSheet2;
         private SweetSheet mSweetSheet3;
         private RelativeLayout rl;
 
@@ -52,8 +47,9 @@ public class ResionCinemaActivity extends AppCompatActivity {
         Bitmap bitmap;
         Bitmap bitmap2;
         Bitmap bitmap3;
-        AudioManager audioManager;
         SeekBar seekBar;
+        Switch callServiceSwitchBtn;
+        AudioManager audioManager;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -191,6 +187,7 @@ public class ResionCinemaActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                                 switch (TriToggleButton.getState()) {
+
                                         case 0:
                                                 audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
                                                 break;
@@ -205,8 +202,8 @@ public class ResionCinemaActivity extends AppCompatActivity {
                                 }
                         }
                 });
-                seekBar =(SeekBar)view.findViewById(R.id.custom_seek);
 
+                seekBar =(SeekBar)view.findViewById(R.id.custom_seek);
                 seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                         @Override
                         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -230,7 +227,6 @@ public class ResionCinemaActivity extends AppCompatActivity {
 
                         }
                 });
-
         }
 
 

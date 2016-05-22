@@ -35,14 +35,14 @@ public class CallService extends Service {
                     case TelephonyManager.CALL_STATE_IDLE: //전화가 끊긴 상태
                         mAudioManager.setRingerMode(mAudioManager.RINGER_MODE_VIBRATE);
                         if (call == true) {
-                            SendSMS(incomingNumber, "Sorry");
+                            SendSMS(incomingNumber, "죄송합니다. 지금 전화를 받을 수 없습니다.");
                             call = false;
                         }
                         break;
                     case TelephonyManager.CALL_STATE_OFFHOOK: //통화중
                         break;
                     case TelephonyManager.CALL_STATE_RINGING: //전화벨 울리는 중
-                        call = true;
+                        if(true) call = true;
                         mAudioManager.setRingerMode(mAudioManager.RINGER_MODE_SILENT);
                         break;
                     default: break;

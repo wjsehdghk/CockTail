@@ -223,7 +223,6 @@ public class ResionExhibitionActivity extends AppCompatActivity {
             }
         });
         seekBar =(SeekBar)view.findViewById(R.id.custom_seek);
-
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
