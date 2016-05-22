@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 
 import com.mingle.entity.MenuEntity;
 
@@ -28,7 +29,6 @@ public class SweetSheet {
     public enum Type{
         RecyclerView,Viewpager,Custom
     }
-
 
     private ViewGroup mParentVG;
     private Delegate mDelegate;

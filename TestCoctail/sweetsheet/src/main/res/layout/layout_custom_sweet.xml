@@ -27,15 +27,14 @@
             android:layout_height="fill_parent"
             android:layout_gravity="bottom"
             android:clipChildren="false"
-            android:layout_marginTop="70dp"
-            />
+            android:layout_marginTop="70dp"/>
 
         <com.mingle.widget.CRImageView
             android:id="@+id/sliderIM"
-            android:layout_width="40dp"
+            android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_gravity="right"
-            android:layout_alignParentRight="true"
+            android:layout_gravity="center"
+
             android:layout_marginTop="40dp"
             android:padding="10dp"
             android:src="@drawable/ic_slider_line"/>

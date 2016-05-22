@@ -1,24 +1,33 @@
 package com.mingle.myapplication;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.AudioManager;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.method.Touch;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import android.widget.SeekBar;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.mingle.entity.MenuEntity;
@@ -50,10 +59,20 @@ public class ResionExhibitionActivity extends AppCompatActivity {
     Bitmap bitmap2;
     Bitmap bitmap3;
 
+    AudioManager audioManager;
+
+    public static int state=-1;
+
+    SeekBar seekBar;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resion_exhibition);
+
+        audioManager = (AudioManager) getBaseContext().getSystemService(Context.AUDIO_SERVICE);
+
 
         //final Animation animAlpha = AnimationUtils.loadAnimation(this, R.anim.anim_alpha);
         final Animation animRotate = AnimationUtils.loadAnimation(this, R.anim.anim_rotate);
@@ -144,6 +163,9 @@ public class ResionExhibitionActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+
     }
 
     protected void onNewIntent(Intent intent) {
@@ -153,14 +175,14 @@ public class ResionExhibitionActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
+        bottomToggleButton.setChecked(false);
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        bitmap.recycle();
-        bitmap2.recycle();
-        bitmap3.recycle();
     }
 
     @Override
@@ -174,18 +196,58 @@ public class ResionExhibitionActivity extends AppCompatActivity {
     private void setupCustomView() {
         mSweetSheet3 = new SweetSheet(rl);
         CustomDelegate customDelegate = new CustomDelegate(true,
-                CustomDelegate.AnimationType.DuangLayoutAnimation);
+                CustomDelegate.AnimationType.AlphaAnimation);
         View view = LayoutInflater.from(this).inflate(R.layout.layout_custom_view, null, false);
+
         customDelegate.setCustomView(view);
         customDelegate.setSweetSheetColor(getResources().getColor(R.color.colorBottomtab));
         mSweetSheet3.setDelegate(customDelegate);
         mSweetSheet3.setBackgroundEffect(new BlurEffect(8));
-        view.findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
+        mSweetSheet3.setBackgroundClickEnable(false);
+        view.findViewById(R.id.triToggleButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mSweetSheet3.dismiss();
+                switch (state) {
+                    case 0:
+                        audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+                        break;
+                    case 1:
+                        audioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
+                        break;
+                    case 2:
+                        audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+                        break;
+                    default:
+                        break;
+                }
             }
         });
+        seekBar =(SeekBar)view.findViewById(R.id.custom_seek);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if(progress<10){
+                    progress=10;
+                    seekBar.setProgress(progress);
+                }
+
+                WindowManager.LayoutParams params = getWindow().getAttributes();
+                params.screenBrightness = (float) progress / 100;
+                getWindow().setAttributes(params);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+
     }
 
     private void setupRecyclerView() {
@@ -228,6 +290,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         });
 
     }
+
     private void setupViewpager() {
 
 
@@ -260,6 +323,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
 
         if (mSweetSheet3.isShow()) {
             mSweetSheet3.dismiss();
+            bottomToggleButton.setChecked(false);
         } else {
             super.onBackPressed();
         }

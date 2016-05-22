@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.mingle.myapplication"
-        minSdkVersion 16
+        minSdkVersion 18
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -27,5 +27,8 @@ dependencies {
     //compile 'com.felipecsl:gifimageview:2.0.0'
     compile project(':sweetsheet')
     compile 'net.colindodd:toggleimagebutton:1.2'
-
+    compile files('lib/reco-sdk-android_0.1.5.jar')
+    compile files('lib/reco-sdk-android_0.1.5_JavaDoc.jar')
+    compile 'com.github.markushi:circlebutton:1.1'
+    compile 'info.hoang8f:fbutton:1.0.5'
 }
