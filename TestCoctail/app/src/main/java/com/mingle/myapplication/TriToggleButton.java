@@ -9,7 +9,7 @@ import android.widget.Button;
  */
 public class TriToggleButton extends Button {
 
-    public int _state = 0;
+    public static int _state = 0;
     public TriToggleButton(Context context) {
         super(context);
         _state = 0;
@@ -76,7 +76,7 @@ public class TriToggleButton extends Button {
         }
     }
 
-    public int getState() {
+    public static int getState() {
         return _state;
     }
 }

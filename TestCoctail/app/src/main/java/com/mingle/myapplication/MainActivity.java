@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 
-public class MainActivity extends RECOActivity
+public class MainActivity extends AppCompatActivity
         implements ActivityCompat.OnRequestPermissionsResultCallback{
 
     public static final String RECO_UUID = "24DDF411-8CF1-440C-87CD-E368DAF9C93E";
@@ -69,20 +69,7 @@ public class MainActivity extends RECOActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
-        mBluetoothAdapter = mBluetoothManager.getAdapter();
-
-        if(mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
-            Intent enableBTIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBTIntent, REQUEST_ENABLE_BT);
-        }
-
         m_checkPermission();
-
-
-
-        mRecoManager.setRangingListener(this);
-        mRecoManager.bind(this);
 
         Intent monitorService = new Intent(this, RECOBackgroundMonitoringService.class);
         startService(monitorService);
@@ -167,6 +154,14 @@ public class MainActivity extends RECOActivity
     }
 
     private void m_checkPermission() {
+        mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+        mBluetoothAdapter = mBluetoothManager.getAdapter();
+
+        if(mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
+            Intent enableBTIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBTIntent, REQUEST_ENABLE_BT);
+        }
+
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED ||
@@ -247,7 +242,6 @@ public class MainActivity extends RECOActivity
             super.onBackPressed();
         }
 
-
     }
 
     @Override
@@ -256,77 +250,6 @@ public class MainActivity extends RECOActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onServiceConnect() {
-        Log.i("RECORangingActivity", "onServiceConnect()");
-        this.start(mRegions);
-        //Write the code when RECOBeaconManager is bound to RECOBeaconService
-    }
 
-    @Override
-    public void didRangeBeaconsInRegion(Collection<RECOBeacon> recoBeacons, RECOBeaconRegion recoRegion) {
-        Log.i("RECORangingActivity", "didRangeBeaconsInRegion() region: " + recoRegion.getUniqueIdentifier() + ", number of beacons ranged: " + recoBeacons.size());
-        updateAllBeacons(recoBeacons);
-
-        //Write the code when the beacons in the region is received
-        //Toast.makeText(this, "didRBIR", Toast.LENGTH_LONG).show();
-    }
-
-    public void updateAllBeacons(Collection<RECOBeacon> beacons) {
-        synchronized (beacons) {
-            mRangedBeacons = new ArrayList<RECOBeacon>(beacons);
-        }
-
-        try {
-            RECOBeacon recoBeacon = mRangedBeacons.get(0);
-            //Toast.makeText(this, "Beacon Major" + recoBeacon.getMajor(), Toast.LENGTH_LONG).show();
-
-            //SharedPreferenceUtil.getInstance().putSharedPreference(this, "KEY_CINEMA_MODE", 2);
-            //SharedPreferenceUtil.getInstance().putSharedPreference(this, "KEY_CINEMA_BRIGHTNESS", 90);
-
-        } catch (NullPointerException e) {
-            Toast.makeText(this, "없습니다.", Toast.LENGTH_LONG).show();
-        } catch (Exception e) {
-
-        }
-    }
-
-    protected void start(ArrayList<RECOBeaconRegion> regions) {
-
-        /**
-         * There is a known android bug that some android devices scan BLE devices only once. (link: http://code.google.com/p/android/issues/detail?id=65863)
-         * To resolve the bug in our SDK, you can use setDiscontinuousScan() method of the RECOBeaconManager.
-         * This method is to set whether the device scans BLE devices continuously or discontinuously.
-         * The default is set as FALSE. Please set TRUE only for specific devices.
-         *
-         * mRecoManager.setDiscontinuousScan(true);
-         */
-
-        for(RECOBeaconRegion region : regions) {
-            try {
-                mRecoManager.startRangingBeaconsInRegion(region);
-            } catch (RemoteException e) {
-                Log.i("RECORangingActivity", "Remote Exception");
-                e.printStackTrace();
-            } catch (NullPointerException e) {
-                Log.i("RECORangingActivity", "Null Pointer Exception");
-                e.printStackTrace();
-            }
-        }
-    }
-
-    protected void stop(ArrayList<RECOBeaconRegion> regions) {
-        for(RECOBeaconRegion region : regions) {
-            try {
-                mRecoManager.stopRangingBeaconsInRegion(region);
-            } catch (RemoteException e) {
-                Log.i("RECORangingActivity", "Remote Exception");
-                e.printStackTrace();
-            } catch (NullPointerException e) {
-                Log.i("RECORangingActivity", "Null Pointer Exception");
-                e.printStackTrace();
-            }
-        }
-    }
 
 }

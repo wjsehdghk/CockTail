@@ -44,6 +44,7 @@ public class RECOBackgroundMonitoringService extends Service implements RECOMoni
 	private AudioManager aManager ;
 
 	int test=0;
+	private int mNotificationID2=0;
 	
 	@Override
 	public void onCreate() {
@@ -217,7 +218,9 @@ public class RECOBackgroundMonitoringService extends Service implements RECOMoni
 
 		Notification.InboxStyle inboxStyle = new Notification.InboxStyle();
 		builder.setStyle(inboxStyle);
+		nm.cancel(mNotificationID2);
 		nm.notify(mNotificationID, builder.build());
+		mNotificationID2 = mNotificationID;
 		mNotificationID = (mNotificationID - 1) % 1000 + 9000;
 	}
 
