@@ -1,5 +1,6 @@
 package com.mingle.myapplication;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -18,10 +19,12 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.Switch;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 import com.mingle.myapplication.service.CallService;
 import com.mingle.sweetpick.BlurEffect;
@@ -50,6 +53,8 @@ public class ResionCinemaActivity extends AppCompatActivity {
         SeekBar seekBar;
         Switch callServiceSwitchBtn;
         AudioManager audioManager;
+        Intent callService;
+        int callFrag=0;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -145,8 +150,9 @@ public class ResionCinemaActivity extends AppCompatActivity {
                         }
                 });
 
-                Intent callService = new Intent(this, CallService.class);
-                startService(callService);
+                startService(new Intent("com.mingle.myapplication.service"));
+
+                callFrag=1;
 
         }
         protected void onNewIntent(Intent intent){
@@ -174,8 +180,8 @@ public class ResionCinemaActivity extends AppCompatActivity {
                 bitmap.recycle();
                 bitmap2.recycle();
                 bitmap3.recycle();
-                Intent callService = new Intent(this, CallService.class);
-                stopService(callService);
+                stopService(new Intent("com.mingle.myapplication.service"));
+                callFrag=0;
         }
 
         private void setupCustomView() {
@@ -228,6 +234,27 @@ public class ResionCinemaActivity extends AppCompatActivity {
 
                         @Override
                         public void onStopTrackingTouch(SeekBar seekBar) {
+
+                        }
+                });
+
+                callServiceSwitchBtn = (Switch)view.findViewById(R.id.switch1);
+                callServiceSwitchBtn.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                if(isChecked) {
+                                        if(callFrag==0) startService(new Intent("com.mingle.myapplication.service"));
+                                        Toast.makeText(getApplicationContext(),
+                                                "전화 차단 후 메시지 전송기능 사용", Toast.LENGTH_SHORT).show();
+                                        callFrag=1;
+
+                                }
+                                else {
+                                        stopService(new Intent("com.mingle.myapplication.service"));
+                                        Toast.makeText(getApplicationContext(),
+                                                "전화 차단 후 메시지 전송기능 사용 안함", Toast.LENGTH_SHORT).show();
+                                        callFrag=0;
+                                }
 
                         }
                 });

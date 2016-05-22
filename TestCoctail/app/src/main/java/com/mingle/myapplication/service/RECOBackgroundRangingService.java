@@ -45,6 +45,7 @@ public class RECOBackgroundRangingService extends Service implements RECOMonitor
 	private long mSleepDuration = 10*1000L;
 	private long mRegionExpirationTime = 3*1000L;
 	private int mNotificationID = 9999;
+	private int mNotificationID2 = 0;
 	
 	private RECOBeaconManager mRecoManager;
 	private ArrayList<RECOBeaconRegion> mRegions;
@@ -280,8 +281,11 @@ public class RECOBackgroundRangingService extends Service implements RECOMonitor
 
 		Notification.InboxStyle inboxStyle = new Notification.InboxStyle();
 		builder.setStyle(inboxStyle);
+		nm.cancel(mNotificationID2);
 		nm.notify(mNotificationID, builder.build());
+		mNotificationID2 = mNotificationID;
 		mNotificationID = (mNotificationID - 1) % 1000 + 9000;
+		if(mNotificationID < 1) mNotificationID = 9999;
 	}
 	
 	@Override

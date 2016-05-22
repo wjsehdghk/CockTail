@@ -9,6 +9,7 @@ import android.telephony.PhoneStateListener;
 import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.widget.Toast;
 
 /**
  * Created by multimedia on 2016-05-16.
@@ -35,7 +36,9 @@ public class CallService extends Service {
                     case TelephonyManager.CALL_STATE_IDLE: //전화가 끊긴 상태
                         mAudioManager.setRingerMode(mAudioManager.RINGER_MODE_VIBRATE);
                         if (call == true) {
-                            SendSMS(incomingNumber, "죄송합니다. 지금 전화를 받을 수 없습니다.");
+                            //SendSMS(incomingNumber, "죄송합니다. 지금 전화를 받을 수 없습니다.");
+                            Toast.makeText(getApplicationContext(), "죄송합니다. 지금 전화를 받을 수 없습니다."
+                                    ,Toast.LENGTH_SHORT).show();
                             call = false;
                         }
                         break;

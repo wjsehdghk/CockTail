@@ -229,6 +229,17 @@ public class MainActivity extends AppCompatActivity
                 //intent3.addCategory(Intent.CATEGORY_HOME);
                 //startActivity(intent3);
             }
+            if(SharedPreferenceUtil.getSharedPreference(this, "ResionMajor") == 18243) {
+                Intent intent = new Intent(getApplicationContext(), ResionExhibitionActivity.class);
+                startActivity(intent);
+                //moveTaskToBack(SharedPreferenceUtil.isResionSet);
+
+                SharedPreferenceUtil.isResionSet=false;
+                //Intent intent3 = new Intent();
+                //intent3.setAction(Intent.ACTION_MAIN);
+                //intent3.addCategory(Intent.CATEGORY_HOME);
+                //startActivity(intent3);
+            }
         }
     }
 
