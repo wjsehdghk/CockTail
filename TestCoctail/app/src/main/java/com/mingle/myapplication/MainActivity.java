@@ -1,37 +1,40 @@
 package com.mingle.myapplication;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.RemoteException;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 
+import com.mingle.myapplication.model.SharedPreferenceUtil;
 import com.mingle.myapplication.service.RECOBackgroundMonitoringService;
+import com.mingle.myapplication.service.RECOBackgroundRangingService;
 import com.mingle.sweetpick.CustomDelegate;
 import com.mingle.sweetpick.SweetSheet;
 import com.perples.recosdk.RECOBeacon;
-import com.perples.recosdk.RECOBeaconRegion;
 import java.util.ArrayList;
-import java.util.Collection;
 
 
 public class MainActivity extends AppCompatActivity
@@ -62,7 +65,9 @@ public class MainActivity extends AppCompatActivity
     Button exhibitButton;
     Toolbar toolbar;
     Toolbar bottombar;
+    Handler handler;
 
+    AlertDialog.Builder alert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +76,7 @@ public class MainActivity extends AppCompatActivity
 
         m_checkPermission();
 
-        Intent monitorService = new Intent(this, RECOBackgroundMonitoringService.class);
+        Intent monitorService = new Intent(this, RECOBackgroundRangingService.class);
         startService(monitorService);
 
 
@@ -83,7 +88,7 @@ public class MainActivity extends AppCompatActivity
         cinemaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent cinema=new Intent(getApplicationContext(),ResionCinemaActivity.class);
+                Intent cinema = new Intent(getApplicationContext(), ResionCinemaActivity.class);
                 cinema.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(cinema);
 
@@ -94,7 +99,7 @@ public class MainActivity extends AppCompatActivity
         libraryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent library=new Intent(getApplicationContext(),RegionLibraryActivity.class);
+                Intent library = new Intent(getApplicationContext(), RegionLibraryActivity.class);
                 library.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(library);
 
@@ -151,6 +156,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+
     }
 
     private void m_checkPermission() {
@@ -182,7 +188,48 @@ public class MainActivity extends AppCompatActivity
         } else {
             //사용 권한이 있음 확인
         }
+        handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                updateThread();
+            }
+        };
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Thread myThread = new Thread(new Runnable() {
+            public void run() {
+                while (true) {
+                    try {
+                        handler.sendMessage(handler.obtainMessage());
+                        Thread.sleep(3000);
+                    } catch (Throwable t) {
+                    }
+                }
+            }
+        });
+
+        myThread.start();
+    }
+
+
+    private void updateThread() {
+        if(SharedPreferenceUtil.isResionSet) {
+            if (SharedPreferenceUtil.getSharedPreference(this, "ResionMajor") == 18249) {
+                Intent intent = new Intent(getApplicationContext(), ResionCinemaActivity.class);
+                startActivity(intent);
+                //moveTaskToBack(SharedPreferenceUtil.isResionSet);
+                Toast.makeText(this, "스레드 동작 중", Toast.LENGTH_SHORT);
+                SharedPreferenceUtil.isResionSet=false;
+                //Intent intent3 = new Intent();
+                //intent3.setAction(Intent.ACTION_MAIN);
+                //intent3.addCategory(Intent.CATEGORY_HOME);
+                //startActivity(intent3);
+            }
+        }
     }
 
     @Override
@@ -205,6 +252,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+
     }
 
     private void setupCustomView() {

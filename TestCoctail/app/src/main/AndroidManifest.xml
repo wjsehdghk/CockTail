@@ -37,6 +37,17 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".AlertDialogActivity"
+            android:theme="@android:style/Theme.Dialog">
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="ShowMsgActivity" android:theme="@android:style/Theme.Translucent"/>
+
+
         <service android:name=".service.CallService">
             <intent-filter>
                 <action android:name="wjsehdghk" />
@@ -45,6 +56,7 @@
         </service>
         <service android:name="com.perples.recosdk.RECOBeaconService" />
         <service android:name=".service.RECOBackgroundMonitoringService" />
+        <service android:name=".service.RECOBackgroundRangingService"/>
 
         <activity android:name=".ResionCinemaActivity" />
         <activity android:name=".RegionLibraryActivity" />

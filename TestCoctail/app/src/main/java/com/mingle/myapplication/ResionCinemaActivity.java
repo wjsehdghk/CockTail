@@ -154,6 +154,11 @@ public class ResionCinemaActivity extends AppCompatActivity {
         }
 
         @Override
+        protected void onStart() {
+                super.onStart();
+        }
+
+        @Override
         protected void onResume() {
                 super.onResume();
         }
@@ -187,7 +192,6 @@ public class ResionCinemaActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                                 switch (TriToggleButton.getState()) {
-
                                         case 0:
                                                 audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
                                                 break;
