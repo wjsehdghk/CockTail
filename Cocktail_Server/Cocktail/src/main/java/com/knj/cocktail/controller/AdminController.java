@@ -28,6 +28,13 @@ public class AdminController {
 		return "login";
 	}
 	
+	@RequestMapping("logout")
+	public ModelAndView doLogout(Model model,HttpSession session) {
+		ModelAndView mv = new ModelAndView("redirect:/login");
+		session.removeAttribute("adminLoginInfo");
+		return mv;
+	}
+	
 	@RequestMapping("loginProcess")
 	public ModelAndView doLoginProcess(HttpSession session, HttpServletRequest request){
         ModelAndView mv = new ModelAndView();
@@ -40,7 +47,7 @@ public class AdminController {
         if (loginAdmin != null) {
         	session.setAttribute("adminLoginInfo", loginAdmin);
             session.setAttribute("adminId", loginAdmin.getAdminId());
-            mv.setViewName("confirm");
+            mv.setViewName("home");
         }
         else {
         	mv.setViewName("failLogin");
@@ -56,6 +63,11 @@ public class AdminController {
 		return "failLogin";
 	}
 	
+	@RequestMapping("home")
+	public String showHome(){
+		
+		return "home";
+	}
 	
 	@RequestMapping("/test")
 	public void showtest(HttpServletRequest request){ 
