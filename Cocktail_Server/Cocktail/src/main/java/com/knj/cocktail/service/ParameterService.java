@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.knj.cocktail.dao.ParameterDAO;
 import com.knj.cocktail.domain.Parameter;
@@ -24,12 +25,14 @@ public class ParameterService {
 		return parameterDAO.getparameters();
 	}
 
+	@Transactional
 	public void doAdd(String sectorId, String brightness, String modeId, String callId) {
 		
 		parameterDAO.insertParameter(sectorId,brightness,modeId,callId);
 		
 	}
-
+	
+	@Transactional
 	public void doDelete(String sectorId) {
 		
 		parameterDAO.deleteParameter(sectorId);

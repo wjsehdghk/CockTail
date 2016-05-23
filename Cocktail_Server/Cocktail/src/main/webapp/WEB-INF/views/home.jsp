@@ -34,7 +34,7 @@
 				<a class="btn btn-navbar" data-toggle="collapse"
 					data-target=".nav-collapse"> <span class="icon-bar"></span> <span
 					class="icon-bar"></span> <span class="icon-bar"></span>
-				</a> <a class="brand" href="#">Cocktail Admin</a>
+				</a> <a class="brand" href="home">Cocktail Admin</a>
 				<div class="nav-collapse collapse">
 					<ul class="nav pull-right">
 						<li class="dropdown"><a href="#" role="button"
@@ -63,7 +63,7 @@
 				<ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
 					<li><a href="showSector"><i class="icon-chevron-right"></i> Sector</a></li>
 					<li><a href="calendar.html"><i class="icon-chevron-right"></i>Statistics</a></li>
-					<li><a href="shoWBeacon"><i class="icon-chevron-right"></i>Beacon</a></li>
+					<li><a href="showBeacon"><i class="icon-chevron-right"></i>Beacon</a></li>
 					<li><a href="form.html"><i class="icon-chevron-right"></i>Users</a></li>
 
 				</ul>
