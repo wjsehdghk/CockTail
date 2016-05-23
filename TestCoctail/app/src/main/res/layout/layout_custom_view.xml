@@ -22,6 +22,16 @@
 
 
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="save"
+                android:id="@+id/saveBtn"
+                sl:scale_height="100"
+                sl:scale_left="400"
+                sl:scale_textsize="37"
+                sl:scale_top="550"
+                sl:scale_width="200"/>
 
             <TextView
                 android:layout_width="wrap_content"

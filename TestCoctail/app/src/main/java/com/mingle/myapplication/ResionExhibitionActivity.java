@@ -1,23 +1,25 @@
 package com.mingle.myapplication;
 
-import android.app.Activity;
+
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.AudioManager;
+import android.media.Image;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
+import android.os.Handler;
+import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.method.Touch;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -25,24 +27,22 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
 import android.widget.SeekBar;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.mingle.entity.MenuEntity;
+import com.mingle.myapplication.model.SharedPreferenceUtil;
 import com.mingle.sweetpick.BlurEffect;
 import com.mingle.sweetpick.CustomDelegate;
-import com.mingle.sweetpick.DimEffect;
-import com.mingle.sweetpick.RecyclerViewDelegate;
-import com.mingle.sweetpick.SweetSheet;
-import com.mingle.sweetpick.ViewPagerDelegate;
 
-import java.util.ArrayList;
+import com.mingle.sweetpick.SweetSheet;
+
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URL;
+
 
 public class ResionExhibitionActivity extends AppCompatActivity {
-    private SweetSheet mSweetSheet;
-    private SweetSheet mSweetSheet2;
     private SweetSheet mSweetSheet3;
     private RelativeLayout rl;
 
@@ -58,12 +58,11 @@ public class ResionExhibitionActivity extends AppCompatActivity {
     Bitmap bitmap;
     Bitmap bitmap2;
     Bitmap bitmap3;
-
     AudioManager audioManager;
-
     public static int state=-1;
-
     SeekBar seekBar;
+
+    private AlertDialog mDialog = null;
 
 
     @Override
@@ -73,8 +72,6 @@ public class ResionExhibitionActivity extends AppCompatActivity {
 
         audioManager = (AudioManager) getBaseContext().getSystemService(Context.AUDIO_SERVICE);
 
-
-        //final Animation animAlpha = AnimationUtils.loadAnimation(this, R.anim.anim_alpha);
         final Animation animRotate = AnimationUtils.loadAnimation(this, R.anim.anim_rotate);
 
         bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.exhibition);
@@ -96,7 +93,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent home = new Intent(getApplicationContext(), MainActivity.class);
-                home.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(home);
                 finish();
             }
@@ -106,7 +103,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent library = new Intent(getApplicationContext(), RegionLibraryActivity.class);
-                library.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                library.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(library);
                 finish();
             }
@@ -116,7 +113,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent cinema = new Intent(getApplicationContext(), ResionCinemaActivity.class);
-                cinema.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                cinema.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(cinema);
                 finish();
             }
@@ -166,6 +163,66 @@ public class ResionExhibitionActivity extends AppCompatActivity {
 
 
 
+        Settings.System.putInt(getContentResolver(), "screen_brightness",
+                SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionBrightness"));
+        audioManager.setRingerMode(
+                SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionRingerMode"));
+
+        initDialog();
+
+    }
+
+    public void initDialog() {
+        final Handler handler = new Handler();
+        LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View dialogView=inflater.inflate(R.layout.dialog_layout, null);
+        AlertDialog.Builder ab = new AlertDialog.Builder(this);
+        ab.setTitle("전시장");
+        ab.setCancelable(false);
+        ab.setView(dialogView);
+        ab.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                setDismiss(mDialog);
+            }
+        });
+
+        ab.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                setDismiss(mDialog);
+            }
+        });
+
+        ab.show();
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    final ImageView iv = (ImageView)dialogView.findViewById(R.id.webImage);
+                    URL url = new URL("http://previews.123rf.com/images/cienpies/cienpies1307/cienpies130700563/20602613-Multimedia-internet-marketing-icons-concept-pencil-tree-Vector-illustration-layered-for-easy-manipul-Stock-Vector.jpg");
+                    InputStream is = url.openStream();
+                    final Bitmap bm = BitmapFactory.decodeStream(is);
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            iv.setImageBitmap(bm);
+                        }
+                    });
+                    iv.setImageBitmap(bm);
+                } catch (Exception e) {
+
+                }
+            }
+        });
+        t.start();
+
+    }
+
+    private void setDismiss(Dialog dialog){
+        if(dialog != null && dialog.isShowing())
+            dialog.dismiss();
     }
 
     protected void onNewIntent(Intent intent) {
@@ -207,32 +264,38 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         view.findViewById(R.id.triToggleButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (state) {
+                switch (TriToggleButton.getState()) {
                     case 0:
                         audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+                        SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "ExhibitionRingerMode", AudioManager.RINGER_MODE_SILENT);
                         break;
                     case 1:
                         audioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
+                        SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "ExhibitionRingerMode", AudioManager.RINGER_MODE_VIBRATE);
                         break;
                     case 2:
                         audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+                        SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "ExhibitionRingerMode", AudioManager.RINGER_MODE_NORMAL);
                         break;
                     default:
                         break;
                 }
             }
         });
+
         seekBar =(SeekBar)view.findViewById(R.id.custom_seek);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            float brightness = 0;
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if(progress<10){
-                    progress=10;
+                if (progress < 10) {
+                    progress = 10;
                     seekBar.setProgress(progress);
                 }
 
                 WindowManager.LayoutParams params = getWindow().getAttributes();
                 params.screenBrightness = (float) progress / 100;
+                brightness = params.screenBrightness;
                 getWindow().setAttributes(params);
             }
 
@@ -243,71 +306,13 @@ public class ResionExhibitionActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
+                brightness = brightness * 255;
+                Settings.System.putInt(getContentResolver(), "screen_brightness", (int) brightness);
+                SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "ExhibitionBrightness", (int) brightness);
             }
         });
-
-
-    }
-
-    private void setupRecyclerView() {
-        final ArrayList<MenuEntity> list = new ArrayList<>();
-        //添加假数据
-        MenuEntity menuEntity1 = new MenuEntity();
-        menuEntity1.iconId = R.drawable.ic_account_child;
-        menuEntity1.titleColor = 0xff96CC7A; //textcolor
-        menuEntity1.title = "code";
-
-        MenuEntity menuEntity = new MenuEntity();
-        menuEntity.iconId = R.drawable.ic_account_child;
-        menuEntity.titleColor = 0xffb3b3b3;
-        menuEntity.title = "QQ";
-
-        list.add(menuEntity1);
-        list.add(menuEntity);
-
-        // SweetSheet 控件,根据 rl 确认位置
-        mSweetSheet = new SweetSheet(rl);
-
-        //设置数据源 (数据源支持设置 list 数组,也支持从菜单中获取)
-        mSweetSheet.setMenuList(list);
-        //根据设置不同的 Delegate 来显示不同的风格.
-        mSweetSheet.setDelegate(new RecyclerViewDelegate(true));
-        //根据设置不同Effect 来显示背景效果BlurEffect:模糊效果.DimEffect 变暗效果
-        mSweetSheet.setBackgroundEffect(new BlurEffect(8));
-        //设置点击事件
-        mSweetSheet.setOnMenuItemClickListener(new SweetSheet.OnMenuItemClickListener() {
-            @Override
-            public boolean onItemClick(int position, MenuEntity menuEntity1) {
-                //即时改变当前项的颜色
-                list.get(position).titleColor = 0xff96CC7A;
-                ((RecyclerViewDelegate) mSweetSheet.getDelegate()).notifyDataSetChanged();
-
-                //根据返回值, true 会关闭 SweetSheet ,false 则不会.
-                //Toast.makeText(MainActivity.this, menuEntity1.title + "  " + position, Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
-
-    }
-
-    private void setupViewpager() {
-
-
-        mSweetSheet2 = new SweetSheet(rl);
-
-        //从menu 中设置数据源
-        mSweetSheet2.setMenuList(R.menu.menu_sweet);
-        mSweetSheet2.setDelegate(new ViewPagerDelegate());
-        mSweetSheet2.setBackgroundEffect(new DimEffect(0.5f));
-        mSweetSheet2.setOnMenuItemClickListener(new SweetSheet.OnMenuItemClickListener() {
-            @Override
-            public boolean onItemClick(int position, MenuEntity menuEntity1) {
-
-                //   Toast.makeText(MainActivity.this, menuEntity1.title + "  " + position, Toast.LENGTH_SHORT).show();
-                return true;
-            }
-        });
+        seekBar.setProgress(
+                SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionBrightness"));
 
 
     }

@@ -1,15 +1,18 @@
 package com.mingle.myapplication;
 
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.AudioManager;
+import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.telecom.Call;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,12 +29,12 @@ import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
+import com.mingle.myapplication.model.SharedPreferenceUtil;
 import com.mingle.myapplication.service.CallService;
 import com.mingle.sweetpick.BlurEffect;
 import com.mingle.sweetpick.CustomDelegate;
 import com.mingle.sweetpick.SweetSheet;
-
-
 
 
 public class ResionCinemaActivity extends AppCompatActivity {
@@ -53,8 +56,11 @@ public class ResionCinemaActivity extends AppCompatActivity {
         SeekBar seekBar;
         Switch callServiceSwitchBtn;
         AudioManager audioManager;
-        Intent callService;
+        ComponentName mCallService;
         int callFrag=0;
+        Button saveBtn;
+
+
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -82,19 +88,18 @@ public class ResionCinemaActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                                 Intent home = new Intent(getApplicationContext(), MainActivity.class);
-                                home.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(home);
                                 finish();
                         }
                 });
 
-
                 libraryButton=(Button)findViewById(R.id.library_btn);
                 libraryButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                                Intent library=new Intent(getApplicationContext(),RegionLibraryActivity.class);
-                                library.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                Intent library = new Intent(getApplicationContext(), RegionLibraryActivity.class);
+                                library.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(library);
                                 finish();
                         }
@@ -104,7 +109,7 @@ public class ResionCinemaActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                                 Intent exhibition = new Intent(getApplicationContext(), ResionExhibitionActivity.class);
-                                exhibition.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                exhibition.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(exhibition);
                                 finish();
                         }
@@ -150,19 +155,24 @@ public class ResionCinemaActivity extends AppCompatActivity {
                         }
                 });
 
-                startService(new Intent("com.mingle.myapplication.service"));
 
+                SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "CallServiceFrag", 1);
+                mCallService = startService(new Intent(this, CallService.class));
                 callFrag=1;
+                SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "CinemaRingerMode");
+
+
+                Settings.System.putInt(getContentResolver(), "screen_brightness",
+                        SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "CinemaBrightness"));
+                audioManager.setRingerMode(
+                        SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "CinemaRingerMode"));
+
 
         }
-        protected void onNewIntent(Intent intent){
-                super.onNewIntent(intent);
-        }
+        protected void onNewIntent(Intent intent){super.onNewIntent(intent); }
 
         @Override
-        protected void onStart() {
-                super.onStart();
-        }
+        protected void onStart() {super.onStart();}
 
         @Override
         protected void onResume() {
@@ -180,7 +190,6 @@ public class ResionCinemaActivity extends AppCompatActivity {
                 bitmap.recycle();
                 bitmap2.recycle();
                 bitmap3.recycle();
-                stopService(new Intent("com.mingle.myapplication.service"));
                 callFrag=0;
         }
 
@@ -200,12 +209,15 @@ public class ResionCinemaActivity extends AppCompatActivity {
                                 switch (TriToggleButton.getState()) {
                                         case 0:
                                                 audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+                                                SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "CinemaRingerMode", AudioManager.RINGER_MODE_SILENT);
                                                 break;
                                         case 1:
                                                 audioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
+                                                SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "CinemaRingerMode", AudioManager.RINGER_MODE_VIBRATE);
                                                 break;
                                         case 2:
                                                 audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+                                                SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "CinemaRingerMode", AudioManager.RINGER_MODE_NORMAL);
                                                 break;
                                         default:
                                                 break;
@@ -213,8 +225,10 @@ public class ResionCinemaActivity extends AppCompatActivity {
                         }
                 });
 
-                seekBar =(SeekBar)view.findViewById(R.id.custom_seek);
+                seekBar = (SeekBar) view.findViewById(R.id.custom_seek);
                 seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                        float brightness = 0;
+
                         @Override
                         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                                 if (progress < 10) {
@@ -224,6 +238,7 @@ public class ResionCinemaActivity extends AppCompatActivity {
 
                                 WindowManager.LayoutParams params = getWindow().getAttributes();
                                 params.screenBrightness = (float) progress / 100;
+                                brightness = params.screenBrightness;
                                 getWindow().setAttributes(params);
                         }
 
@@ -234,32 +249,67 @@ public class ResionCinemaActivity extends AppCompatActivity {
 
                         @Override
                         public void onStopTrackingTouch(SeekBar seekBar) {
-
+                                brightness = brightness * 255;
+                                Settings.System.putInt(getContentResolver(), "screen_brightness", (int) brightness);
+                                SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "CinemaBrightness", (int) brightness);
                         }
                 });
+                seekBar.setProgress(
+                        SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "CinemaBrightness"));
 
                 callServiceSwitchBtn = (Switch)view.findViewById(R.id.switch1);
+                if(SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "CinemaChecked")==1) callServiceSwitchBtn.setChecked(true);
+                else callServiceSwitchBtn.setChecked(false);
+
                 callServiceSwitchBtn.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
                         @Override
                         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                if(isChecked) {
-                                        if(callFrag==0) startService(new Intent("com.mingle.myapplication.service"));
-                                        Toast.makeText(getApplicationContext(),
-                                                "전화 차단 후 메시지 전송기능 사용", Toast.LENGTH_SHORT).show();
-                                        callFrag=1;
+                                if (isChecked) {
+                                        if (callFrag == 0) {
+                                                initiateService();
+                                        }
 
-                                }
-                                else {
-                                        stopService(new Intent("com.mingle.myapplication.service"));
-                                        Toast.makeText(getApplicationContext(),
-                                                "전화 차단 후 메시지 전송기능 사용 안함", Toast.LENGTH_SHORT).show();
-                                        callFrag=0;
+                                        callFrag = 1;
+                                        SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "CinemaChecked", 1);
+
+
+                                } else {
+                                        terminateService();
+                                        callFrag = 0;
+                                        SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "CinemaChecked", 0);
                                 }
 
                         }
                 });
+
+                saveBtn = (Button)view.findViewById(R.id.saveBtn);
+                saveBtn.setOnClickListener(new Button.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                                saveResionState();
+                        }
+                });
+
         }
 
+        public void initiateService() {
+                SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "CallServiceFrag", 1);
+                mCallService = startService(new Intent(this, CallService.class));
+        }
+
+        public void terminateService() {
+                if(mCallService==null) {
+                        return;
+                }
+                Intent i = new Intent();
+                i.setComponent(mCallService);
+                stopService(i);
+
+        }
+
+        public void saveResionState() {
+
+        }
 
         @Override
         public boolean onCreateOptionsMenu(Menu menu) {
@@ -285,6 +335,3 @@ public class ResionCinemaActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
 }
-
-
-

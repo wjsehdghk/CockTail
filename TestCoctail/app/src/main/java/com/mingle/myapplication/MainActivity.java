@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Intent cinema = new Intent(getApplicationContext(), ResionCinemaActivity.class);
-                cinema.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                cinema.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(cinema);
 
             }
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Intent library = new Intent(getApplicationContext(), RegionLibraryActivity.class);
-                library.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                library.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(library);
 
             }
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Intent exhibition = new Intent(getApplicationContext(), ResionExhibitionActivity.class);
-                exhibition.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                exhibition.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(exhibition);
 
             }

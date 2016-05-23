@@ -26,12 +26,11 @@ public class ShowMsgActivity extends Activity{
                 WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
 
 
-        AlertDialog.Builder ab = new AlertDialog.Builder(this);
-        ab.setTitle("Title");
-        ab.setMessage("내용");
-        ab.setCancelable(false);
-        ab.setIcon(getResources().getDrawable(R.drawable.ic_account_child));
 
+        AlertDialog.Builder ab = new AlertDialog.Builder(this);
+        ab.setTitle("전시장");
+
+        ab.setCancelable(false);
         ab.setPositiveButton("확인", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
