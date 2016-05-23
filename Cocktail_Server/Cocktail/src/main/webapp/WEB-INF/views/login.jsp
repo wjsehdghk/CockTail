@@ -45,20 +45,24 @@
                                 <center><div class="muted pull"><h1>Log-In</h1></div></center>
                             </div>
                             <br></br>
+                             
                             <div class="block-content collapse in">
+                          
                                 <form class="form-horizontal"  method="post" action="loginProcess">
                                       <fieldset>
+                                      
                                         <div class="control-group">
-                                    <label class="control-label" for="focusedInput">ID : </label>
+                                    <label class="control-label span5" for="focusedInput">ID  </label>
                                           <div class="controls">
-                                            <input class="input-xlarge focused" type="text" name="adminId" >
+                                             &nbsp&nbsp<input class="input-xlarge focused" type="text" name="adminId" >
                                           </div>
                                           
+                                     
                                         </div>
                                          <div class="control-group">
-                                    <label class="control-label" for="focusedInput">PASSWORD : </label>
+                                    <label class="control-label span5" for="focusedInput">PASSWORD  </label>
                                           <div class="controls">
-                                            <input class="input-xlarge focused" type="password" name="password" >
+                                            &nbsp&nbsp<input class="input-xlarge focused" type="password" name="password" >
                                           </div>
                 
                                         </div>

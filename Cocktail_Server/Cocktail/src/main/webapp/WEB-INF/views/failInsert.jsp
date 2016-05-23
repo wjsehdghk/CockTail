@@ -8,15 +8,9 @@
 </head>
 <body>
 
-	    <% 
-	String adminId = (String)session.getAttribute("adminLoginId");
-	if(adminId == null){
-%> 
-	<script>
-	  alert("로그인 되지 않았습니다.");
-	     location.href="login";
+<script>
+	  alert("내용을 입력하시오");
+	     location.href="showSector";
 	</script>
-<%	}	%>
-
 </body>
 </html>

@@ -32,29 +32,34 @@ public class AdminController {
 	public ModelAndView doLogout(Model model,HttpSession session) {
 		ModelAndView mv = new ModelAndView("redirect:/login");
 		session.removeAttribute("adminLoginInfo");
+		session.removeAttribute("adminLoginId");
 		return mv;
 	}
 	
 	@RequestMapping("loginProcess")
-	public ModelAndView doLoginProcess(HttpSession session, HttpServletRequest request){
-        ModelAndView mv = new ModelAndView();
+	public String doLoginProcess(HttpSession session, HttpServletRequest request){
+        String mv;
         
         String adminId = request.getParameter("adminId");
 		String password = request.getParameter("password");
- 
        Admin loginAdmin = adminService.isAdminOk(adminId, password);
-		
         if (loginAdmin != null) {
         	session.setAttribute("adminLoginInfo", loginAdmin);
-            session.setAttribute("adminId", loginAdmin.getAdminId());
-            mv.setViewName("home");
+            session.setAttribute("adminLoginId", loginAdmin.getAdminId());
+            mv="home";
         }
         else {
-        	mv.setViewName("failLogin");
+        	mv="failLogin";
         }
         
         return mv;
     } 
+	
+	@RequestMapping("home")
+	public String goHome(){
+		
+		return "home";
+	}
 	
 	
 	@RequestMapping("failLogin")
@@ -63,19 +68,7 @@ public class AdminController {
 		return "failLogin";
 	}
 	
-	@RequestMapping("home")
-	public String showHome(){
-		
-		return "home";
-	}
 	
-	@RequestMapping("/test")
-	public void showtest(HttpServletRequest request){ 
-		
-		System.out.println(request.getParameter("test"));
-		
-		
-		
-		
-	}
+	
+
 }
