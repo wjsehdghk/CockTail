@@ -34,7 +34,7 @@
 				<a class="btn btn-navbar" data-toggle="collapse"
 					data-target=".nav-collapse"> <span class="icon-bar"></span> <span
 					class="icon-bar"></span> <span class="icon-bar"></span>
-				</a> <a class="brand" href="#">Cocktail Admin</a>
+				</a> <a class="brand" href="home">Cocktail Admin</a>
 				<div class="nav-collapse collapse">
 					<ul class="nav pull-right">
 						<li class="dropdown"><a href="#" role="button"
@@ -81,7 +81,7 @@
 						<!-- block -->
 						<div class="block">
 							<div class="navbar navbar-inner block-header">
-								<div class="muted pull-left">Sector Table (default)</div>
+								<div class="muted pull-left">Beacon Table</div>
 
 							</div>
 							
@@ -90,10 +90,9 @@
 									<thead>
 										<tr>
 											<th>#</th>
+											<th>BeaconId</th>
 											<th>sectorId</th>
-											<th>brightness</th>
-											<th>modeId</th>
-											<th>callId</th>
+											<th>distance</th>
 											<th>delete</th>
 										</tr>
 									</thead>
@@ -102,15 +101,14 @@
 											int i = 1;
 										%>
 										<c:choose>
-											<c:when test="${fn:length(parameterDefault) > 0}">
-												<c:forEach items="${parameterDefault}" var="row">
+											<c:when test="${fn:length(beaconList) > 0}">
+												<c:forEach items="${beaconList}" var="row">
 													<tr>
 														<th><%=i++%></th>
+														<th>${row.beaconId}</th>
 														<th>${row.sectorId}</th>
-														<th>${row.brightness}</th>
-														<th>${row.modeId}</th>
-														<th>${row.callId}</th>
-														<th class="btn-group"><a href="${row.sectorId}Delete"><button
+														<th>${row.distance}</th>
+														<th class="btn-group"><a href="${row.beaconId}Remove"><button
 																	class="btn btn-danger btn-mini">delete</button></a></th>
 													</tr>
 												</c:forEach>
@@ -129,22 +127,19 @@
 
 							</div>
 							  <div class="block-content collapse in">
-							<form  method="post" action="insertSector">
-								<table class="table table-striped">
+							<form  method="post" action="insertBeacon">
+								<table class="table table-striped " >
 									
 												<tr>
 												
-													<th></th>
+													<th> </th>
 													<th><input class="input-small focused" type="text"
+														name="beaconId"></th>
+													<th><input class="input-small" type="text"
 														name="sectorId"></th>
-													<th><input class="input focused" type="text"
-														name="brightness"></th>
 													<th><input class="input-small focused" type="text"
-														name="modeId"></th>
-													<th><input class="input-small focused" type="text"
-														name="callId"></th>
+														name="distance"></th>
 													<th>
-													
 													<div class="btn-group">
 													
                                          <button class="btn btn-success" type="submit">Add New <i class="icon-plus icon-white"></i></button></a>
@@ -162,14 +157,6 @@
 					</div>
 
 				</div>
-				modeId = 0 -> non bell &nbsp&nbsp&nbsp&nbsp callId = 0 -> call
-				rejection off<br>
-				&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp= 1
-				->
-				vibrate&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp=
-				1 -> call rejection on<br>
-				&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp= 2
-				-> bell<br>
 			</div>
 		</div>
 		<hr>
