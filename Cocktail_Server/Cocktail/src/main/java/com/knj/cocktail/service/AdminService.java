@@ -22,8 +22,9 @@ public class AdminService {
 		if(admin!=null && password.equals(admin.getPassword())){
 			return admin;
 		}
-		else
-		return null;
-	}
+		else{
+			return null;
+		}
+		}
 
 }
