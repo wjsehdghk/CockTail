@@ -23,6 +23,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'com.android.support:design:23.2.1'
     compile 'com.android.support:support-v4:23.2.1'
+    compile 'com.loopj.android:android-async-http:1.4.9'
     compile 'com.ssomai:android.scalablelayout:2.1.0'
     //compile 'com.felipecsl:gifimageview:2.0.0'
     compile project(':sweetsheet')
@@ -31,4 +32,6 @@ dependencies {
     compile files('lib/reco-sdk-android_0.1.5_JavaDoc.jar')
     compile 'com.github.markushi:circlebutton:1.1'
     compile 'info.hoang8f:fbutton:1.0.5'
+    compile files('lib/gson-2.6.2.jar')
+    compile files('lib/android-async-http-1.4.9.jar')
 }

@@ -1,15 +1,20 @@
 package com.mingle.myapplication;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.RemoteException;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -20,10 +25,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-
 
 import com.mingle.myapplication.service.RECOBackgroundMonitoringService;
 import com.mingle.sweetpick.CustomDelegate;
@@ -32,7 +37,7 @@ import com.perples.recosdk.RECOBeacon;
 import com.perples.recosdk.RECOBeaconRegion;
 import java.util.ArrayList;
 import java.util.Collection;
-
+import com.mingle.myapplication.severcall.Servercall;
 
 public class MainActivity extends AppCompatActivity
         implements ActivityCompat.OnRequestPermissionsResultCallback{
@@ -62,12 +67,22 @@ public class MainActivity extends AppCompatActivity
     Button exhibitButton;
     Toolbar toolbar;
     Toolbar bottombar;
+    //String NickNick;
 
-
+    DialogCall dialogCall;
+    String editText;
+    Servercall servercall;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //dialogCall=new DialogCall();
+
+        showDialog();
+
+        servercall=new Servercall();
+        servercall.confirm(getApplicationContext(),editText);
 
         m_checkPermission();
 
@@ -152,7 +167,15 @@ public class MainActivity extends AppCompatActivity
         });
 
     }
+    public void showDialog(){
 
+        dialogCall=new DialogCall();
+        dialogCall.show(getFragmentManager(),"NickName");
+        editText=dialogCall.NickNick;
+
+
+
+    }
     private void m_checkPermission() {
         mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = mBluetoothManager.getAdapter();
@@ -244,12 +267,12 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         return super.onOptionsItemSelected(item);
     }
-
 
 
 }
