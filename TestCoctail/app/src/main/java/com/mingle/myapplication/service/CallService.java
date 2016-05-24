@@ -40,8 +40,8 @@ public class CallService extends Service {
                     Log.d("DEBUG", "incomingNumber:" + incomingNumber);
                     switch (state) {
                         case TelephonyManager.CALL_STATE_IDLE: //전화가 끊긴 상태
-                            mAudioManager.setRingerMode(mAudioManager.RINGER_MODE_VIBRATE);
                             if (call == true) {
+                                mAudioManager.setRingerMode(mAudioManager.RINGER_MODE_VIBRATE);
                                 //SendSMS(incomingNumber, "죄송합니다. 지금 전화를 받을 수 없습니다.");
                                 Toast.makeText(getApplicationContext(), "죄송합니다. 지금 전화를 받을 수 없습니다."
                                         , Toast.LENGTH_SHORT).show();

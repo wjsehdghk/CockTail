@@ -16,6 +16,7 @@ import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -65,13 +66,14 @@ public class ResionExhibitionActivity extends AppCompatActivity {
     private AlertDialog mDialog = null;
 
 
+    boolean flag=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resion_exhibition);
+        initDialog();
 
         audioManager = (AudioManager) getBaseContext().getSystemService(Context.AUDIO_SERVICE);
-
         final Animation animRotate = AnimationUtils.loadAnimation(this, R.anim.anim_rotate);
 
         bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.exhibition);
@@ -122,8 +124,6 @@ public class ResionExhibitionActivity extends AppCompatActivity {
 
         rl = (RelativeLayout) findViewById(R.id.rl);
 
-        //setupViewpager();
-        //setupRecyclerView();
         setupCustomView();
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -167,8 +167,10 @@ public class ResionExhibitionActivity extends AppCompatActivity {
                 SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionBrightness"));
         audioManager.setRingerMode(
                 SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionRingerMode"));
+        Log.d("SharedPreferenceUtil 1", "Resion Exhibition: " + SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionBrightness"));
+        Log.d("SharedPreferenceUtil 1", "Resion Exhibition: " + SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionRingerMode"));
 
-        initDialog();
+
 
     }
 
@@ -254,6 +256,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         mSweetSheet3 = new SweetSheet(rl);
         CustomDelegate customDelegate = new CustomDelegate(true,
                 CustomDelegate.AnimationType.AlphaAnimation);
+
         View view = LayoutInflater.from(this).inflate(R.layout.layout_custom_view, null, false);
 
         customDelegate.setCustomView(view);
@@ -262,6 +265,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         mSweetSheet3.setBackgroundEffect(new BlurEffect(8));
         mSweetSheet3.setBackgroundClickEnable(false);
         view.findViewById(R.id.triToggleButton).setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 switch (TriToggleButton.getState()) {
@@ -286,6 +290,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         seekBar =(SeekBar)view.findViewById(R.id.custom_seek);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             float brightness = 0;
+
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (progress < 10) {
@@ -297,6 +302,8 @@ public class ResionExhibitionActivity extends AppCompatActivity {
                 params.screenBrightness = (float) progress / 100;
                 brightness = params.screenBrightness;
                 getWindow().setAttributes(params);
+                Log.d("SharedPreferenceUtil 3", "Resion Exhibition: " + SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionBrightness"));
+                Log.d("SharedPreferenceUtil 3", "Resion Exhibition: " + SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionRingerMode"));
             }
 
             @Override
@@ -309,10 +316,13 @@ public class ResionExhibitionActivity extends AppCompatActivity {
                 brightness = brightness * 255;
                 Settings.System.putInt(getContentResolver(), "screen_brightness", (int) brightness);
                 SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "ExhibitionBrightness", (int) brightness);
+
             }
         });
         seekBar.setProgress(
                 SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionBrightness"));
+        Log.d("SharedPreferenceUtil 2", "Resion Exhibition: " + SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionBrightness"));
+        Log.d("SharedPreferenceUtil 2", "Resion Exhibition: " + SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionRingerMode"));
 
 
     }

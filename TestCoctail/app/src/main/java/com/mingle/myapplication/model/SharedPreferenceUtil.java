@@ -14,6 +14,7 @@ public class SharedPreferenceUtil {
     //public static final String KEY_CINEMA_BRIGHTNESS = "Cinema Brightness";
     public static boolean isResionSet = false;
 
+    /*
     private static SharedPreferenceUtil instance;
 
     public static SharedPreferenceUtil getInstance() {
@@ -22,6 +23,7 @@ public class SharedPreferenceUtil {
         }
         return instance;
     }
+    */
 
 
     public static void putSharedPreference(Context context, String key, int value) {

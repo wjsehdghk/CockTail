@@ -38,8 +38,7 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".ResionCinemaActivity"></activity>
+        <activity android:name=".ResionCinemaActivity"></activity>
         <activity android:name=".RegionLibraryActivity"></activity>
         <activity android:name=".ResionExhibitionActivity"></activity>
         <activity android:name=".IntroActivity"></activity>
