@@ -215,7 +215,7 @@ public class RECOBackgroundRangingService extends Service implements RECOMonitor
 		//Log.i("RECOBackgroundRangingService", "didEnterRegion() - " + region.getUniqueIdentifier());
 		this.popupNotification("Ranging Inside of " + region.getUniqueIdentifier());
 		//Write the code when the device is enter the region
-		SharedPreferenceUtil.isResionSet=true;
+		SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "ISRESIONSET", 1);
 		this.startRangingWithRegion(region); //start ranging to get beacons inside of the region
 		//from now, stop ranging after 10 seconds if the device is not exited
 
@@ -231,7 +231,7 @@ public class RECOBackgroundRangingService extends Service implements RECOMonitor
 		//Log.i("RECOBackgroundRangingService", "didExitRegion() - " + region.getUniqueIdentifier());
 		this.popupNotification("Ranging Outside of " + region.getUniqueIdentifier());
 		//Write the code when the device is exit the region
-		SharedPreferenceUtil.isResionSet=false;
+		SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "ISRESIONSET", 0);
 		this.stopRangingWithRegion(region); //stop ranging because the device is outside of the region from now
 
 	}

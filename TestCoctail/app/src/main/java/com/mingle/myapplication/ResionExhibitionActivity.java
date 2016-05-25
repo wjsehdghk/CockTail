@@ -320,7 +320,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
             }
         });
         seekBar.setProgress(
-                SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionBrightness"));
+                SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionBrightness")*100/255);
         Log.d("SharedPreferenceUtil 2", "Resion Exhibition: " + SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionBrightness"));
         Log.d("SharedPreferenceUtil 2", "Resion Exhibition: " + SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionRingerMode"));
 

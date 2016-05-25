@@ -12,7 +12,6 @@ public class SharedPreferenceUtil {
     //public static final String KEY_CINEMA_MAJOR = "Cinema Major";              //영화관 Major
     //public static final String KEY_CINEMA_MODE = "Cinema RingerMode";          // 영화관 RingerMode
     //public static final String KEY_CINEMA_BRIGHTNESS = "Cinema Brightness";
-    public static boolean isResionSet = false;
 
     /*
     private static SharedPreferenceUtil instance;

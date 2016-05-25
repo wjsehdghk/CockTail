@@ -20,92 +20,80 @@
             sl:scale_base_height="1650"
             sl:scale_base_width="1000">
 
-
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="save"
-                android:id="@+id/saveBtn"
-                sl:scale_height="100"
-                sl:scale_left="400"
-                sl:scale_textsize="37"
-                sl:scale_top="550"
-                sl:scale_width="200"/>
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="밝기"
+                android:text="장소 에티켓 설정"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/white"
                 sl:scale_height="100"
-                sl:scale_left="425"
+                sl:scale_left="260"
                 sl:scale_textsize="70"
-                sl:scale_top="50"
-                sl:scale_width="150" />
+                sl:scale_top="10"
+                sl:scale_width="520" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/round_corner"
-                sl:scale_height="105"
-                sl:scale_left="100"
-                sl:scale_top="160"
-                sl:scale_width="800">
+                sl:scale_height="500"
+                sl:scale_left="10"
+                sl:scale_top="120"
+                sl:scale_width="980">
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/ic_brightness1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_account_child"
+                android:src="@drawable/ic_brightness_low_black_24dp"
                 sl:scale_height="100"
-                sl:scale_left="100"
-                sl:scale_top="163"
-                sl:scale_width="150" />
+                sl:scale_left="0"
+                sl:scale_top="133"
+                sl:scale_width="180"/>
 
             <SeekBar
                 android:id="@+id/custom_seek"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 sl:scale_height="100"
-                sl:scale_left="250"
-                sl:scale_top="163"
+                sl:scale_left="150"
+                sl:scale_top="133"
                 sl:scale_width="650" />
+
+            <ImageView
+                android:id="@+id/ic_brightness2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_brightness_high_black_24dp"
+                sl:scale_height="100"
+                sl:scale_left="800"
+                sl:scale_top="133"
+                sl:scale_width="180"/>
+
+
+
+            <ImageView
+                android:id="@+id/ic_phon2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_phone_android_black_24dp"
+                sl:scale_height="111"
+                sl:scale_left="0"
+                sl:scale_top="320"
+                sl:scale_width="180"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="모드변경"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 sl:scale_height="100"
-                sl:scale_left="155"
+                sl:scale_left="380"
                 sl:scale_textsize="70"
-                sl:scale_top="290"
+                sl:scale_top="325"
                 sl:scale_width="270" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="전화무음"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/white"
-                sl:scale_height="100"
-                sl:scale_left="575"
-                sl:scale_textsize="70"
-                sl:scale_top="290"
-                sl:scale_width="270" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_corner"
-                sl:scale_height="100"
-                sl:scale_left="155"
-                sl:scale_top="400"
-                sl:scale_width="270">
-            </LinearLayout>
 
             <com.mingle.myapplication.TriToggleButton
                 android:id="@+id/triToggleButton"
@@ -113,62 +101,44 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_volume_up_black_24dp"
                 sl:scale_height="100"
-                sl:scale_left="240"
-                sl:scale_top="400"
+                sl:scale_left="847"
+                sl:scale_top="320"
                 sl:scale_width="100">
             </com.mingle.myapplication.TriToggleButton>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_corner"
-                sl:scale_height="105"
-                sl:scale_left="575"
-                sl:scale_top="400"
-                sl:scale_width="270">
-            </LinearLayout>
+
 
             <ImageView
-                android:id="@+id/imageView5"
+                android:id="@+id/ic_phon1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_account_child"
-                sl:scale_height="100"
-                sl:scale_left="575"
-                sl:scale_top="405"
-                sl:scale_width="100"/>
+                android:src="@drawable/ic_phone_forwarded_black_24dp"
+                sl:scale_height="111"
+                sl:scale_left="0"
+                sl:scale_top="507"
+                sl:scale_width="180"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="전화무음 \u0026 메시지전송"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/black"
+                sl:scale_height="80"
+                sl:scale_left="265"
+                sl:scale_textsize="55"
+                sl:scale_top="525"
+                sl:scale_width="565" />
 
             <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/switch1"
                 sl:scale_height="100"
-                sl:scale_left="670"
-                sl:scale_top="400"
+                sl:scale_left="780"
+                sl:scale_top="510"
                 sl:scale_width="170"/>
-
-
-            <info.hoang8f.widget.FButton
-                android:id="@+id/intro_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="7"
-                android:text="모드"
-                fbutton:buttonColor="@color/colorPrimary"
-                fbutton:cornerRadius="5dp"
-                fbutton:shadowColor="#7f8c8d"
-                fbutton:shadowEnabled="true"
-                fbutton:shadowHeight="5dp"
-                sl:scale_height="50"
-                sl:scale_left="0"
-                sl:scale_top="0"
-                sl:scale_width="50">
-            </info.hoang8f.widget.FButton>
 
         </com.ssomai.android.scalablelayout.ScalableLayout>
     </ScrollView>
-
-
-
-
 </RelativeLayout>

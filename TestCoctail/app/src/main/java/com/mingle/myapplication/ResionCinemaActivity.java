@@ -248,9 +248,6 @@ public class ResionCinemaActivity extends AppCompatActivity {
                                 Log.d("SharedPreferenceUtil 3", "Resion Cinema: " + SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "CinemaBrightness"));
                                 Log.d("SharedPreferenceUtil 3", "Resion Cinema: " + SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "CinemaRingerMode"));
 
-                                brightness = brightness * 255;
-                                Settings.System.putInt(getContentResolver(), "screen_brightness", (int) brightness);
-                                SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "CinemaBrightness", (int) brightness);
                         }
 
                         @Override
@@ -260,11 +257,13 @@ public class ResionCinemaActivity extends AppCompatActivity {
 
                         @Override
                         public void onStopTrackingTouch(SeekBar seekBar) {
-
+                                brightness = brightness * 255;
+                                Settings.System.putInt(getContentResolver(), "screen_brightness", (int) brightness);
+                                SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "CinemaBrightness", (int) brightness);
                         }
                 });
                 seekBar.setProgress(
-                        SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "CinemaBrightness"));
+                        SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "CinemaBrightness")*100/255);
                 Log.d("SharedPreferenceUtil 2", "Resion Cinema: " + SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "CinemaBrightness"));
                 Log.d("SharedPreferenceUtil 2", "Resion Cinema: " + SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "CinemaRingerMode"));
 

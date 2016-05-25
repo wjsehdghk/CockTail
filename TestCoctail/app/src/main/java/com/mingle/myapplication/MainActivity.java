@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.AudioManager;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
@@ -68,14 +69,15 @@ public class MainActivity extends AppCompatActivity
     Handler handler;
 
     AlertDialog.Builder alert;
+    AudioManager audioManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "ISRESIONSET", 0);
         m_checkPermission();
-
+        audioManager = (AudioManager) getBaseContext().getSystemService(Context.AUDIO_SERVICE);
         Intent monitorService = new Intent(this, RECOBackgroundRangingService.class);
         startService(monitorService);
 
@@ -217,24 +219,28 @@ public class MainActivity extends AppCompatActivity
 
 
     private void updateThread() {
-        if(SharedPreferenceUtil.isResionSet) {
-            if (SharedPreferenceUtil.getSharedPreference(this, "ResionMajor") == 18249) {
+        if(SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ISRESIONSET")==1) {
+            if (SharedPreferenceUtil.getSharedPreference(this, "ResionMajor") == 18243) {
                 Intent intent = new Intent(getApplicationContext(), ResionCinemaActivity.class);
                 startActivity(intent);
                 //moveTaskToBack(SharedPreferenceUtil.isResionSet);
                 Toast.makeText(this, "스레드 동작 중", Toast.LENGTH_SHORT);
-                SharedPreferenceUtil.isResionSet=false;
+                SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "ISRESIONSET", 0);
                 //Intent intent3 = new Intent();
                 //intent3.setAction(Intent.ACTION_MAIN);
                 //intent3.addCategory(Intent.CATEGORY_HOME);
                 //startActivity(intent3);
             }
-            if(SharedPreferenceUtil.getSharedPreference(this, "ResionMajor") == 18243) {
+            if(SharedPreferenceUtil.getSharedPreference(this, "ResionMajor") == 18249) {
+                audioManager.setRingerMode(
+                        SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionRingerMode")
+                );
+
                 Intent intent = new Intent(getApplicationContext(), ResionExhibitionActivity.class);
                 startActivity(intent);
                 //moveTaskToBack(SharedPreferenceUtil.isResionSet);
 
-                SharedPreferenceUtil.isResionSet=false;
+                SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "ISRESIONSET", 0);
                 //Intent intent3 = new Intent();
                 //intent3.setAction(Intent.ACTION_MAIN);
                 //intent3.addCategory(Intent.CATEGORY_HOME);
