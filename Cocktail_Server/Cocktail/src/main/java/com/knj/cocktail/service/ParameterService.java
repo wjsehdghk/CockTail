@@ -39,4 +39,8 @@ public class ParameterService {
 		
 	}
 
+	public Parameter selectDefault() {
+		return parameterDAO.getparameter();
+	}
+
 }

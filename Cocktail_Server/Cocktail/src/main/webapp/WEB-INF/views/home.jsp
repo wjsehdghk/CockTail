@@ -62,7 +62,7 @@
 			<div class="span3" id="sidebar">
 				<ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
 					<li><a href="showSector"><i class="icon-chevron-right"></i> Sector</a></li>
-					<li><a href="calendar.html"><i class="icon-chevron-right"></i>Statistics</a></li>
+					<li><a href="showStatistic"><i class="icon-chevron-right"></i>Statistics</a></li>
 					<li><a href="showBeacon"><i class="icon-chevron-right"></i>Beacon</a></li>
 					<li><a href="form.html"><i class="icon-chevron-right"></i>Users</a></li>
 

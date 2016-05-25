@@ -5,6 +5,7 @@ public class Parameter {
 	
 	public Parameter() {
 	}
+	
 	private String userId;
 	private String sectorId;
 	private int brightness;
@@ -46,5 +47,12 @@ public class Parameter {
 	}
 	public void setCallId(int callId) {
 		this.callId = callId;
+	}
+	//\"userId\"=\"" + userId + "\",
+	@Override
+	public String toString() {
+		
+		return "{\"sectorId\"=\"" + sectorId + "\", "
+				+ "\"brightness\"=\"" + brightness + "\", \"modeId\"=\"" + modeId + "\", \"callId\"=\"" +callId +"\"}";
 	}
 }
