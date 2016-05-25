@@ -32,6 +32,8 @@ public class ParameterController {
 		return "sector";
 	}
 	
+	
+	
 	@RequestMapping("insertSector")
 	public String insertSector( HttpServletRequest request){
 		String sectorId = request.getParameter("sectorId");
@@ -62,6 +64,10 @@ public class ParameterController {
 	@RequestMapping("test")
 	public String showLogin(Model model) {
 		System.out.println("success");
+		Parameter parameter = parameterService.selectDefault();
+		model.addAttribute("parameter", parameter);
 		return "test";
 	}
+	
+
 }

@@ -43,4 +43,9 @@ public class ParameterDAO {
 		
 	}
 
+	public Parameter getparameter() {
+		String sqlStatement = "select * from parameter where userId is null && sectorId='cinema'" ;
+		return jdbcTemplateObject.queryForObject(sqlStatement, new ParameterMapper());
+	}
+
 }

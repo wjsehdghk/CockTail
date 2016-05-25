@@ -63,7 +63,7 @@
 				<ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
 					<li class="active"><a href="showSector"><i
 							class="icon-chevron-right"></i> Sector</a></li>
-					<li><a href="calendar.html"><i class="icon-chevron-right"></i>
+					<li><a href="showStatistic"><i class="icon-chevron-right"></i>
 							Statistics</a></li>
 					<li><a href="showBeacon"><i class="icon-chevron-right"></i>
 							Beacon</a></li>
