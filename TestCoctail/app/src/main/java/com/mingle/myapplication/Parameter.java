@@ -6,8 +6,8 @@ package com.mingle.myapplication;
 public class Parameter {
 
     public String sectorId;
-    public String brightness;
-    public String modeId;
-    public String callId;
+    public int brightness;
+    public int modeId;
+    public int callId;
 
 }

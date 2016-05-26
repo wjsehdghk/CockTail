@@ -56,7 +56,7 @@ public class ResionCinemaActivity extends AppCompatActivity {
         AudioManager audioManager;
         String cinema;
         Servercall servercall;
-        Customize customize;
+
         @Override
         protected void onCreate(Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);

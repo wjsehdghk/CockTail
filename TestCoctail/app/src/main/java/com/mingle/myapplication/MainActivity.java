@@ -38,7 +38,7 @@ import com.perples.recosdk.RECOBeaconRegion;
 import java.util.ArrayList;
 import java.util.Collection;
 import com.mingle.myapplication.severcall.Servercall;
-
+import com.mingle.myapplication.model.SharedPreferenceUtil;
 public class MainActivity extends AppCompatActivity
         implements ActivityCompat.OnRequestPermissionsResultCallback{
 
@@ -69,11 +69,14 @@ public class MainActivity extends AppCompatActivity
     Toolbar bottombar;
 
 
-
+    int num;
 
 
     DialogCall dialogCall;
     Servercall servercall;
+
+    Parameter parameter;
+    SharedPreferenceUtil sharedPreferenceUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,9 +84,18 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
        // showDialog();
-        servercall=new Servercall();
 
+
+
+        servercall=new Servercall();
         servercall.customizeset(getApplicationContext());
+
+
+
+
+
+        sharedPreferenceUtil.putSharedPreference(getApplicationContext(),"cinemabrightness",parameter.brightness);
+
 
 
 

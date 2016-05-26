@@ -1,28 +1,20 @@
 package com.mingle.myapplication.severcall;
-
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 import com.mingle.myapplication.Result;
-
 import cz.msebera.android.httpclient.Header;
-
 /**
  * Created by multimedia on 2016-05-23.
  */
 public class Servercall extends AppCompatActivity {
-
-
     Gson gson;
     Result result;
     AsyncHttpClient client = new AsyncHttpClient();
-
-
     private static final String server_url = "http://113.198.84.92:8080/cocktail";
 
     public void postcinemainfo(Context context, String id){
@@ -42,7 +34,6 @@ public class Servercall extends AppCompatActivity {
             }
         });
     }
-
     public void confirm(Context context, String nickname) {
         RequestParams params=new RequestParams();
         params.put("nickname",nickname);
@@ -59,9 +50,7 @@ public class Servercall extends AppCompatActivity {
             }
         });
     }
-
     public void customizeset(Context context){
-
         RequestParams params=new RequestParams();
         client.post(context, server_url + "/test", params, new TextHttpResponseHandler() {
             @Override
@@ -70,7 +59,6 @@ public class Servercall extends AppCompatActivity {
             }
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
-
                 Log.d("success","custom "+statusCode);
                 // gson 을 사용하겠음.
                 gson = new Gson();
