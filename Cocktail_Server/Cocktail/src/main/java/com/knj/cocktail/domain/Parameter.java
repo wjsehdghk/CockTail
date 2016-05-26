@@ -6,7 +6,6 @@ public class Parameter {
 	public Parameter() {
 	}
 	
-	private String userId;
 	private String sectorId;
 	private int brightness;
 	private int modeId;
@@ -18,12 +17,7 @@ public class Parameter {
 		this.modeId = modeId;
 		this.callId = callId;
 	}
-	public String getUserId() {
-		return userId;
-	}
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+
 	public String getSectorId() {
 		return sectorId;
 	}

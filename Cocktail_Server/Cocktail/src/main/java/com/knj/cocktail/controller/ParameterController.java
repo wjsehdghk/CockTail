@@ -31,14 +31,14 @@ public class ParameterController {
 		model.addAttribute("parameterDefault", parameterDefault);
 		return "sector";
 	}
-	
+/*	
 	@RequestMapping("showCustom")
 	public String showCustom(Model model){
-		Custom custom = parameterService.selectCustom();
+		List<Custom> custom = parameterService.selectCustom();
 		model.addAttribute("custom", custom);
 		return "custom";
 	}
-	
+	*/
 
 	
 	
@@ -50,6 +50,7 @@ public class ParameterController {
 		String callId = request.getParameter("callId");
 		
 		System.out.println(sectorId);
+
 		if(sectorId!="" && brightness != "" && modeId != "" && callId != ""){
 			Parameter parameter = parameterService.selectDefault();
 			if(parameter.getSectorId()==sectorId){
@@ -57,7 +58,7 @@ public class ParameterController {
 				return "insertOverlap";
 			}
 			parameterService.doAdd(sectorId, brightness, modeId, callId);
-			
+			System.out.println("here");
 			return "redirect:showSector";
 		}
 		else {

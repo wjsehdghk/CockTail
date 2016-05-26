@@ -61,14 +61,14 @@
 		<div class="row-fluid">
 			<div class="span3" id="sidebar">
 				<ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
+									<li class="active"><a href="showStatistic"><i class="icon-chevron-right"></i>Statistics</a></li>
 					<li><a href="showSector"><i class="icon-chevron-right"></i> Sector</a></li>
-					<li class="active"><a href="showStatistic"><i class="icon-chevron-right"></i>Statistics</a></li>
+
 					<li><a href="showBeacon"><i class="icon-chevron-right"></i>Beacon</a></li>
 					<li><a href="form.html"><i class="icon-chevron-right"></i>Users</a></li>
 
 				</ul>
 			</div>
-<%String string="73"; %>
 			<!--/span-->
 			   <div class="span9" id="content">
 
@@ -99,8 +99,8 @@
                                     </div>
                                 </div>
                                 <div class="span3">
-                                <div align="center">Sector Count</div></br>
-                                   <table class="table table-striped">
+                                <div align="center"><h6>Sector Count</h6></div></br>
+                                   <table class="table table-bordered">
 								
 										<tr>
 											<th>Cinema</th>
@@ -118,16 +118,18 @@
 								</table>
                                 </div>
                             </div>
+                            <div> </br></div>
                         </div>
                         <!-- /block -->
                     </div>
+                   
                     <div class="row-fluid">
-                        <div class="span6">
+                        <div class="span12">
                             <!-- block -->
                             <div class="block">
                                 <div class="navbar navbar-inner block-header">
-                                    <div class="muted pull-left">Users</div>
-                                    <div class="pull-right"><span class="badge badge-info">1,234</span>
+                                    <div class="muted pull-left"><h3>Average Parameters Each Sector</h3></div>
+                                    <div class="pull-right">
 
                                     </div>
                                 </div>
@@ -136,30 +138,26 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>First Name</th>
-                                                <th>Last Name</th>
-                                                <th>Username</th>
+                                                <th>SectorId</th>
+                                                <th>brightness</th>
+                                                <th>modeId</th>
+                                                <th>callId</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Mark</td>
-                                                <td>Otto</td>
-                                                <td>@mdo</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Jacob</td>
-                                                <td>Thornton</td>
-                                                <td>@fat</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>Vincent</td>
-                                                <td>Gabriel</td>
-                                                <td>@gabrielva</td>
-                                            </tr>
+                                            <%int i = 1;%>
+									<tr>
+										
+												<c:forEach items="${custom}" var="row">
+													<tr>
+														<th><%=i++%></th>
+														<th>${row.sectorId}</th>
+														<th>${row.brightness}</th>
+														<th>${row.modeId}</th>
+														<th>${row.callId}</th>
+													</tr>
+												</c:forEach>
+											
                                         </tbody>
                                     </table>
                                 </div>

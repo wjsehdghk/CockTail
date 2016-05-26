@@ -5,6 +5,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -42,11 +43,18 @@ public class ParameterDAO {
 		jdbcTemplateObject.update(sqlStatement, new Object[] {sectorId});
 		
 	}
+	
+
 
 	public Parameter getparameter() {
-		String sqlStatement = "select * from parameter where userId is null && sectorId='cinema'" ;
+		String sqlStatement = "select * from parameter where sectorId='cinema'" ;
+		try{
 		return jdbcTemplateObject.queryForObject(sqlStatement, new ParameterMapper());
-	}
+		}catch(EmptyResultDataAccessException e) {
+	        // EmptyResultDataAccessException 예외 발생시 null 리턴
+	        return null;
+	    }
+		}
 
 	public List<Custom> getCustoms() {
 		

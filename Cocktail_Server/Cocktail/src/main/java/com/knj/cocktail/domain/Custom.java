@@ -3,6 +3,9 @@ package com.knj.cocktail.domain;
 public class Custom {
 
 	
+
+	
+
 	private String userId;
 	private String sectorId;
 	private int brightness;
@@ -41,4 +44,13 @@ public class Custom {
 	public void setCallId(int callId) {
 		this.callId = callId;
 	}
+	
+	public Custom( String sectorId, int brightness, int modeId, int callId) {
+		this.sectorId = sectorId;
+		this.brightness = brightness;
+		this.modeId = modeId;
+		this.callId = callId;
+	}
+	
+	
 }
