@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/round_corner"
-                sl:scale_height="900"
+                sl:scale_height="1080"
                 sl:scale_left="10"
                 sl:scale_top="120"
                 sl:scale_width="980">
@@ -199,6 +199,33 @@
                 sl:scale_left="780"
                 sl:scale_top="884"
                 sl:scale_width="170"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_brightness_low_black_24dp"
+                sl:scale_height="100"
+                sl:scale_left="0"
+                sl:scale_top="1078"
+                sl:scale_width="180"/>
+
+            <SeekBar
+                android:id="@+id/custom_seek2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                sl:scale_height="100"
+                sl:scale_left="150"
+                sl:scale_top="1078"
+                sl:scale_width="650" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_brightness_high_black_24dp"
+                sl:scale_height="100"
+                sl:scale_left="800"
+                sl:scale_top="1078"
+                sl:scale_width="180"/>
+
 
 
         </com.ssomai.android.scalablelayout.ScalableLayout>

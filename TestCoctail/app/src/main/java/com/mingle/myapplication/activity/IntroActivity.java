@@ -1,4 +1,4 @@
-package com.mingle.myapplication;
+package com.mingle.myapplication.activity;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -9,6 +9,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mingle.myapplication.R;
 
 
 public class IntroActivity extends AppCompatActivity {

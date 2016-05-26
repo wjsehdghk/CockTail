@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.Button;
 
+import com.mingle.myapplication.activity.ResionExhibitionActivity;
+
 /**
  * Created by multimedia on 2016-05-18.
  */

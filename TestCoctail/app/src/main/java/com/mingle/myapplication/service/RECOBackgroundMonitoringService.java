@@ -2,20 +2,17 @@ package com.mingle.myapplication.service;
 
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.mingle.myapplication.MainActivity;
+import com.mingle.myapplication.activity.MainActivity;
 import com.mingle.myapplication.R;
-import com.mingle.myapplication.ResionCinemaActivity;
 import com.perples.recosdk.RECOBeaconManager;
 import com.perples.recosdk.RECOBeaconRegion;
 import com.perples.recosdk.RECOBeaconRegionState;

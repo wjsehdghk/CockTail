@@ -1,4 +1,4 @@
-package com.mingle.myapplication;
+package com.mingle.myapplication.activity;
 
 
 import android.os.Bundle;

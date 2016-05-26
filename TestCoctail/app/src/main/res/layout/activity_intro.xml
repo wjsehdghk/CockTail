@@ -4,7 +4,7 @@
     xmlns:sl="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mingle.myapplication.IntroActivity">
+    tools:context=".activity.IntroActivity">
 
     <com.ssomai.android.scalablelayout.ScalableLayout
         android:id="@+id/view"

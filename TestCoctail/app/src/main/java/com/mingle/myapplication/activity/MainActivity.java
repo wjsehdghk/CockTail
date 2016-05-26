@@ -1,7 +1,6 @@
-package com.mingle.myapplication;
+package com.mingle.myapplication.activity;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
@@ -23,17 +22,24 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+
 import android.widget.RelativeLayout;
-import android.widget.Toast;
+
 import android.widget.ToggleButton;
 
 
+import com.mingle.myapplication.DialogCall;
+import com.mingle.myapplication.Parameter;
+import com.mingle.myapplication.R;
 import com.mingle.myapplication.model.SharedPreferenceUtil;
 import com.mingle.myapplication.service.RECOBackgroundRangingService;
+
 import com.mingle.sweetpick.CustomDelegate;
 import com.mingle.sweetpick.SweetSheet;
 import com.perples.recosdk.RECOBeacon;
 import java.util.ArrayList;
+
+import com.mingle.myapplication.severcall.Servercall;
 
 
 public class MainActivity extends AppCompatActivity
@@ -54,8 +60,7 @@ public class MainActivity extends AppCompatActivity
 
     private ArrayList<RECOBeacon> mRangedBeacons;
 
-    private SweetSheet mSweetSheet;
-    private SweetSheet mSweetSheet2;
+
     private SweetSheet mSweetSheet3;
     private RelativeLayout rl;
     ToggleButton bottomToggleButton;
@@ -71,20 +76,38 @@ public class MainActivity extends AppCompatActivity
     int selectBeaconMajor=0;
     int difResionNum=0;
 
+
+    DialogCall dialogCall;
+    Servercall servercall;
+
+    Parameter parameter;
+    SharedPreferenceUtil sharedPreferenceUtil;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "ISRESIONSET", 0);
+
+
+       // showDialog();
+
+
+        servercall=new Servercall();
+        servercall.customizeset(getApplicationContext());
+
+
+        //sharedPreferenceUtil.putSharedPreference(getApplicationContext(),"cinemabrightness",parameter.brightness);
+
         m_checkPermission();
         audioManager = (AudioManager) getBaseContext().getSystemService(Context.AUDIO_SERVICE);
         Intent monitorService = new Intent(this, RECOBackgroundRangingService.class);
         startService(monitorService);
-
-
         cinemaButton=(Button)findViewById(R.id.cinema_h_icon);
         libraryButton=(Button)findViewById(R.id.library_h_icon);
         exhibitButton=(Button)findViewById(R.id.exhibition_h_icon);
+
 
 
         cinemaButton.setOnClickListener(new View.OnClickListener() {
@@ -162,7 +185,14 @@ public class MainActivity extends AppCompatActivity
 
 
     }
+    public void showDialog(){
 
+        dialogCall=new DialogCall();
+        dialogCall.show(getFragmentManager(),"NickName");
+        dialogCall.setCancelable(true);
+
+
+    }
     private void m_checkPermission() {
         mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = mBluetoothManager.getAdapter();
@@ -327,12 +357,12 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         return super.onOptionsItemSelected(item);
     }
-
 
 
 }

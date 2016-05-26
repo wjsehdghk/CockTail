@@ -1,5 +1,4 @@
-package com.mingle.myapplication;
-
+package com.mingle.myapplication.activity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -9,7 +8,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.AudioManager;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
@@ -32,16 +30,17 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.mingle.myapplication.R;
+import com.mingle.myapplication.TriToggleButton;
 import com.mingle.myapplication.model.SharedPreferenceUtil;
 import com.mingle.sweetpick.BlurEffect;
 import com.mingle.sweetpick.CustomDelegate;
-
 import com.mingle.sweetpick.SweetSheet;
-
 import java.io.InputStream;
-import java.net.URI;
 import java.net.URL;
-
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.net.HttpURLConnection;
 
 public class ResionExhibitionActivity extends AppCompatActivity {
     private SweetSheet mSweetSheet3;
@@ -62,34 +61,66 @@ public class ResionExhibitionActivity extends AppCompatActivity {
     AudioManager audioManager;
     public static int state=-1;
     SeekBar seekBar;
+    AlertDialog.Builder builder;
+    AlertDialog dialog;
+    Handler handler;
+    ImageView imageView;
+
 
     private AlertDialog mDialog = null;
 
 
-    boolean flag=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resion_exhibition);
-        initDialog();
+        audioManager = (AudioManager) getBaseContext().getSystemService(Context.AUDIO_SERVICE);
+        initdialog();
 
+        handler = new Handler();
+        dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://img.etoday.co.kr/pto_db/2015/07/20150722114910_680826_600_800.jpg");
+                    //InputStream is = url.openStream();
+                    HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                    conn.connect();
+                    int imagesize=conn.getContentLength();
+                    BufferedInputStream is=new BufferedInputStream(conn.getInputStream(),imagesize);
+                    final Bitmap bm = BitmapFactory.decodeStream(is);
+                    is.close();
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.d("image", "called");
+                            dialog.show();
+                        }
+                    });
+                    //imageView.setImageBitmap(bm);
+                    //Log.d("image2", "called2");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        t.start();
         audioManager = (AudioManager) getBaseContext().getSystemService(Context.AUDIO_SERVICE);
         final Animation animRotate = AnimationUtils.loadAnimation(this, R.anim.anim_rotate);
-
         bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.exhibition);
         bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.exhibition_edge);
         bitmap3 = BitmapFactory.decodeResource(getResources(), R.drawable.exhibition_icon);
-
         exhibition_back = (ImageView) findViewById(R.id.exhibition_back);
         exhibition_edge = (ImageView) findViewById(R.id.exhibition_edge);
         exhibition_icon = (ImageView)findViewById(R.id.exhibition_icon);
-
         exhibition_back.setImageBitmap(bitmap);
         exhibition_edge.setImageBitmap(bitmap2);
         exhibition_edge.setAnimation(animRotate);
         exhibition_icon.setImageBitmap(bitmap3);
-
-
         homeButton = (Button) findViewById(R.id.home_btn);
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,15 +192,12 @@ public class ResionExhibitionActivity extends AppCompatActivity {
             }
         });
 
-
-
         Settings.System.putInt(getContentResolver(), "screen_brightness",
                 SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionBrightness"));
         audioManager.setRingerMode(
                 SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionRingerMode"));
         Log.d("SharedPreferenceUtil 1", "Resion Exhibition: " + SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionBrightness"));
         Log.d("SharedPreferenceUtil 1", "Resion Exhibition: " + SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionRingerMode"));
-
 
 
     }
@@ -252,6 +280,27 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         bitmap3.recycle();
     }
 
+    public void initdialog(){
+
+        LayoutInflater inflater= (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View dialogview=inflater.inflate(R.layout.dialog,null);
+        imageView=(ImageView)findViewById(R.id.dialogimage);
+        builder=new AlertDialog.Builder(this);
+        builder.setTitle("메시지");
+        builder.setView(dialogview);
+        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        builder.setNegativeButton("Move", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+    }
     private void setupCustomView() {
         mSweetSheet3 = new SweetSheet(rl);
         CustomDelegate customDelegate = new CustomDelegate(true,

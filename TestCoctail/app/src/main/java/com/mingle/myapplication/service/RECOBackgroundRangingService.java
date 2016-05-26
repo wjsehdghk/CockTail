@@ -1,25 +1,16 @@
 package com.mingle.myapplication.service;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
-import android.widget.EditText;
 
-import com.mingle.myapplication.AlertDialogActivity;
-import com.mingle.myapplication.MainActivity;
+import com.mingle.myapplication.activity.MainActivity;
 import com.mingle.myapplication.R;
-import com.mingle.myapplication.ShowMsgActivity;
-import com.mingle.myapplication.model.ResionValue;
+import com.mingle.myapplication.activity.ShowMsgActivity;
 import com.mingle.myapplication.model.SharedPreferenceUtil;
 import com.perples.recosdk.RECOBeacon;
 import com.perples.recosdk.RECOBeaconManager;

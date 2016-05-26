@@ -1,4 +1,4 @@
-package com.mingle.myapplication;
+package com.mingle.myapplication.activity;
 
 
 import android.content.ComponentName;
@@ -13,7 +13,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.telecom.Call;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -29,11 +28,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.Switch;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.mingle.myapplication.R;
+import com.mingle.myapplication.TriToggleButton;
 import com.mingle.myapplication.model.SharedPreferenceUtil;
 import com.mingle.myapplication.service.CallService;
+import com.mingle.myapplication.severcall.Servercall;
 import com.mingle.sweetpick.BlurEffect;
 import com.mingle.sweetpick.CustomDelegate;
 import com.mingle.sweetpick.SweetSheet;
@@ -65,13 +66,17 @@ public class ResionCinemaActivity extends AppCompatActivity {
         Button saveBtn;
         WifiManager mWifiManager;
 
-
-
+        String cinema;
+        Servercall servercall;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.activity_resion_cinema);
+
+                servercall=new Servercall();
+                cinema="cinema";
+                servercall.postcinemainfo(getApplicationContext(), cinema);
 
                 final Animation animRotate = AnimationUtils.loadAnimation(this, R.anim.anim_rotate);
                 audioManager = (AudioManager) getBaseContext().getSystemService(Context.AUDIO_SERVICE);
@@ -173,9 +178,6 @@ public class ResionCinemaActivity extends AppCompatActivity {
                 SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "CallServiceFrag", 1);
                 mCallService = startService(new Intent(this, CallService.class));
                 callFrag=1;
-
-
-
 
 
         }

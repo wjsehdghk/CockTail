@@ -1,4 +1,4 @@
-package com.mingle.myapplication;
+package com.mingle.myapplication.activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.ToggleButton;
 
 import com.mingle.entity.MenuEntity;
+import com.mingle.myapplication.R;
 import com.mingle.sweetpick.BlurEffect;
 import com.mingle.sweetpick.CustomDelegate;
 import com.mingle.sweetpick.DimEffect;

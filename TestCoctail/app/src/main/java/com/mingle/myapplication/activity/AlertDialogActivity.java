@@ -1,4 +1,4 @@
-package com.mingle.myapplication;
+package com.mingle.myapplication.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.mingle.myapplication.R;
 
 public class AlertDialogActivity extends Activity {
 

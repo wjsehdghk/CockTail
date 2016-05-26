@@ -1,4 +1,4 @@
-package com.mingle.myapplication;
+package com.mingle.myapplication.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
