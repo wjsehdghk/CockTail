@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.knj.cocktail.domain.Custom;
 import com.knj.cocktail.domain.Parameter;
 import com.knj.cocktail.domain.UseCount;
 import com.knj.cocktail.service.ParameterService;
@@ -43,6 +44,8 @@ public class StatisticContorller {
 		useCount = statisticService.doCompute(useCount);
 		System.out.println(useCount.getCinema());
 		model.addAttribute("useCount", useCount);
+		List<Custom> custom = parameterService.selectCustom();
+		model.addAttribute("custom", custom);
 		return "statistic";
 	}
 	

@@ -59,7 +59,7 @@ public class AdminController {
 	public String goHome(){
 		
 		return "home";
-	}
+	} 
 	
 	
 	@RequestMapping("failLogin")
