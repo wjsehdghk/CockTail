@@ -81,7 +81,7 @@
 						<!-- block -->
 						<div class="block">
 							<div class="navbar navbar-inner block-header">
-								<div class="muted pull-left">Sector Table (default)</div>
+								<div class="muted pull-left"><h3>Sector Table (default)</h3></div>
 
 							</div>
 							

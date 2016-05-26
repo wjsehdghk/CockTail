@@ -3,37 +3,37 @@ package com.knj.cocktail.domain;
 public class UseCount {
 
 	
-	public UseCount(double cinema, double exhibition, double library) {
+	public UseCount(int cinema, int exhibition, int library) {
 		
 		this.cinema = cinema;
 		this.exhibition = exhibition;
 		this.library = library;
 	}
-	private double cinema;
-	private double exhibition;
-	private double library;
+	private int cinema;
+	private int exhibition;
+	private int library;
 	private int cinemaCompute;
 	private int exhibitionCompute;
 	private int libraryCompute;
 	
 	public UseCount() {
 	}
-	public double getCinema() {
+	public int getCinema() {
 		return cinema;
 	}
-	public void setCinema(double cinema) {
+	public void setCinema(int cinema) {
 		this.cinema = cinema;
 	}
-	public double getExhibition() {
+	public int getExhibition() {
 		return exhibition;
 	}
-	public void setExhibition(double exhibition) {
+	public void setExhibition(int exhibition) {
 		this.exhibition = exhibition;
 	}
-	public double getLibrary() {
+	public int getLibrary() {
 		return library;
 	}
-	public void setLibrary(double library) {
+	public void setLibrary(int library) {
 		this.library = library;
 	}
 	

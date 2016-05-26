@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.knj.cocktail.dao.ParameterDAO;
+import com.knj.cocktail.domain.Custom;
 import com.knj.cocktail.domain.Parameter;
 
 
@@ -41,6 +42,12 @@ public class ParameterService {
 
 	public Parameter selectDefault() {
 		return parameterDAO.getparameter();
+	}
+
+	public Custom selectCustom() {
+		List<Custom> custom = parameterDAO.getCustoms();
+		
+		return null;
 	}
 
 }
