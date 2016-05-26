@@ -67,32 +67,34 @@ public class MainActivity extends AppCompatActivity
     Button exhibitButton;
     Toolbar toolbar;
     Toolbar bottombar;
-    //String NickNick;
+
+
+
+
 
     DialogCall dialogCall;
-    String editText;
     Servercall servercall;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //dialogCall=new DialogCall();
-
-        showDialog();
-
+       // showDialog();
         servercall=new Servercall();
-        servercall.confirm(getApplicationContext(),editText);
+
+        servercall.customizeset(getApplicationContext());
+
+
 
         m_checkPermission();
 
         Intent monitorService = new Intent(this, RECOBackgroundMonitoringService.class);
         startService(monitorService);
-
-
         cinemaButton=(Button)findViewById(R.id.cinema_h_icon);
         libraryButton=(Button)findViewById(R.id.library_h_icon);
         exhibitButton=(Button)findViewById(R.id.exhibition_h_icon);
+
 
 
         cinemaButton.setOnClickListener(new View.OnClickListener() {
@@ -171,8 +173,7 @@ public class MainActivity extends AppCompatActivity
 
         dialogCall=new DialogCall();
         dialogCall.show(getFragmentManager(),"NickName");
-        editText=dialogCall.NickNick;
-
+        dialogCall.setCancelable(true);
 
 
     }

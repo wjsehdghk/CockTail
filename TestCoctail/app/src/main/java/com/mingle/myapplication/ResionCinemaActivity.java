@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,7 +24,10 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.ToggleButton;
+
+import com.mingle.myapplication.model.SharedPreferenceUtil;
 import com.mingle.myapplication.service.CallService;
+import com.mingle.myapplication.severcall.Servercall;
 import com.mingle.sweetpick.BlurEffect;
 import com.mingle.sweetpick.CustomDelegate;
 import com.mingle.sweetpick.SweetSheet;
@@ -50,11 +54,23 @@ public class ResionCinemaActivity extends AppCompatActivity {
         SeekBar seekBar;
         Switch callServiceSwitchBtn;
         AudioManager audioManager;
-
+        String cinema;
+        Servercall servercall;
+        Customize customize;
         @Override
         protected void onCreate(Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.activity_resion_cinema);
+
+
+                servercall=new Servercall();
+                cinema="cinema";
+                servercall.postcinemainfo(getApplicationContext(),cinema);
+
+
+
+
+
 
                 final Animation animRotate = AnimationUtils.loadAnimation(this, R.anim.anim_rotate);
                 audioManager = (AudioManager) getBaseContext().getSystemService(Context.AUDIO_SERVICE);

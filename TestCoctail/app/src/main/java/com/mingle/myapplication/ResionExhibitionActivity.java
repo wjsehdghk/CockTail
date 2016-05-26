@@ -1,7 +1,7 @@
 package com.mingle.myapplication;
 
-import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,30 +10,26 @@ import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.TabLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.method.Touch;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
 import android.widget.SeekBar;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-
 import com.mingle.entity.MenuEntity;
 import com.mingle.sweetpick.BlurEffect;
 import com.mingle.sweetpick.CustomDelegate;
@@ -41,12 +37,12 @@ import com.mingle.sweetpick.DimEffect;
 import com.mingle.sweetpick.RecyclerViewDelegate;
 import com.mingle.sweetpick.SweetSheet;
 import com.mingle.sweetpick.ViewPagerDelegate;
-
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import com.mingle.myapplication.DialogCall;
 
 public class ResionExhibitionActivity extends AppCompatActivity {
     private SweetSheet mSweetSheet;
@@ -77,15 +73,22 @@ public class ResionExhibitionActivity extends AppCompatActivity {
     Handler handler;
     ImageView imageView;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resion_exhibition);
+
         initdialog();
+
         handler = new Handler();
         dialog = builder.create();
         dialog.setCanceledOnTouchOutside(true);
         dialog.show();
+
+
+
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -198,9 +201,6 @@ public class ResionExhibitionActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-
     }
 
     protected void onNewIntent(Intent intent) {
@@ -227,6 +227,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         bitmap2.recycle();
         bitmap3.recycle();
     }
+
     public void initdialog(){
 
         LayoutInflater inflater= (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
