@@ -5,10 +5,10 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import com.knj.cocktail.domain.Custom;
 import com.knj.cocktail.domain.Parameter;
 
 
@@ -24,7 +24,7 @@ public class ParameterDAO {
 	
 	public List<Parameter> getparameters() {
 
-		String sqlStatement = "select * from parameter where userId is null" ;
+		String sqlStatement = "select * from parameter " ;
 		return jdbcTemplateObject.query(sqlStatement, new ParameterMapper());
 		
 	}
@@ -46,6 +46,12 @@ public class ParameterDAO {
 	public Parameter getparameter() {
 		String sqlStatement = "select * from parameter where userId is null && sectorId='cinema'" ;
 		return jdbcTemplateObject.queryForObject(sqlStatement, new ParameterMapper());
+	}
+
+	public List<Custom> getCustoms() {
+		
+		String sqlStatement = "select * from custom " ;
+		return jdbcTemplateObject.query(sqlStatement, new CustomMapper());
 	}
 
 }

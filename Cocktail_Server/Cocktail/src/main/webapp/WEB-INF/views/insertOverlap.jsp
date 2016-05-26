@@ -7,13 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-<script type="text/javascript">
-alert("내용을 입력하시오");
-  history.go(-1);   //이전페이지로 가기
-</script>
 
-
-
-
+<script>
+	  alert("장소명이 중복됩니다.");
+	     location.href="showSector";
+	</script>
 </body>
 </html>

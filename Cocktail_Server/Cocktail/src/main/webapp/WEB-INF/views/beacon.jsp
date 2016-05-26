@@ -81,7 +81,7 @@
 						<!-- block -->
 						<div class="block">
 							<div class="navbar navbar-inner block-header">
-								<div class="muted pull-left">Beacon Table</div>
+								<div class="muted pull-left"><h3>Beacon Table</h3></div>
 
 							</div>
 							

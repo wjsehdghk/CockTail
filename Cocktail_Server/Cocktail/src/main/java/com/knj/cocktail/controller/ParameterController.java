@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.knj.cocktail.domain.Custom;
 import com.knj.cocktail.domain.Parameter;
 import com.knj.cocktail.service.ParameterService;
 
@@ -28,10 +29,17 @@ public class ParameterController {
 	public String showHome(Model model){
 		List<Parameter> parameterDefault = parameterService.selectDefaultList();
 		model.addAttribute("parameterDefault", parameterDefault);
-		
 		return "sector";
 	}
 	
+	@RequestMapping("showCustom")
+	public String showCustom(Model model){
+		Custom custom = parameterService.selectCustom();
+		model.addAttribute("custom", custom);
+		return "custom";
+	}
+	
+
 	
 	
 	@RequestMapping("insertSector")
@@ -43,7 +51,11 @@ public class ParameterController {
 		
 		System.out.println(sectorId);
 		if(sectorId!="" && brightness != "" && modeId != "" && callId != ""){
-
+			Parameter parameter = parameterService.selectDefault();
+			if(parameter.getSectorId()==sectorId){
+				
+				return "insertOverlap";
+			}
 			parameterService.doAdd(sectorId, brightness, modeId, callId);
 			
 			return "redirect:showSector";

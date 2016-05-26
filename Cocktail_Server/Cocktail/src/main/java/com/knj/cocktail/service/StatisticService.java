@@ -30,10 +30,10 @@ private StatisticDAO statisticDAO;
 
 	public UseCount doCompute(UseCount useCount) {
 		
-		double total = useCount.getCinema() + useCount.getExhibition() + useCount.getLibrary();
-		useCount.setCinemaCompute((int)((useCount.getCinema()/total)*100));
-		useCount.setExhibitionCompute((int)((useCount.getExhibition()/total)*100));
-		useCount.setLibraryCompute( (int)((useCount.getLibrary()/total)*100));
+		int total = useCount.getCinema() + useCount.getExhibition() + useCount.getLibrary();
+		useCount.setCinemaCompute(useCount.getCinema()*100/total);
+		useCount.setExhibitionCompute(useCount.getExhibition()*100/total);
+		useCount.setLibraryCompute(useCount.getLibrary()*100/total);
 		System.out.println("cinema="+useCount.getCinema());
 		return useCount;
 	}
