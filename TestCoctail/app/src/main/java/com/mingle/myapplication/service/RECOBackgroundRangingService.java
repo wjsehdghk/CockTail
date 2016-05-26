@@ -42,8 +42,8 @@ import java.util.Locale;
  */
 public class RECOBackgroundRangingService extends Service implements RECOMonitoringListener, RECORangingListener, RECOServiceConnectListener {
 	private long mScanDuration = 1*1000L;
-	private long mSleepDuration = 10*1000L;
-	private long mRegionExpirationTime = 3*1000L;
+	private long mSleepDuration = 1*1000L;
+	private long mRegionExpirationTime = 1*1000L;
 	private int mNotificationID = 9999;
 	private int mNotificationID2 = 0;
 	
@@ -67,7 +67,7 @@ public class RECOBackgroundRangingService extends Service implements RECOMonitor
 		 * 		mRecoManager = RECOBeaconManager.getInstance(getApplicationContext(), false); 
 		 * 주의: false로 설정 시, 배터리 소모량이 증가합니다.
 		 */
-		mRecoManager = RECOBeaconManager.getInstance(getApplicationContext());
+		mRecoManager = RECOBeaconManager.getInstance(getApplicationContext(), false);
 	}
 
 	@Override
@@ -248,15 +248,19 @@ public class RECOBackgroundRangingService extends Service implements RECOMonitor
 		//Write the code when the beacons inside of the region is received
 		updateAllBeacons(beacons);
 		double selectBeacon=10.0f;
+		int selectBeaconMajor=0;
 		try {
 			for(int i=0;i<beacons.size();i++) {
 				RECOBeacon recoBeacon = mRangedBeacons.get(i);
-				Log.d("RangeBeaconsInRegion ", "resion Major: " + recoBeacon.getMajor());
+
 				if(selectBeacon > recoBeacon.getAccuracy()) {
 					selectBeacon = recoBeacon.getAccuracy();
-					SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "ResionMajor", recoBeacon.getMajor());
+					selectBeaconMajor = recoBeacon.getMajor();
+
 				}
 			}
+			SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "ResionMajor", selectBeaconMajor);
+			Log.d("RangeBeaconsInRegion ", "resion Major: " + selectBeaconMajor);
 
 		} catch (IndexOutOfBoundsException e) {
 			e.printStackTrace();

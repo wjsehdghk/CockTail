@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.AudioManager;
+import android.net.wifi.WifiManager;
 import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -56,10 +57,14 @@ public class ResionCinemaActivity extends AppCompatActivity {
         Bitmap bitmap3;
         SeekBar seekBar;
         Switch callServiceSwitchBtn;
+        Switch messgeSwitchBtn;
+        Switch wifiSwitchBtn;
         AudioManager audioManager;
         ComponentName mCallService;
         int callFrag=0;
         Button saveBtn;
+        WifiManager mWifiManager;
+
 
 
 
@@ -263,11 +268,11 @@ public class ResionCinemaActivity extends AppCompatActivity {
                         }
                 });
                 seekBar.setProgress(
-                        SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "CinemaBrightness")*100/255);
+                        SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "CinemaBrightness") * 100 / 255);
                 Log.d("SharedPreferenceUtil 2", "Resion Cinema: " + SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "CinemaBrightness"));
                 Log.d("SharedPreferenceUtil 2", "Resion Cinema: " + SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "CinemaRingerMode"));
-
                 callServiceSwitchBtn = (Switch)view.findViewById(R.id.switch1);
+                messgeSwitchBtn = (Switch)view.findViewById(R.id.switch2);
                 if(SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "CinemaChecked")==1) callServiceSwitchBtn.setChecked(true);
                 else callServiceSwitchBtn.setChecked(false);
 
@@ -280,14 +285,41 @@ public class ResionCinemaActivity extends AppCompatActivity {
                                         }
                                         callFrag = 1;
                                         SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "CinemaChecked", 1);
+                                        messgeSwitchBtn.setEnabled(true);
+
                                 } else {
                                         terminateService();
                                         callFrag = 0;
                                         SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "CinemaChecked", 0);
+                                        messgeSwitchBtn.setEnabled(false);
                                 }
 
                         }
                 });
+                messgeSwitchBtn.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                if (isChecked) {
+                                        SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "MessageChecked", 1);
+                                } else {
+                                        SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "MessageChecked", 0);
+                                }
+                        }
+                });
+                mWifiManager = (WifiManager)getSystemService(Context.WIFI_SERVICE);
+                wifiSwitchBtn = (Switch)view.findViewById(R.id.switch3);
+                wifiSwitchBtn.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                if (isChecked) {
+                                        mWifiManager.setWifiEnabled(true);
+                                }
+                                else {
+                                        mWifiManager.setWifiEnabled(false);
+                                }
+                        }
+                });
+
 
         }
 
