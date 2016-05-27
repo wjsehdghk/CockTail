@@ -40,12 +40,11 @@ public class StatisticContorller {
 	public String showHome(Model model){
 		
 		UseCount useCount = statisticService.showUseCount();
-		System.out.println(useCount.getCinema());
 		useCount = statisticService.doCompute(useCount);
-		System.out.println(useCount.getCinema());
 		model.addAttribute("useCount", useCount);
-		List<Custom> custom = parameterService.selectCustom();
+		List<Custom> custom = parameterService.selectCustomAverage();
 		model.addAttribute("custom", custom);
+		
 		return "statistic";
 	}
 	

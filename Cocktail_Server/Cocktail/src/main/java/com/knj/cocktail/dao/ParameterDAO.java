@@ -62,4 +62,5 @@ public class ParameterDAO {
 		return jdbcTemplateObject.query(sqlStatement, new CustomMapper());
 	}
 
+
 }
