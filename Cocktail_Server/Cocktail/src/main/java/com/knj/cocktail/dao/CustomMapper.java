@@ -18,6 +18,7 @@ public class CustomMapper implements RowMapper<Custom> {
 		custom.setBrightness((rs.getInt("brightness")));
 		custom.setModeId((rs.getInt("modeId")));
 		custom.setCallId((rs.getInt("callId")));
+		custom.setLog((rs.getString("log")));
 		
 	
 		return custom;

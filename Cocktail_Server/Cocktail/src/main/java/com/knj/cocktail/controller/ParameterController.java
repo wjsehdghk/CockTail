@@ -24,6 +24,12 @@ public class ParameterController {
 	this.parameterService = parameterService;
 	}
 	
+	@RequestMapping("users")
+	public String showUsers(Model model){
+		List<Custom> logList = parameterService.selectCustom();
+		model.addAttribute("logList", logList);
+		return "users";
+	}
 	
 	@RequestMapping("showSector")
 	public String showHome(Model model){

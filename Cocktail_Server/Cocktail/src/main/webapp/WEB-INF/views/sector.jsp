@@ -67,7 +67,7 @@
 					
 					<li><a href="showBeacon"><i class="icon-chevron-right"></i>
 							Beacon</a></li>
-					<li><a href="form.html"><i class="icon-chevron-right"></i>
+					<li><a href="users"><i class="icon-chevron-right"></i>
 							Users</a></li>
 
 				</ul>
@@ -77,7 +77,7 @@
 			<div class="span9" id="content">
 
 				<div class="row-fluid">
-					<div class="span9">
+					<div class="span12">
 						<!-- block -->
 						<div class="block">
 							<div class="navbar navbar-inner block-header">
@@ -160,16 +160,23 @@
 						</div>
 						<!-- /block -->
 					</div>
+					<div class=span3>
+				<table class="table table-bordered">
+				<thead><tr><th>modeId</th></tr></thead>
+				<tr><th>0</th><th>Non Bell</th></tr>
+				<tr><th>1</th><th>Vibrate</th></tr>
+				<tr><th>2</th><th>Bell</th></tr>
+				</table></div>
+				<div class=span3>
+				<table class="table table-bordered">
+				<thead><tr><th>callId</th></tr></thead>
+				<tr><th>0</th><th>call rejection off</th></tr>
+				<tr><th>1</th><th>call rejection on</th></tr>
+				</table>
+				</div>
 
 				</div>
-				modeId = 0 -> non bell &nbsp&nbsp&nbsp&nbsp callId = 0 -> call
-				rejection off<br>
-				&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp= 1
-				->
-				vibrate&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp=
-				1 -> call rejection on<br>
-				&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp= 2
-				-> bell<br>
+				
 			</div>
 		</div>
 		<hr>
