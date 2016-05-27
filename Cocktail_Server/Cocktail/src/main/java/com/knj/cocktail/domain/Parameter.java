@@ -46,7 +46,16 @@ public class Parameter {
 	@Override
 	public String toString() {
 		
-		return "{\"sectorId\"=\"" + sectorId + "\", "
-				+ "\"brightness\"=\"" + brightness + "\", \"modeId\"=\"" + modeId + "\", \"callId\"=\"" +callId +"\"}";
+		return "{\"sectorId\"=\"" + sectorId + "\", "+ "\"brightness\"=\"" + brightness + "\", \"modeId\"=\"" + modeId + "\", \"callId\"=\"" +callId +"\"}"; 
 	}
+	
+	
+	//"{\"sectorId\"=\"" + sectorId + "\", "+ "\"brightness\"=\"" + brightness + "\", \"modeId\"=\"" + modeId + "\", \"callId\"=\"" +callId +"\"}";
+	  /*
+	@Override
+	   public String toString() {
+	      return "{\"id\"=\"" + id + "\", \"name\"=\"" + name + "\", \"memberUrl\"=\"" + memberUrl + "\", \"lastReviewDate\"=\"" + lastReviewDate
+	            + "\", \"phoneNumber\"=\"" + phoneNumber + "\", \"point\"=" + point + ", \"level\"=\"" + level + "\", \"reviewCount\"="
+	            + reviewCount + ", \"totalReviewCount\"=" + totalReviewCount + "}";
+	   }*/
 }

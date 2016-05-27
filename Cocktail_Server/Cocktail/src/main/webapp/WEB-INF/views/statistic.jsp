@@ -169,7 +169,7 @@
                      <div class=span3>
 				<table class="table table-bordered">
 				<thead><tr><th>modeId</th></tr></thead>
-				<tr><th>0</th><th>Non Bell</th></tr>
+				<tr><th>0</th><th>Slient</th></tr>
 				<tr><th>1</th><th>Vibrate</th></tr>
 				<tr><th>2</th><th>Bell</th></tr>
 				</table></div>
