@@ -69,4 +69,12 @@ public class Custom {
 		this.callId = callId;
 		this.log = log;
 	}
+	public Custom(String userId, String sectorId, int brightness, int modeId, int callId) {
+		super();
+		this.userId = userId;
+		this.sectorId = sectorId;
+		this.brightness = brightness;
+		this.modeId = modeId;
+		this.callId = callId;
+	}
 }
