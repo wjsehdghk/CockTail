@@ -1,20 +1,17 @@
-package com.mingle.myapplication;
+package com.mingle.myapplication.activity;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.RemoteException;
-import android.support.annotation.Nullable;
+import android.media.AudioManager;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -25,20 +22,26 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+
 import android.widget.RelativeLayout;
-import android.widget.Toast;
+
 import android.widget.ToggleButton;
 
-import com.mingle.myapplication.service.RECOBackgroundMonitoringService;
+
+import com.mingle.myapplication.DialogCall;
+import com.mingle.myapplication.Parameter;
+import com.mingle.myapplication.R;
+import com.mingle.myapplication.model.SharedPreferenceUtil;
+import com.mingle.myapplication.service.RECOBackgroundRangingService;
+
 import com.mingle.sweetpick.CustomDelegate;
 import com.mingle.sweetpick.SweetSheet;
 import com.perples.recosdk.RECOBeacon;
-import com.perples.recosdk.RECOBeaconRegion;
 import java.util.ArrayList;
-import java.util.Collection;
+
 import com.mingle.myapplication.severcall.Servercall;
-import com.mingle.myapplication.model.SharedPreferenceUtil;
+
+
 public class MainActivity extends AppCompatActivity
         implements ActivityCompat.OnRequestPermissionsResultCallback{
 
@@ -57,8 +60,7 @@ public class MainActivity extends AppCompatActivity
 
     private ArrayList<RECOBeacon> mRangedBeacons;
 
-    private SweetSheet mSweetSheet;
-    private SweetSheet mSweetSheet2;
+
     private SweetSheet mSweetSheet3;
     private RelativeLayout rl;
     ToggleButton bottomToggleButton;
@@ -67,9 +69,12 @@ public class MainActivity extends AppCompatActivity
     Button exhibitButton;
     Toolbar toolbar;
     Toolbar bottombar;
+    Handler handler;
 
+    AudioManager audioManager;
 
-    int num;
+    int selectBeaconMajor=0;
+    int difResionNum=0;
 
 
     DialogCall dialogCall;
@@ -83,25 +88,21 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       // showDialog();
+        SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "ISRESIONSET", 0);
 
+
+       // showDialog();
 
 
         servercall=new Servercall();
         servercall.customizeset(getApplicationContext());
 
 
-
-
-
-        sharedPreferenceUtil.putSharedPreference(getApplicationContext(),"cinemabrightness",parameter.brightness);
-
-
-
+        //sharedPreferenceUtil.putSharedPreference(getApplicationContext(),"cinemabrightness",parameter.brightness);
 
         m_checkPermission();
-
-        Intent monitorService = new Intent(this, RECOBackgroundMonitoringService.class);
+        audioManager = (AudioManager) getBaseContext().getSystemService(Context.AUDIO_SERVICE);
+        Intent monitorService = new Intent(this, RECOBackgroundRangingService.class);
         startService(monitorService);
         cinemaButton=(Button)findViewById(R.id.cinema_h_icon);
         libraryButton=(Button)findViewById(R.id.library_h_icon);
@@ -112,8 +113,8 @@ public class MainActivity extends AppCompatActivity
         cinemaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent cinema=new Intent(getApplicationContext(),ResionCinemaActivity.class);
-                cinema.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                Intent cinema = new Intent(getApplicationContext(), ResionCinemaActivity.class);
+                cinema.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(cinema);
 
             }
@@ -123,8 +124,8 @@ public class MainActivity extends AppCompatActivity
         libraryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent library=new Intent(getApplicationContext(),RegionLibraryActivity.class);
-                library.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                Intent library = new Intent(getApplicationContext(), RegionLibraryActivity.class);
+                library.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(library);
 
             }
@@ -134,7 +135,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Intent exhibition = new Intent(getApplicationContext(), ResionExhibitionActivity.class);
-                exhibition.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                exhibition.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(exhibition);
 
             }
@@ -180,6 +181,9 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "ResionMajor", 0);
+
+
     }
     public void showDialog(){
 
@@ -218,7 +222,79 @@ public class MainActivity extends AppCompatActivity
         } else {
             //사용 권한이 있음 확인
         }
+        handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                updateThread();
+            }
+        };
+        Thread myThread = new Thread(new Runnable() {
+            public void run() {
+                while (true) {
+                    try {
+                        handler.sendMessage(handler.obtainMessage());
+                        Thread.sleep(1000);
+                    } catch (Throwable t) {
+                    }
+                }
+            }
+        });
 
+        myThread.start();
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
+
+
+    private void updateThread() {
+        //if(SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ISRESIONSET")==1) {
+        if(selectBeaconMajor !=
+                SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ResionMajor")) {
+            difResionNum++;
+            if(difResionNum == 3) {
+                difResionNum = 0;
+                selectBeaconMajor = SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ResionMajor");
+
+                if (SharedPreferenceUtil.getSharedPreference(this, "ResionMajor") == 18243) { // 초록색
+                    Intent intent = new Intent(getApplicationContext(), ResionCinemaActivity.class);
+                    startActivity(intent);
+                    //moveTaskToBack(SharedPreferenceUtil.isResionSet);
+
+                    SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "ISRESIONSET", 0);
+                    //Intent intent3 = new Intent();
+                    //intent3.setAction(Intent.ACTION_MAIN);
+                    //intent3.addCategory(Intent.CATEGORY_HOME);
+                    //startActivity(intent3);
+                }
+                else if(SharedPreferenceUtil.getSharedPreference(this, "ResionMajor") == 18249) { // 노란색
+                    audioManager.setRingerMode(
+                            SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionRingerMode")
+                    );
+
+                    Intent intent = new Intent(getApplicationContext(), ResionExhibitionActivity.class);
+                    startActivity(intent);
+                    //moveTaskToBack(SharedPreferenceUtil.isResionSet);
+
+                    SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "ISRESIONSET", 0);
+                    //Intent intent3 = new Intent();
+                    //intent3.setAction(Intent.ACTION_MAIN);
+                    //intent3.addCategory(Intent.CATEGORY_HOME);
+                    //startActivity(intent3);
+                }
+
+                else {
+                    Log.d("RESION: ", "알수없는 비콘");
+                }
+            }
+        }
+
+
+        //}
     }
 
     @Override
@@ -241,6 +317,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+
     }
 
     private void setupCustomView() {
@@ -250,7 +327,7 @@ public class MainActivity extends AppCompatActivity
         View view = LayoutInflater.from(this).inflate(R.layout.layout_custom_view, null, false);
         customDelegate.setCustomView(view);
         mSweetSheet3.setDelegate(customDelegate);
-        view.findViewById(R.id.intro_btn).setOnClickListener(new View.OnClickListener() {
+        /*view.findViewById(R.id.intro_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), IntroActivity.class);
@@ -258,7 +335,7 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
                 finish();
             }
-        });
+        });*/
     }
 
 

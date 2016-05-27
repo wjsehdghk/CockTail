@@ -1,168 +1,116 @@
-package com.mingle.myapplication;
-
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
+package com.mingle.myapplication.activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.AudioManager;
+
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.SeekBar;
-import android.widget.Toast;
 import android.widget.ToggleButton;
+
 import com.mingle.entity.MenuEntity;
+import com.mingle.myapplication.R;
+import com.mingle.myapplication.severcall.Servercall;
 import com.mingle.sweetpick.BlurEffect;
 import com.mingle.sweetpick.CustomDelegate;
 import com.mingle.sweetpick.DimEffect;
 import com.mingle.sweetpick.RecyclerViewDelegate;
 import com.mingle.sweetpick.SweetSheet;
 import com.mingle.sweetpick.ViewPagerDelegate;
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import com.mingle.myapplication.DialogCall;
 
-public class ResionExhibitionActivity extends AppCompatActivity {
+import java.util.ArrayList;
+public class RegionLibraryActivity extends AppCompatActivity {
     private SweetSheet mSweetSheet;
     private SweetSheet mSweetSheet2;
     private SweetSheet mSweetSheet3;
     private RelativeLayout rl;
-
     Toolbar toolbar;
     Toolbar bottombar;
     Button homeButton;
     Button cinemaButton;
-    Button libraryButton;
+    Button exhibitButton;
     ToggleButton bottomToggleButton;
-    ImageView exhibition_back;
-    ImageView exhibition_icon;
-    ImageView exhibition_edge;
+    ImageView library_back;
+    ImageView library_icon;
+    ImageView library_edge;
     Bitmap bitmap;
     Bitmap bitmap2;
     Bitmap bitmap3;
 
-    AudioManager audioManager;
-
-    public static int state=-1;
-
-    SeekBar seekBar;
-    AlertDialog.Builder builder;
-    AlertDialog dialog;
-    Handler handler;
-    ImageView imageView;
-
+    Servercall servercall;
+    String library;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_resion_exhibition);
+        setContentView(R.layout.activity_resion_library);
 
-        initdialog();
-
-        handler = new Handler();
-        dialog = builder.create();
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.show();
-
-
-
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL("http://img.etoday.co.kr/pto_db/2015/07/20150722114910_680826_600_800.jpg");
-                    //InputStream is = url.openStream();
-                    HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-                    conn.connect();
-                    int imagesize=conn.getContentLength();
-                    BufferedInputStream is=new BufferedInputStream(conn.getInputStream(),imagesize);
-                    final Bitmap bm = BitmapFactory.decodeStream(is);
-                    is.close();
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Log.d("image", "called");
-                            dialog.show();
-                        }
-                    });
-                    //imageView.setImageBitmap(bm);
-                    //Log.d("image2", "called2");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        //t.start();
-        audioManager = (AudioManager) getBaseContext().getSystemService(Context.AUDIO_SERVICE);
-        //final Animation animAlpha = AnimationUtils.loadAnimation(this, R.anim.anim_alpha);
         final Animation animRotate = AnimationUtils.loadAnimation(this, R.anim.anim_rotate);
-        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.exhibition);
-        bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.exhibition_edge);
-        bitmap3 = BitmapFactory.decodeResource(getResources(), R.drawable.exhibition_icon);
-        exhibition_back = (ImageView) findViewById(R.id.exhibition_back);
-        exhibition_edge = (ImageView) findViewById(R.id.exhibition_edge);
-        exhibition_icon = (ImageView)findViewById(R.id.exhibition_icon);
-        exhibition_back.setImageBitmap(bitmap);
-        exhibition_edge.setImageBitmap(bitmap2);
-        exhibition_edge.setAnimation(animRotate);
-        exhibition_icon.setImageBitmap(bitmap3);
+
+        servercall=new Servercall();
+        library="library";
+        servercall.postResioninfo(getApplicationContext(), library);
+
+        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.library);
+        bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.library_edge);
+        bitmap3 = BitmapFactory.decodeResource(getResources(), R.drawable.library_icon);
+
+        library_back = (ImageView) findViewById(R.id.library_back);
+        library_edge = (ImageView) findViewById(R.id.library_edge);
+        library_icon = (ImageView)findViewById(R.id.library_icon);
+
+        library_back.setImageBitmap(bitmap);
+        library_edge.setImageBitmap(bitmap2);
+        library_edge.setAnimation(animRotate);
+        library_icon.setImageBitmap(bitmap3);
+
+
         homeButton = (Button) findViewById(R.id.home_btn);
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent home = new Intent(getApplicationContext(), MainActivity.class);
-                home.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(home);
                 finish();
             }
         });
-        libraryButton = (Button) findViewById(R.id.library_btn);
-        libraryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent library = new Intent(getApplicationContext(), RegionLibraryActivity.class);
-                library.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                startActivity(library);
-                finish();
-            }
-        });
+
         cinemaButton = (Button) findViewById(R.id.cinema_btn);
         cinemaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent cinema = new Intent(getApplicationContext(), ResionCinemaActivity.class);
-                cinema.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                cinema.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(cinema);
                 finish();
             }
         });
 
+        exhibitButton=(Button)findViewById(R.id.exhibition_btn);
+        exhibitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent exhibition=new Intent(getApplicationContext(),ResionExhibitionActivity.class);
+                exhibition.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(exhibition);
+                finish();
+            }
+        });
 
         rl = (RelativeLayout) findViewById(R.id.rl);
-
         //setupViewpager();
         //setupRecyclerView();
         setupCustomView();
@@ -179,6 +127,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
                         Gravity.CENTER
                 )
         );
+
         bottombar = (Toolbar) findViewById(R.id.bottombar);
         setSupportActionBar(bottombar);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
@@ -210,9 +159,6 @@ public class ResionExhibitionActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
-        bottomToggleButton.setChecked(false);
-
     }
 
     @Override
@@ -228,99 +174,33 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         bitmap3.recycle();
     }
 
-    public void initdialog(){
-
-        LayoutInflater inflater= (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View dialogview=inflater.inflate(R.layout.dialog,null);
-        imageView=(ImageView)findViewById(R.id.dialogimage);
-        builder=new AlertDialog.Builder(this);
-        builder.setTitle("메시지");
-        builder.setView(dialogview);
-        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        });
-        builder.setNegativeButton("Move", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-
-    }
     private void setupCustomView() {
         mSweetSheet3 = new SweetSheet(rl);
         CustomDelegate customDelegate = new CustomDelegate(true,
                 CustomDelegate.AnimationType.AlphaAnimation);
         View view = LayoutInflater.from(this).inflate(R.layout.layout_custom_view, null, false);
-
         customDelegate.setCustomView(view);
         customDelegate.setSweetSheetColor(getResources().getColor(R.color.colorBottomtab));
         mSweetSheet3.setDelegate(customDelegate);
         mSweetSheet3.setBackgroundEffect(new BlurEffect(8));
         mSweetSheet3.setBackgroundClickEnable(false);
-        view.findViewById(R.id.triToggleButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (state) {
-                    case 0:
-                        audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
-                        break;
-                    case 1:
-                        audioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
-                        break;
-                    case 2:
-                        audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-        seekBar =(SeekBar)view.findViewById(R.id.custom_seek);
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if(progress<10){
-                    progress=10;
-                    seekBar.setProgress(progress);
-                }
-
-                WindowManager.LayoutParams params = getWindow().getAttributes();
-                params.screenBrightness = (float) progress / 100;
-                getWindow().setAttributes(params);
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-
-
     }
 
     private void setupRecyclerView() {
+
         final ArrayList<MenuEntity> list = new ArrayList<>();
-        //添加假数据
+
         MenuEntity menuEntity1 = new MenuEntity();
         menuEntity1.iconId = R.drawable.ic_account_child;
         menuEntity1.titleColor = 0xff96CC7A; //textcolor
         menuEntity1.title = "code";
-
         MenuEntity menuEntity = new MenuEntity();
         menuEntity.iconId = R.drawable.ic_account_child;
         menuEntity.titleColor = 0xffb3b3b3;
         menuEntity.title = "QQ";
-
         list.add(menuEntity1);
         list.add(menuEntity);
+
 
         // SweetSheet 控件,根据 rl 确认位置
         mSweetSheet = new SweetSheet(rl);
@@ -360,7 +240,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
             @Override
             public boolean onItemClick(int position, MenuEntity menuEntity1) {
 
-                //   Toast.makeText(MainActivity.this, menuEntity1.title + "  " + position, Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(MainActivity.this, menuEntity1.title + "  " + position, Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
@@ -379,10 +259,10 @@ public class ResionExhibitionActivity extends AppCompatActivity {
 
         if (mSweetSheet3.isShow()) {
             mSweetSheet3.dismiss();
-            bottomToggleButton.setChecked(false);
         } else {
             super.onBackPressed();
         }
+        bottomToggleButton.setChecked(false);
 
     }
 
@@ -392,3 +272,4 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+

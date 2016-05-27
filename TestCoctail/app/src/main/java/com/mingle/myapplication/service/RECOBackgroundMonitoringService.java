@@ -2,20 +2,17 @@ package com.mingle.myapplication.service;
 
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.mingle.myapplication.MainActivity;
+import com.mingle.myapplication.activity.MainActivity;
 import com.mingle.myapplication.R;
-import com.mingle.myapplication.ResionCinemaActivity;
 import com.perples.recosdk.RECOBeaconManager;
 import com.perples.recosdk.RECOBeaconRegion;
 import com.perples.recosdk.RECOBeaconRegionState;
@@ -175,23 +172,22 @@ public class RECOBackgroundMonitoringService extends Service implements RECOMoni
 		this.popupNotification("Inside of " + region.getUniqueIdentifier());
 		//Write the code when the device is enter the region
 		if(!mRegions.isEmpty()) {
-				aManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
-				//Settings.System.putInt(getContentResolver(), "screen_brightness", 100);
-				Toast.makeText(RECOBackgroundMonitoringService.this, "영화관 안 입니다.", Toast.LENGTH_SHORT).show();
 		} else {
 			Toast.makeText(RECOBackgroundMonitoringService.this, "공백", Toast.LENGTH_SHORT).show();
 		}
 
-		Intent intent = new Intent(getApplicationContext(), ResionCinemaActivity.class);
-
-		PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
-
+		//Intent intent = new Intent(getApplicationContext(), ResionCinemaActivity.class);
+		//PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
+		/*
 		try {
 			pendingIntent.send();
 		}
 		catch (PendingIntent.CanceledException e) {
 			e.printStackTrace();
 		}
+		*/
+
+		//startService(new Intent(getApplicationContext(), RECOBackgroundRangingService.class));
 
 	}
 	
@@ -222,6 +218,7 @@ public class RECOBackgroundMonitoringService extends Service implements RECOMoni
 		nm.notify(mNotificationID, builder.build());
 		mNotificationID2 = mNotificationID;
 		mNotificationID = (mNotificationID - 1) % 1000 + 9000;
+		if(mNotificationID < 1) mNotificationID = 9999;
 	}
 
 	@Override

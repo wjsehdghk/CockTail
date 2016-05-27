@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/rl"
-    tools:context=".MainActivity">
+    tools:context=".activity.MainActivity">
 
     <com.ssomai.android.scalablelayout.ScalableLayout
         android:id="@+id/view"
