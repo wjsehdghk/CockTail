@@ -33,14 +33,12 @@ import android.widget.ToggleButton;
 import com.mingle.myapplication.R;
 import com.mingle.myapplication.TriToggleButton;
 import com.mingle.myapplication.model.SharedPreferenceUtil;
+import com.mingle.myapplication.severcall.Servercall;
 import com.mingle.sweetpick.BlurEffect;
 import com.mingle.sweetpick.CustomDelegate;
 import com.mingle.sweetpick.SweetSheet;
 import java.io.InputStream;
 import java.net.URL;
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.net.HttpURLConnection;
 
 public class ResionExhibitionActivity extends AppCompatActivity {
     private SweetSheet mSweetSheet3;
@@ -61,54 +59,26 @@ public class ResionExhibitionActivity extends AppCompatActivity {
     AudioManager audioManager;
     public static int state=-1;
     SeekBar seekBar;
-    AlertDialog.Builder builder;
-    AlertDialog dialog;
     Handler handler;
-    ImageView imageView;
-
-
     private AlertDialog mDialog = null;
+
+    Servercall servercall;
+    String exhibition;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resion_exhibition);
+        initDialog();
         audioManager = (AudioManager) getBaseContext().getSystemService(Context.AUDIO_SERVICE);
-        initdialog();
+
+        servercall=new Servercall();
+        exhibition="exhibition";
+        servercall.postResioninfo(getApplicationContext(), exhibition);
 
         handler = new Handler();
-        dialog = builder.create();
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.show();
 
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL("http://img.etoday.co.kr/pto_db/2015/07/20150722114910_680826_600_800.jpg");
-                    //InputStream is = url.openStream();
-                    HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-                    conn.connect();
-                    int imagesize=conn.getContentLength();
-                    BufferedInputStream is=new BufferedInputStream(conn.getInputStream(),imagesize);
-                    final Bitmap bm = BitmapFactory.decodeStream(is);
-                    is.close();
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Log.d("image", "called");
-                            dialog.show();
-                        }
-                    });
-                    //imageView.setImageBitmap(bm);
-                    //Log.d("image2", "called2");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        t.start();
         audioManager = (AudioManager) getBaseContext().getSystemService(Context.AUDIO_SERVICE);
         final Animation animRotate = AnimationUtils.loadAnimation(this, R.anim.anim_rotate);
         bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.exhibition);
@@ -131,6 +101,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
                 finish();
             }
         });
+
         libraryButton = (Button) findViewById(R.id.library_btn);
         libraryButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,6 +112,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
                 finish();
             }
         });
+
         cinemaButton = (Button) findViewById(R.id.cinema_btn);
         cinemaButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -224,14 +196,12 @@ public class ResionExhibitionActivity extends AppCompatActivity {
             }
         });
 
-        ab.show();
-
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     final ImageView iv = (ImageView)dialogView.findViewById(R.id.webImage);
-                    URL url = new URL("http://previews.123rf.com/images/cienpies/cienpies1307/cienpies130700563/20602613-Multimedia-internet-marketing-icons-concept-pencil-tree-Vector-illustration-layered-for-easy-manipul-Stock-Vector.jpg");
+                    URL url = new URL("https://scontent.xx.fbcdn.net/t31.0-8/13248551_1711638399105324_4905597678629514614_o.jpg");
                     InputStream is = url.openStream();
                     final Bitmap bm = BitmapFactory.decodeStream(is);
                     handler.post(new Runnable() {
@@ -247,6 +217,9 @@ public class ResionExhibitionActivity extends AppCompatActivity {
             }
         });
         t.start();
+
+        ab.show();
+
 
     }
 
@@ -280,27 +253,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         bitmap3.recycle();
     }
 
-    public void initdialog(){
 
-        LayoutInflater inflater= (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View dialogview=inflater.inflate(R.layout.dialog,null);
-        imageView=(ImageView)findViewById(R.id.dialogimage);
-        builder=new AlertDialog.Builder(this);
-        builder.setTitle("메시지");
-        builder.setView(dialogview);
-        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        });
-        builder.setNegativeButton("Move", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-
-    }
     private void setupCustomView() {
         mSweetSheet3 = new SweetSheet(rl);
         CustomDelegate customDelegate = new CustomDelegate(true,
@@ -372,7 +325,6 @@ public class ResionExhibitionActivity extends AppCompatActivity {
                 SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionBrightness")*100/255);
         Log.d("SharedPreferenceUtil 2", "Resion Exhibition: " + SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionBrightness"));
         Log.d("SharedPreferenceUtil 2", "Resion Exhibition: " + SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionRingerMode"));
-
 
     }
 

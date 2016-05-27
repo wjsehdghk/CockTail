@@ -17,23 +17,25 @@ public class Servercall extends AppCompatActivity {
     AsyncHttpClient client = new AsyncHttpClient();
     private static final String server_url = "http://113.198.84.87:8080/cocktail";
 
-    public void postcinemainfo(Context context, String id){
+    public void postResioninfo(Context context, String id){
         RequestParams params=new RequestParams();
         String cinema=id;
-        params.put("sectorId",cinema);
+        params.put("sectorId",id);
         client.post(context, server_url + "/app/incUseCount", params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.d("cinema","fail");
-                Log.d("cinema","fail "+statusCode);
+                Log.d("resion","fail");
+                Log.d("resion","fail "+statusCode);
             }
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                Log.d("cinema","success1");
-                Log.d("cinema","success2 "+responseString );
+                Log.d("resion","success1");
+                Log.d("resion","success2 "+responseString );
             }
         });
     }
+
+
     public void confirm(Context context, String nickname) {
         RequestParams params=new RequestParams();
         params.put("nickname",nickname);

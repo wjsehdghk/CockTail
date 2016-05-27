@@ -199,32 +199,37 @@
                 sl:scale_left="780"
                 sl:scale_top="884"
                 sl:scale_width="170"/>
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_brightness_low_black_24dp"
+                android:src="@drawable/ic_phone_in_talk_black_24dp"
                 sl:scale_height="100"
                 sl:scale_left="0"
                 sl:scale_top="1078"
                 sl:scale_width="180"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="벨소리"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/black"
+                sl:scale_height="90"
+                sl:scale_left="170"
+                sl:scale_textsize="50"
+                sl:scale_top="1090"
+                sl:scale_width="150" />
 
             <SeekBar
                 android:id="@+id/custom_seek2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 sl:scale_height="100"
-                sl:scale_left="150"
+                sl:scale_left="300"
                 sl:scale_top="1078"
                 sl:scale_width="650" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_brightness_high_black_24dp"
-                sl:scale_height="100"
-                sl:scale_left="800"
-                sl:scale_top="1078"
-                sl:scale_width="180"/>
 
 
 

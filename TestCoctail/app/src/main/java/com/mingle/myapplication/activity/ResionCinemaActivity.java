@@ -76,7 +76,7 @@ public class ResionCinemaActivity extends AppCompatActivity {
 
                 servercall=new Servercall();
                 cinema="cinema";
-                servercall.postcinemainfo(getApplicationContext(), cinema);
+                servercall.postResioninfo(getApplicationContext(), cinema);
 
                 final Animation animRotate = AnimationUtils.loadAnimation(this, R.anim.anim_rotate);
                 audioManager = (AudioManager) getBaseContext().getSystemService(Context.AUDIO_SERVICE);

@@ -21,6 +21,7 @@ import android.widget.ToggleButton;
 
 import com.mingle.entity.MenuEntity;
 import com.mingle.myapplication.R;
+import com.mingle.myapplication.severcall.Servercall;
 import com.mingle.sweetpick.BlurEffect;
 import com.mingle.sweetpick.CustomDelegate;
 import com.mingle.sweetpick.DimEffect;
@@ -47,6 +48,9 @@ public class RegionLibraryActivity extends AppCompatActivity {
     Bitmap bitmap2;
     Bitmap bitmap3;
 
+    Servercall servercall;
+    String library;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,10 @@ public class RegionLibraryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_resion_library);
 
         final Animation animRotate = AnimationUtils.loadAnimation(this, R.anim.anim_rotate);
+
+        servercall=new Servercall();
+        library="library";
+        servercall.postResioninfo(getApplicationContext(), library);
 
         bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.library);
         bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.library_edge);
