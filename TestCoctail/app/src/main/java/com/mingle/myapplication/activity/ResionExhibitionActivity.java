@@ -37,6 +37,7 @@ import com.mingle.myapplication.severcall.Servercall;
 import com.mingle.sweetpick.BlurEffect;
 import com.mingle.sweetpick.CustomDelegate;
 import com.mingle.sweetpick.SweetSheet;
+
 import java.io.InputStream;
 import java.net.URL;
 
@@ -57,25 +58,23 @@ public class ResionExhibitionActivity extends AppCompatActivity {
     Bitmap bitmap2;
     Bitmap bitmap3;
     AudioManager audioManager;
-    public static int state=-1;
+    public static int state = -1;
     SeekBar seekBar;
     Handler handler;
     private AlertDialog mDialog = null;
-
     Servercall servercall;
     String exhibition;
-
+    AlertDialog.Builder ab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resion_exhibition);
-        initDialog();
+        initDialog(); //전시장에 관한 팝업창이 나오는 함수.
         audioManager = (AudioManager) getBaseContext().getSystemService(Context.AUDIO_SERVICE);
-
-        servercall=new Servercall();
-        exhibition="exhibition";
-        servercall.postResioninfo(getApplicationContext(), exhibition);
+        servercall = new Servercall();
+        exhibition = "exhibition";
+        servercall.postResioninfo(getApplicationContext(), exhibition);//전시장 들어갔을때 서버에 Count증가 시킴.
 
         handler = new Handler();
 
@@ -86,7 +85,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         bitmap3 = BitmapFactory.decodeResource(getResources(), R.drawable.exhibition_icon);
         exhibition_back = (ImageView) findViewById(R.id.exhibition_back);
         exhibition_edge = (ImageView) findViewById(R.id.exhibition_edge);
-        exhibition_icon = (ImageView)findViewById(R.id.exhibition_icon);
+        exhibition_icon = (ImageView) findViewById(R.id.exhibition_icon);
         exhibition_back.setImageBitmap(bitmap);
         exhibition_edge.setImageBitmap(bitmap2);
         exhibition_edge.setAnimation(animRotate);
@@ -163,44 +162,27 @@ public class ResionExhibitionActivity extends AppCompatActivity {
                 }
             }
         });
-
         Settings.System.putInt(getContentResolver(), "screen_brightness",
                 SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionBrightness"));
         audioManager.setRingerMode(
                 SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionRingerMode"));
         Log.d("SharedPreferenceUtil 1", "Resion Exhibition: " + SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionBrightness"));
         Log.d("SharedPreferenceUtil 1", "Resion Exhibition: " + SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionRingerMode"));
-
-
     }
 
     public void initDialog() {
         final Handler handler = new Handler();
-        LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View dialogView=inflater.inflate(R.layout.dialog_layout, null);
-        AlertDialog.Builder ab = new AlertDialog.Builder(this);
-        ab.setTitle("전시장");
-        ab.setCancelable(false);
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View dialogView = inflater.inflate(R.layout.dialog_layout, null);
+        ab = new AlertDialog.Builder(this);
         ab.setView(dialogView);
-        ab.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface arg0, int arg1) {
-                setDismiss(mDialog);
-            }
-        });
-
-        ab.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface arg0, int arg1) {
-                setDismiss(mDialog);
-            }
-        });
 
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    final ImageView iv = (ImageView)dialogView.findViewById(R.id.webImage);
+
+                    final ImageView iv = (ImageView) dialogView.findViewById(R.id.webImage);
                     URL url = new URL("https://scontent.xx.fbcdn.net/t31.0-8/13248551_1711638399105324_4905597678629514614_o.jpg");
                     InputStream is = url.openStream();
                     final Bitmap bm = BitmapFactory.decodeStream(is);
@@ -217,21 +199,29 @@ public class ResionExhibitionActivity extends AppCompatActivity {
             }
         });
         t.start();
-
+        ab.setTitle("전시장");
+        ab.setCancelable(false);
+        ab.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                setDismiss(mDialog);
+            }
+        });
+        ab.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                setDismiss(mDialog);
+            }
+        });
         ab.show();
-
-
     }
-
-    private void setDismiss(Dialog dialog){
-        if(dialog != null && dialog.isShowing())
+    private void setDismiss(Dialog dialog) {
+        if (dialog != null && dialog.isShowing())
             dialog.dismiss();
     }
-
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
     }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -239,12 +229,10 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         bottomToggleButton.setChecked(false);
 
     }
-
     @Override
     protected void onPause() {
         super.onPause();
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -252,8 +240,6 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         bitmap2.recycle();
         bitmap3.recycle();
     }
-
-
     private void setupCustomView() {
         mSweetSheet3 = new SweetSheet(rl);
         CustomDelegate customDelegate = new CustomDelegate(true,
@@ -267,7 +253,6 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         mSweetSheet3.setBackgroundEffect(new BlurEffect(8));
         mSweetSheet3.setBackgroundClickEnable(false);
         view.findViewById(R.id.triToggleButton).setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 switch (TriToggleButton.getState()) {
@@ -288,8 +273,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
                 }
             }
         });
-
-        seekBar =(SeekBar)view.findViewById(R.id.custom_seek);
+        seekBar = (SeekBar) view.findViewById(R.id.custom_seek);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             float brightness = 0;
 
@@ -299,10 +283,10 @@ public class ResionExhibitionActivity extends AppCompatActivity {
                     progress = 10;
                     seekBar.setProgress(progress);
                 }
-
                 WindowManager.LayoutParams params = getWindow().getAttributes();
                 params.screenBrightness = (float) progress / 100;
                 brightness = params.screenBrightness;
+                SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "ExhibitionBrightness", (int) brightness);
                 getWindow().setAttributes(params);
                 Log.d("SharedPreferenceUtil 3", "Resion Exhibition: " + SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionBrightness"));
                 Log.d("SharedPreferenceUtil 3", "Resion Exhibition: " + SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionRingerMode"));
@@ -322,7 +306,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
             }
         });
         seekBar.setProgress(
-                SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionBrightness")*100/255);
+                SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionBrightness") * 100 / 255);
         Log.d("SharedPreferenceUtil 2", "Resion Exhibition: " + SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionBrightness"));
         Log.d("SharedPreferenceUtil 2", "Resion Exhibition: " + SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionRingerMode"));
 
@@ -333,22 +317,17 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         //getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
     @Override
     public void onBackPressed() {
-
         if (mSweetSheet3.isShow()) {
             mSweetSheet3.dismiss();
             bottomToggleButton.setChecked(false);
         } else {
             super.onBackPressed();
         }
-
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         return super.onOptionsItemSelected(item);
     }
 }

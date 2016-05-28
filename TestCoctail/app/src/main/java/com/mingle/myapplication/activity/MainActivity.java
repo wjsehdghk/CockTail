@@ -31,6 +31,7 @@ import android.widget.ToggleButton;
 import com.mingle.myapplication.DialogCall;
 import com.mingle.myapplication.Parameter;
 import com.mingle.myapplication.R;
+
 import com.mingle.myapplication.model.SharedPreferenceUtil;
 import com.mingle.myapplication.service.RECOBackgroundRangingService;
 
@@ -40,11 +41,8 @@ import com.perples.recosdk.RECOBeacon;
 import java.util.ArrayList;
 
 import com.mingle.myapplication.severcall.Servercall;
-
-
 public class MainActivity extends AppCompatActivity
         implements ActivityCompat.OnRequestPermissionsResultCallback{
-
     public static final String RECO_UUID = "24DDF411-8CF1-440C-87CD-E368DAF9C93E";
     private static final int REQUEST_ENABLE_BT = 1;
     private static final int ACCESS_FINE_LOCATION_REQUEST_CODE = 1;
@@ -57,10 +55,7 @@ public class MainActivity extends AppCompatActivity
 
     private BluetoothManager mBluetoothManager;
     private BluetoothAdapter mBluetoothAdapter;
-
     private ArrayList<RECOBeacon> mRangedBeacons;
-
-
     private SweetSheet mSweetSheet3;
     private RelativeLayout rl;
     ToggleButton bottomToggleButton;
@@ -70,13 +65,9 @@ public class MainActivity extends AppCompatActivity
     Toolbar toolbar;
     Toolbar bottombar;
     Handler handler;
-
     AudioManager audioManager;
-
     int selectBeaconMajor=0;
     int difResionNum=0;
-
-
     DialogCall dialogCall;
     Servercall servercall;
 
@@ -87,18 +78,13 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "ISRESIONSET", 0);
 
-
-       // showDialog();
-
+        showDialog(); //닉네임 입력 팝업창 불러오기. UserNickname 입력후 SharedPreference에 저장.
 
         servercall=new Servercall();
-        servercall.customizeset(getApplicationContext());
+        servercall.customizeset(getApplicationContext()); //서버에서 디폴트값 얻어오기 . SharedPreference에 값 저장.
 
-
-        //sharedPreferenceUtil.putSharedPreference(getApplicationContext(),"cinemabrightness",parameter.brightness);
 
         m_checkPermission();
         audioManager = (AudioManager) getBaseContext().getSystemService(Context.AUDIO_SERVICE);
@@ -107,20 +93,14 @@ public class MainActivity extends AppCompatActivity
         cinemaButton=(Button)findViewById(R.id.cinema_h_icon);
         libraryButton=(Button)findViewById(R.id.library_h_icon);
         exhibitButton=(Button)findViewById(R.id.exhibition_h_icon);
-
-
-
         cinemaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent cinema = new Intent(getApplicationContext(), ResionCinemaActivity.class);
                 cinema.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(cinema);
-
             }
         });
-
-
         libraryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,7 +110,6 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
-
         exhibitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,11 +119,8 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
-
         rl = (RelativeLayout) findViewById(R.id.rl);
-
         setupCustomView();
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //noinspection ConstantConditions
@@ -157,7 +133,6 @@ public class MainActivity extends AppCompatActivity
                         Gravity.CENTER
                 )
         );
-
         bottombar = (Toolbar) findViewById(R.id.bottombar);
         setSupportActionBar(bottombar);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
@@ -180,18 +155,12 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
-
         SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "ResionMajor", 0);
-
-
     }
     public void showDialog(){
-
         dialogCall=new DialogCall();
         dialogCall.show(getFragmentManager(),"NickName");
         dialogCall.setCancelable(true);
-
-
     }
     private void m_checkPermission() {
         mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);

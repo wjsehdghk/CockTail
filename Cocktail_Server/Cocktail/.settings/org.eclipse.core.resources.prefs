@@ -2,4 +2,6 @@ eclipse.preferences.version=1
 encoding//src/main/webapp/WEB-INF/views/beacon.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/home.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/sector.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/users.jsp=UTF-8
 encoding//src/main/webapp/index.jsp=UTF-8
+encoding//src/main/webapp/resources/bootstrap/stats.html=UTF-8

@@ -6,7 +6,6 @@ public class Parameter {
 	public Parameter() {
 	}
 	
-	private String userId;
 	private String sectorId;
 	private int brightness;
 	private int modeId;
@@ -18,12 +17,7 @@ public class Parameter {
 		this.modeId = modeId;
 		this.callId = callId;
 	}
-	public String getUserId() {
-		return userId;
-	}
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+
 	public String getSectorId() {
 		return sectorId;
 	}
@@ -52,7 +46,16 @@ public class Parameter {
 	@Override
 	public String toString() {
 		
-		return "{\"sectorId\"=\"" + sectorId + "\", "
-				+ "\"brightness\"=\"" + brightness + "\", \"modeId\"=\"" + modeId + "\", \"callId\"=\"" +callId +"\"}";
+		return "{\"sectorId\"=\"" + sectorId + "\", "+ "\"brightness\"=\"" + brightness + "\", \"modeId\"=\"" + modeId + "\", \"callId\"=\"" +callId +"\"}"; 
 	}
+	
+	
+	//"{\"sectorId\"=\"" + sectorId + "\", "+ "\"brightness\"=\"" + brightness + "\", \"modeId\"=\"" + modeId + "\", \"callId\"=\"" +callId +"\"}";
+	  /*
+	@Override
+	   public String toString() {
+	      return "{\"id\"=\"" + id + "\", \"name\"=\"" + name + "\", \"memberUrl\"=\"" + memberUrl + "\", \"lastReviewDate\"=\"" + lastReviewDate
+	            + "\", \"phoneNumber\"=\"" + phoneNumber + "\", \"point\"=" + point + ", \"level\"=\"" + level + "\", \"reviewCount\"="
+	            + reviewCount + ", \"totalReviewCount\"=" + totalReviewCount + "}";
+	   }*/
 }

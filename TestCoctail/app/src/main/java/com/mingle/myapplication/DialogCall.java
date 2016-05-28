@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
+import com.mingle.myapplication.model.SharedPreferenceUtil;
 import com.mingle.myapplication.severcall.Servercall;
 
 /**
@@ -18,7 +19,6 @@ import com.mingle.myapplication.severcall.Servercall;
  */
 public class DialogCall extends android.app.DialogFragment {
     public EditText editNick;
-    public String NickNick;
     Servercall servercall;
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -26,25 +26,23 @@ public class DialogCall extends android.app.DialogFragment {
         // Get the layout inflater
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialogtest, null);
-
         editNick=(EditText)view.findViewById(R.id.NickName);
-
-        NickNick=editNick.getText().toString();
-
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
         builder.setView(view)
                 // Add action buttons
-                .setPositiveButton("Sign in",
+                .setPositiveButton("확인",
                         new DialogInterface.OnClickListener()
                         {
                             @Override
                             public void onClick(DialogInterface dialog, int id)
                             {
                                 servercall=new Servercall();
-                                servercall.confirm(getActivity(),NickNick);
+                                SharedPreferenceUtil.putSharedPreference(getActivity(),"UserNickname",editNick.getText().toString()); //닉네임값을 저장.
+                                Log.d("jeon","Nicknametest"+SharedPreferenceUtil.getSharedPreference2(getActivity(),"UserNickname"));
+                                servercall.confirm(getActivity(),SharedPreferenceUtil.getSharedPreference2(getActivity(),"UserNickname")); //닉네임값 서버에 보내기.
                             }
-                        }).setNegativeButton("Cancel", null);
+                        }).setNegativeButton("취소", null);
         return builder.create();
     }
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -42,16 +43,32 @@ public class ParameterDAO {
 		jdbcTemplateObject.update(sqlStatement, new Object[] {sectorId});
 		
 	}
+	
 
-	public Parameter getparameter() {
-		String sqlStatement = "select * from parameter where userId is null && sectorId='cinema'" ;
-		return jdbcTemplateObject.queryForObject(sqlStatement, new ParameterMapper());
-	}
+	public Parameter getParameter(String sectorId) {
+		String sqlStatement = "select * from parameter where sectorId=?" ;
+		try{
+		return jdbcTemplateObject.queryForObject(sqlStatement, new Object[] {sectorId}, new ParameterMapper());
+		}catch(EmptyResultDataAccessException e) {
+	        // EmptyResultDataAccessException 예외 발생시 null 리턴
+	        return null;
+	    }
+		}
+
+	
 
 	public List<Custom> getCustoms() {
 		
 		String sqlStatement = "select * from custom " ;
 		return jdbcTemplateObject.query(sqlStatement, new CustomMapper());
 	}
+
+	public void insertCustom(Custom custom) {
+		
+		String sqlStatement = "insert into custom(userId,sectorId,brightness,modeId,callId) values(?,?, ? ,? ,?)  ";
+		jdbcTemplateObject.update(sqlStatement, new Object[] {custom.getUserId(),custom.getSectorId(),custom.getBrightness(),custom.getModeId(),custom.getCallId()});
+		
+	}
+
 
 }

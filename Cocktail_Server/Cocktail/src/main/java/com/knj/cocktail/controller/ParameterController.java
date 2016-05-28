@@ -14,6 +14,8 @@ import com.knj.cocktail.domain.Custom;
 import com.knj.cocktail.domain.Parameter;
 import com.knj.cocktail.service.ParameterService;
 
+import net.sf.json.JSONArray;
+
 @Controller
 public class ParameterController {
 
@@ -24,6 +26,12 @@ public class ParameterController {
 	this.parameterService = parameterService;
 	}
 	
+	@RequestMapping("users")
+	public String showUsers(Model model){
+		List<Custom> logList = parameterService.selectCustom();
+		model.addAttribute("logList", logList);
+		return "users";
+	}
 	
 	@RequestMapping("showSector")
 	public String showHome(Model model){
@@ -31,14 +39,18 @@ public class ParameterController {
 		model.addAttribute("parameterDefault", parameterDefault);
 		return "sector";
 	}
-	
-	@RequestMapping("showCustom")
-	public String showCustom(Model model){
-		Custom custom = parameterService.selectCustom();
-		model.addAttribute("custom", custom);
-		return "custom";
+
+	@RequestMapping("sectorTest")
+	public String showSectorTest(Model model){
+		System.out.println("sectorTest");
+		List<Parameter> parameterDefault = parameterService.selectDefaultList();
+
+		model.addAttribute("parameter", parameterDefault);
+		JSONArray jsonArray = new JSONArray();
+		  model.addAttribute("jsonList", jsonArray.fromObject(parameterDefault));
+		
+		return "sectorTest";
 	}
-	
 
 	
 	
@@ -49,15 +61,18 @@ public class ParameterController {
 		String modeId = request.getParameter("modeId");
 		String callId = request.getParameter("callId");
 		
-		System.out.println(sectorId);
-		if(sectorId!="" && brightness != "" && modeId != "" && callId != ""){
-			Parameter parameter = parameterService.selectDefault();
-			if(parameter.getSectorId()==sectorId){
+		
+
+		if(sectorId !="" && brightness != "" && modeId != "" && callId != ""){
+			Parameter parameter = parameterService.selectDefault(sectorId);
+			System.out.println("hihi");
+			if(parameter!= null && parameter.getSectorId()==sectorId){
 				
 				return "insertOverlap";
 			}
-			parameterService.doAdd(sectorId, brightness, modeId, callId);
 			
+			parameterService.doAdd(sectorId, brightness, modeId, callId);
+			System.out.println("here");
 			return "redirect:showSector";
 		}
 		else {
@@ -76,10 +91,27 @@ public class ParameterController {
 	@RequestMapping("test")
 	public String showLogin(Model model) {
 		System.out.println("success");
-		Parameter parameter = parameterService.selectDefault();
+		Parameter parameter = parameterService.selectDefault("cinema");
 		model.addAttribute("parameter", parameter);
 		return "test";
 	}
 	
-
+	@RequestMapping("app/insertParameter")
+	public String insertParameter(HttpServletRequest request){
+		System.out.println("successInsert");
+		
+		String userId = request.getParameter("userId");
+		System.out.println(userId);
+		String sectorId = request.getParameter("sectorId");
+		System.out.println(sectorId);
+		int brightness =Integer.parseInt(request.getParameter("brightness"));
+		int modeId = Integer.parseInt(request.getParameter("modeId"));
+		int callId = Integer.parseInt(request.getParameter("callId"));
+		
+		
+		Custom custom = new Custom(userId,sectorId,brightness,modeId,callId);
+		parameterService.addCustom(custom);
+		
+		return "defaultTransport";
+	}
 }

@@ -1,13 +1,24 @@
 package com.knj.cocktail.domain;
 
+
+
 public class Custom {
 
 	
+
 	private String userId;
 	private String sectorId;
 	private int brightness;
 	private int modeId;
 	private int callId;
+	private String log;
+	
+	public String getLog() {
+		return log;
+	}
+	public void setLog(String log) {
+		this.log = log;
+	}
 	
 	public String getUserId() {
 		return userId;
@@ -39,6 +50,31 @@ public class Custom {
 		return callId;
 	}
 	public void setCallId(int callId) {
+		this.callId = callId;
+	}
+	
+	public Custom( String sectorId, int brightness, int modeId, int callId) {
+		this.sectorId = sectorId;
+		this.brightness = brightness;
+		this.modeId = modeId;
+		this.callId = callId;
+	}
+	
+	public Custom(String userId, String sectorId, int brightness, int modeId, int callId, String log) {
+		super();
+		this.userId = userId;
+		this.sectorId = sectorId;
+		this.brightness = brightness;
+		this.modeId = modeId;
+		this.callId = callId;
+		this.log = log;
+	}
+	public Custom(String userId, String sectorId, int brightness, int modeId, int callId) {
+		super();
+		this.userId = userId;
+		this.sectorId = sectorId;
+		this.brightness = brightness;
+		this.modeId = modeId;
 		this.callId = callId;
 	}
 }
