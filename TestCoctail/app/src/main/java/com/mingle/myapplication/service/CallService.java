@@ -53,7 +53,7 @@ public class CallService extends Service {
                         case TelephonyManager.CALL_STATE_OFFHOOK: //통화중
                             break;
                         case TelephonyManager.CALL_STATE_RINGING: //전화벨 울리는 중
-                            if (true) call = true;
+                            call = true;
                             mAudioManager.setRingerMode(mAudioManager.RINGER_MODE_SILENT);
                             break;
                         default:

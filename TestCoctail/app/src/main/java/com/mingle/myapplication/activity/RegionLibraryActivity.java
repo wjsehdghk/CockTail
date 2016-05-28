@@ -69,7 +69,7 @@ public class RegionLibraryActivity extends AppCompatActivity {
 
         library_back = (ImageView) findViewById(R.id.library_back);
         library_edge = (ImageView) findViewById(R.id.library_edge);
-        library_icon = (ImageView)findViewById(R.id.library_icon);
+        library_icon = (ImageView) findViewById(R.id.library_icon);
 
         library_back.setImageBitmap(bitmap);
         library_edge.setImageBitmap(bitmap2);
