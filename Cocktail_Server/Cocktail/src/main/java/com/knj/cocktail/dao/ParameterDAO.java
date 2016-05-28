@@ -45,21 +45,29 @@ public class ParameterDAO {
 	}
 	
 
-
-	public Parameter getparameter() {
-		String sqlStatement = "select * from parameter where sectorId='cinema'" ;
+	public Parameter getParameter(String sectorId) {
+		String sqlStatement = "select * from parameter where sectorId=?" ;
 		try{
-		return jdbcTemplateObject.queryForObject(sqlStatement, new ParameterMapper());
+		return jdbcTemplateObject.queryForObject(sqlStatement, new Object[] {sectorId}, new ParameterMapper());
 		}catch(EmptyResultDataAccessException e) {
 	        // EmptyResultDataAccessException 예외 발생시 null 리턴
 	        return null;
 	    }
 		}
 
+	
+
 	public List<Custom> getCustoms() {
 		
 		String sqlStatement = "select * from custom " ;
 		return jdbcTemplateObject.query(sqlStatement, new CustomMapper());
+	}
+
+	public void insertCustom(Custom custom) {
+		
+		String sqlStatement = "insert into custom(userId,sectorId,brightness,modeId,callId) values(?,?, ? ,? ,?)  ";
+		jdbcTemplateObject.update(sqlStatement, new Object[] {custom.getUserId(),custom.getSectorId(),custom.getBrightness(),custom.getModeId(),custom.getCallId()});
+		
 	}
 
 

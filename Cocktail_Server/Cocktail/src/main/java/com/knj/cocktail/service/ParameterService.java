@@ -42,8 +42,8 @@ public class ParameterService {
 		
 	}
 
-	public Parameter selectDefault() {
-		return parameterDAO.getparameter();
+	public Parameter selectDefault(String sectorId) {
+		return parameterDAO.getParameter(sectorId);
 	}
 
 	
@@ -95,6 +95,10 @@ public class ParameterService {
 		custom.add(e);
 		custom.add(l);
 		return custom; 
+	}
+
+	public void addCustom(Custom custom) {
+		parameterDAO.insertCustom(custom);
 	}
 
 
