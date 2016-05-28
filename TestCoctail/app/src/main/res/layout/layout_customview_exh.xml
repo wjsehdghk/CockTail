@@ -112,7 +112,7 @@
                 android:id="@+id/ic_phon1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_phone_forwarded_black_24dp"
+                android:src="@drawable/ic_info_black_24dp"
                 sl:scale_height="111"
                 sl:scale_left="0"
                 sl:scale_top="507"
@@ -121,19 +121,19 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="전화무음"
+                android:text="팝업 on/off"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/black"
                 sl:scale_height="100"
-                sl:scale_left="380"
-                sl:scale_textsize="70"
+                sl:scale_left="335"
+                sl:scale_textsize="65"
                 sl:scale_top="525"
-                sl:scale_width="270" />
+                sl:scale_width="340" />
 
             <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/switch1"
+                android:id="@+id/popupSwitch"
                 sl:scale_height="100"
                 sl:scale_left="780"
                 sl:scale_top="510"
@@ -143,40 +143,10 @@
                 android:id="@+id/ic_phon3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_textsms_black_24dp"
-                sl:scale_height="111"
-                sl:scale_left="0"
-                sl:scale_top="704"
-                sl:scale_width="180"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="전화무음 후 문자전송"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/black"
-                sl:scale_height="100"
-                sl:scale_left="290"
-                sl:scale_textsize="50"
-                sl:scale_top="712"
-                sl:scale_width="470" />
-
-            <Switch
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/switch2"
-                sl:scale_height="100"
-                sl:scale_left="780"
-                sl:scale_top="697"
-                sl:scale_width="170"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:src="@drawable/ic_wifi_black_24dp"
                 sl:scale_height="111"
                 sl:scale_left="0"
-                sl:scale_top="891"
+                sl:scale_top="704"
                 sl:scale_width="180"/>
 
             <TextView
@@ -188,17 +158,18 @@
                 sl:scale_height="100"
                 sl:scale_left="380"
                 sl:scale_textsize="70"
-                sl:scale_top="899"
-                sl:scale_width="270" />
+                sl:scale_top="712"
+                sl:scale_width="270"/>
 
             <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/switch3"
+                android:id="@+id/wifiSwitch"
                 sl:scale_height="100"
                 sl:scale_left="780"
-                sl:scale_top="884"
+                sl:scale_top="697"
                 sl:scale_width="170"/>
+
 
             <ImageView
                 android:layout_width="wrap_content"

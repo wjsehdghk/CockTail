@@ -29,7 +29,8 @@
         android:icon="@mipmap/ic_cocktail"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:hardwareAccelerated="true">
         <activity
             android:name=".activity.MainActivity"
             android:hardwareAccelerated="false"

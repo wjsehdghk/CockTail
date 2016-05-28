@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.AudioManager;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
@@ -23,10 +24,14 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
+import android.widget.Switch;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -64,14 +69,21 @@ public class ResionExhibitionActivity extends AppCompatActivity {
     private AlertDialog mDialog = null;
     Servercall servercall;
     String exhibition;
-    AlertDialog.Builder ab;
+
+    WifiManager wifiManager;
+    Switch popupSwitch;
+    Switch wifiSwitch;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resion_exhibition);
-        initDialog(); //전시장에 관한 팝업창이 나오는 함수.
-        audioManager = (AudioManager) getBaseContext().getSystemService(Context.AUDIO_SERVICE);
+
+        if(SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionPopup")==0) {
+            initDialog();//전시장에 관한 팝업창이 나오는 함수
+        }
+
         servercall = new Servercall();
         exhibition = "exhibition";
         servercall.postResioninfo(getApplicationContext(), exhibition);//전시장 들어갔을때 서버에 Count증가 시킴.
@@ -79,10 +91,12 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         handler = new Handler();
 
         audioManager = (AudioManager) getBaseContext().getSystemService(Context.AUDIO_SERVICE);
+
         final Animation animRotate = AnimationUtils.loadAnimation(this, R.anim.anim_rotate);
         bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.exhibition);
         bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.exhibition_edge);
         bitmap3 = BitmapFactory.decodeResource(getResources(), R.drawable.exhibition_icon);
+
         exhibition_back = (ImageView) findViewById(R.id.exhibition_back);
         exhibition_edge = (ImageView) findViewById(R.id.exhibition_edge);
         exhibition_icon = (ImageView) findViewById(R.id.exhibition_icon);
@@ -90,6 +104,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         exhibition_edge.setImageBitmap(bitmap2);
         exhibition_edge.setAnimation(animRotate);
         exhibition_icon.setImageBitmap(bitmap3);
+
         homeButton = (Button) findViewById(R.id.home_btn);
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,24 +189,27 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         final Handler handler = new Handler();
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View dialogView = inflater.inflate(R.layout.dialog_layout, null);
-        ab = new AlertDialog.Builder(this);
+
+        AlertDialog.Builder ab = new AlertDialog.Builder(this);
+        ab.setTitle("전시장");
+        ab.setCancelable(false);
         ab.setView(dialogView);
 
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-
                     final ImageView iv = (ImageView) dialogView.findViewById(R.id.webImage);
+
                     URL url = new URL("https://scontent.xx.fbcdn.net/t31.0-8/13248551_1711638399105324_4905597678629514614_o.jpg");
                     InputStream is = url.openStream();
                     final Bitmap bm = BitmapFactory.decodeStream(is);
-                    handler.post(new Runnable() {
+                    handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             iv.setImageBitmap(bm);
                         }
-                    });
+                    }, 30);
                     iv.setImageBitmap(bm);
                 } catch (Exception e) {
 
@@ -199,8 +217,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
             }
         });
         t.start();
-        ab.setTitle("전시장");
-        ab.setCancelable(false);
+
         ab.setPositiveButton("확인", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
@@ -213,6 +230,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
                 setDismiss(mDialog);
             }
         });
+
         ab.show();
     }
     private void setDismiss(Dialog dialog) {
@@ -227,7 +245,6 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         super.onResume();
         Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
         bottomToggleButton.setChecked(false);
-
     }
     @Override
     protected void onPause() {
@@ -245,7 +262,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         CustomDelegate customDelegate = new CustomDelegate(true,
                 CustomDelegate.AnimationType.AlphaAnimation);
 
-        View view = LayoutInflater.from(this).inflate(R.layout.layout_custom_view, null, false);
+        View view = LayoutInflater.from(this).inflate(R.layout.layout_customview_exh, null, false);
 
         customDelegate.setCustomView(view);
         customDelegate.setSweetSheetColor(getResources().getColor(R.color.colorBottomtab));
@@ -309,6 +326,38 @@ public class ResionExhibitionActivity extends AppCompatActivity {
                 SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionBrightness") * 100 / 255);
         Log.d("SharedPreferenceUtil 2", "Resion Exhibition: " + SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionBrightness"));
         Log.d("SharedPreferenceUtil 2", "Resion Exhibition: " + SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionRingerMode"));
+
+
+        popupSwitch = (Switch) view.findViewById(R.id.popupSwitch);
+        popupSwitch.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "ExhibitionPopup", 0);
+                }
+                else {
+                    SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "ExhibitionPopup", 1);
+                }
+            }
+        });
+
+        wifiManager = (WifiManager)getSystemService(Context.WIFI_SERVICE);
+        wifiSwitch = (Switch)view.findViewById(R.id.wifiSwitch);
+        wifiSwitch.setChecked(wifiManager.isWifiEnabled());
+        wifiSwitch.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    wifiManager.setWifiEnabled(true);
+                    SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "ExhibitionPopup", true);
+                } else {
+                    wifiManager.setWifiEnabled(false);
+                    SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "ExhibitionPopup", false);
+                }
+            }
+        });
+
+
 
     }
 
