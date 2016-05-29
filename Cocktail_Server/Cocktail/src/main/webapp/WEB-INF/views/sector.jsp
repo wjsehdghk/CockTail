@@ -118,7 +118,7 @@
 											</c:when>
 											<c:otherwise>
 												<tr>
-													<th colspan="6">조회된 결과가 없습니다.</th>
+													<th colspan="6">Not Found Result</th>
 												</tr>
 											</c:otherwise>
 										</c:choose>
