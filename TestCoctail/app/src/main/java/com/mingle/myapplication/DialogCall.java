@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.mingle.myapplication.model.SharedPreferenceUtil;
@@ -20,6 +21,7 @@ import com.mingle.myapplication.severcall.Servercall;
 public class DialogCall extends android.app.DialogFragment {
     public EditText editNick;
     Servercall servercall;
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -27,6 +29,7 @@ public class DialogCall extends android.app.DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialogtest, null);
         editNick=(EditText)view.findViewById(R.id.NickName);
+
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
         builder.setView(view)
@@ -43,6 +46,7 @@ public class DialogCall extends android.app.DialogFragment {
                                 servercall.confirm(getActivity(),SharedPreferenceUtil.getSharedPreference2(getActivity(),"UserNickname")); //닉네임값 서버에 보내기.
                             }
                         }).setNegativeButton("취소", null);
+
         return builder.create();
     }
 }

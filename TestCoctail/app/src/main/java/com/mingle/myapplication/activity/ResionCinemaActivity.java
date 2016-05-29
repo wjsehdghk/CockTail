@@ -66,21 +66,20 @@ public class ResionCinemaActivity extends AppCompatActivity {
     Button saveBtn;
     WifiManager mWifiManager;
     int flag = 0;
-
     Servercall servercall;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resion_cinema);
-
         String cinema = "cinema";
         servercall = new Servercall();
         servercall.postResioninfo(getApplicationContext(), cinema);
+
+
+
         //서버에 사용자가 들어간 장소(씨네마) Count 보내기.
         final Animation animRotate = AnimationUtils.loadAnimation(this, R.anim.anim_rotate);
         audioManager = (AudioManager) getBaseContext().getSystemService(Context.AUDIO_SERVICE);
-
 
         bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cinema);
         bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.cinema_edge);
