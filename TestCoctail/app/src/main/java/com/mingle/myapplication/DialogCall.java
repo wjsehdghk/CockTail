@@ -40,10 +40,10 @@ public class DialogCall extends android.app.DialogFragment {
                             @Override
                             public void onClick(DialogInterface dialog, int id)
                             {
-                                servercall=new Servercall();
+                                //servercall=new Servercall();
                                 SharedPreferenceUtil.putSharedPreference(getActivity(),"UserNickname",editNick.getText().toString()); //닉네임값을 저장.
-                                Log.d("jeon","Nicknametest"+SharedPreferenceUtil.getSharedPreference2(getActivity(),"UserNickname"));
-                                servercall.confirm(getActivity(),SharedPreferenceUtil.getSharedPreference2(getActivity(),"UserNickname")); //닉네임값 서버에 보내기.
+                                Log.d("jeon","Nicknametest"+SharedPreferenceUtil.getSharedPreference(getActivity(),"UserNickname", ""));
+                              //  servercall.confirm(getActivity(),SharedPreferenceUtil.getSharedPreference(getActivity(),"UserNickname", "")); //닉네임값 서버에 보내기.
                             }
                         }).setNegativeButton("취소", null);
 

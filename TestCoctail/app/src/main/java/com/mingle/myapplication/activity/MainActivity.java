@@ -6,9 +6,15 @@ import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.os.Handler;
 import android.os.Message;
+import android.renderscript.Allocation;
+import android.renderscript.Element;
+import android.renderscript.RenderScript;
+import android.renderscript.ScriptIntrinsicBlur;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -22,37 +28,34 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
 import android.widget.ToggleButton;
-
 
 import com.mingle.myapplication.DialogCall;
 import com.mingle.myapplication.Parameter;
 import com.mingle.myapplication.R;
-
 import com.mingle.myapplication.model.SharedPreferenceUtil;
 import com.mingle.myapplication.service.RECOBackgroundRangingService;
-
 import com.mingle.sweetpick.CustomDelegate;
 import com.mingle.sweetpick.SweetSheet;
 import com.perples.recosdk.RECOBeacon;
+
 import java.util.ArrayList;
 
 import com.mingle.myapplication.severcall.Servercall;
+
 public class MainActivity extends AppCompatActivity
-        implements ActivityCompat.OnRequestPermissionsResultCallback{
+        implements ActivityCompat.OnRequestPermissionsResultCallback {
     public static final String RECO_UUID = "24DDF411-8CF1-440C-87CD-E368DAF9C93E";
     private static final int REQUEST_ENABLE_BT = 1;
     private static final int ACCESS_FINE_LOCATION_REQUEST_CODE = 1;
     // 필요한 권한들
-    private static  String[] PERMISSIONS_CONTACT = {
+    private static String[] PERMISSIONS_CONTACT = {
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.SEND_SMS,
             Manifest.permission.READ_PHONE_STATE};
-
     private BluetoothManager mBluetoothManager;
     private BluetoothAdapter mBluetoothAdapter;
     private ArrayList<RECOBeacon> mRangedBeacons;
@@ -66,33 +69,33 @@ public class MainActivity extends AppCompatActivity
     Toolbar bottombar;
     Handler handler;
     AudioManager audioManager;
-    int selectBeaconMajor=0;
-    int difResionNum=0;
+    int selectBeaconMajor = 0;
+    int difResionNum = 0;
     DialogCall dialogCall;
     Servercall servercall;
-
-    Parameter parameter;
-    SharedPreferenceUtil sharedPreferenceUtil;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        /*imageView=(ImageView)findViewById(R.id.cinemablur);
+        Bitmap bitmap= BitmapFactory.decodeResource(getResources(),R.drawable.cinema);
+        Bitmap blurBitmap=blur(bitmap);
+        imageView.setImageBitmap(blurBitmap);
+        */
         SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "ISRESIONSET", 0);
-
         showDialog(); //닉네임 입력 팝업창 불러오기. UserNickname 입력후 SharedPreference에 저장.
-
-        servercall=new Servercall();
+        servercall = new Servercall();
         servercall.customizeset(getApplicationContext()); //서버에서 디폴트값 얻어오기 . SharedPreference에 값 저장.
-
-
         m_checkPermission();
         audioManager = (AudioManager) getBaseContext().getSystemService(Context.AUDIO_SERVICE);
         Intent monitorService = new Intent(this, RECOBackgroundRangingService.class);
         startService(monitorService);
-        cinemaButton=(Button)findViewById(R.id.cinema_h_icon);
-        libraryButton=(Button)findViewById(R.id.library_h_icon);
-        exhibitButton=(Button)findViewById(R.id.exhibition_h_icon);
+        cinemaButton = (Button) findViewById(R.id.cinema_h_icon);
+        libraryButton = (Button) findViewById(R.id.library_h_icon);
+        exhibitButton = (Button) findViewById(R.id.exhibition_h_icon);
         cinemaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,34 +159,53 @@ public class MainActivity extends AppCompatActivity
             }
         });
         SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "ResionMajor", 0);
+        SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "CallServiceFlag", 0);
     }
-    public void showDialog(){
-        dialogCall=new DialogCall();
-        dialogCall.show(getFragmentManager(),"NickName");
+
+    private static final float BLUR_RADIUS = 25f;
+
+    public Bitmap blur(Bitmap image) {
+        if (null == image) return null;
+        Bitmap outputBitmap = Bitmap.createBitmap(image);
+        final RenderScript renderScript = RenderScript.create(this);
+        Allocation tmpIn = Allocation.createFromBitmap(renderScript, image);
+        Allocation tmpOut = Allocation.createFromBitmap(renderScript, outputBitmap);
+        ScriptIntrinsicBlur theIntrinsic = ScriptIntrinsicBlur.create(renderScript, Element.U8_4(renderScript));
+        theIntrinsic.setRadius(BLUR_RADIUS);
+        theIntrinsic.setInput(tmpIn);
+        theIntrinsic.forEach(tmpOut);
+        tmpOut.copyTo(outputBitmap);
+        return outputBitmap;
+    }
+
+    public void showDialog() {
+        dialogCall = new DialogCall();
+        dialogCall.show(getFragmentManager(), "NickName");
         dialogCall.setCancelable(true);
     }
+
     private void m_checkPermission() {
         mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = mBluetoothManager.getAdapter();
 
-        if(mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
+        if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
             Intent enableBTIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBTIntent, REQUEST_ENABLE_BT);
         }
 
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED ) {
+                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             //권한이 없을 경우
 
             //최초 인지, 재요청인지 확인
-            if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION) ||
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION) ||
                     ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION) ||
                     ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.SEND_SMS) ||
-                    ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_PHONE_STATE) ) {
+                    ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_PHONE_STATE)) {
                 // 임의로 취소 시킨 경우 권한 재요청
-                ActivityCompat.requestPermissions(this, PERMISSIONS_CONTACT,  ACCESS_FINE_LOCATION_REQUEST_CODE);
+                ActivityCompat.requestPermissions(this, PERMISSIONS_CONTACT, ACCESS_FINE_LOCATION_REQUEST_CODE);
             } else {
                 //최초로 권한을 요청하는 경우
                 ActivityCompat.requestPermissions(this, PERMISSIONS_CONTACT, ACCESS_FINE_LOCATION_REQUEST_CODE);
@@ -208,9 +230,7 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
-
         myThread.start();
-
     }
 
     @Override
@@ -219,13 +239,12 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-
     private void updateThread() {
         //if(SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ISRESIONSET")==1) {
-        if(selectBeaconMajor !=
+        if (selectBeaconMajor !=
                 SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ResionMajor")) {
             difResionNum++;
-            if(difResionNum == 3) {
+            if (difResionNum == 3) {
                 difResionNum = 0;
                 selectBeaconMajor = SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ResionMajor");
 
@@ -239,24 +258,19 @@ public class MainActivity extends AppCompatActivity
                     //intent3.setAction(Intent.ACTION_MAIN);
                     //intent3.addCategory(Intent.CATEGORY_HOME);
                     //startActivity(intent3);
-                }
-                else if(SharedPreferenceUtil.getSharedPreference(this, "ResionMajor") == 18249) { // 노란색
+                } else if (SharedPreferenceUtil.getSharedPreference(this, "ResionMajor") == 18249) { // 노란색
                     audioManager.setRingerMode(
                             SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionRingerMode")
                     );
-
                     Intent intent = new Intent(getApplicationContext(), ResionExhibitionActivity.class);
                     startActivity(intent);
                     //moveTaskToBack(SharedPreferenceUtil.isResionSet);
-
                     SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "ISRESIONSET", 0);
                     //Intent intent3 = new Intent();
                     //intent3.setAction(Intent.ACTION_MAIN);
                     //intent3.addCategory(Intent.CATEGORY_HOME);
                     //startActivity(intent3);
-                }
-
-                else {
+                } else {
                     Log.d("RESION: ", "알수없는 비콘");
                 }
             }
@@ -270,23 +284,24 @@ public class MainActivity extends AppCompatActivity
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case ACCESS_FINE_LOCATION_REQUEST_CODE: {
-                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was granted
                 } else {
-                   // permissions denied
+                    // permissions denied
                 }
                 return;
             }
         }
     }
 
-    protected void onNewIntent(Intent intent){
+    protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
     }
+
     @Override
     protected void onResume() {
         super.onResume();
-
+        SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "CallServiceFlag", 0);
     }
 
     private void setupCustomView() {
@@ -305,8 +320,8 @@ public class MainActivity extends AppCompatActivity
                 finish();
             }
         });*/
-    }
 
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -316,7 +331,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-
         if (mSweetSheet3.isShow()) {
             mSweetSheet3.dismiss();
             bottomToggleButton.setChecked(false);
@@ -326,12 +340,8 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         return super.onOptionsItemSelected(item);
     }
-
-
 }

@@ -1,6 +1,5 @@
 package com.mingle.myapplication.activity;
 
-
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -42,8 +41,10 @@ import com.mingle.sweetpick.SweetSheet;
 
 
 public class ResionCinemaActivity extends AppCompatActivity {
+
     private SweetSheet mSweetSheet3;
     private RelativeLayout rl;
+
     Toolbar toolbar;
     Toolbar bottombar;
     Button homeButton;
@@ -65,35 +66,36 @@ public class ResionCinemaActivity extends AppCompatActivity {
     int callFrag = 0;
     Button saveBtn;
     WifiManager mWifiManager;
-    int flag = 0;
+    String cinema;
     Servercall servercall;
+    SeekBar ringSeekBar;            //벨 소리 조절
+    SeekBar mediaSeekBar;           //미디어 소리 조절
+    SeekBar alertSeekBar;           //알람 소리 조절
+    SeekBar sysSeekBar;             //시스템 소리 조절
+    int saveCurrentAlert;                //현재 상태 저장
+    int saveCurrentSys;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resion_cinema);
-        String cinema = "cinema";
-        servercall = new Servercall();
-        servercall.postResioninfo(getApplicationContext(), cinema);
-
-
-
         //서버에 사용자가 들어간 장소(씨네마) Count 보내기.
+        servercall = new Servercall();
+        cinema = "cinema";
+        servercall.postResioninfo(getApplicationContext(), cinema);
         final Animation animRotate = AnimationUtils.loadAnimation(this, R.anim.anim_rotate);
         audioManager = (AudioManager) getBaseContext().getSystemService(Context.AUDIO_SERVICE);
-
         bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cinema);
         bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.cinema_edge);
         bitmap3 = BitmapFactory.decodeResource(getResources(), R.drawable.cinema_icon);
-
         cinema_back = (ImageView) findViewById(R.id.cinema_back);
         cinema_edge = (ImageView) findViewById(R.id.cinema_edge);
         cinema_icon = (ImageView) findViewById(R.id.cinema_icon);
-
         cinema_back.setImageBitmap(bitmap);
         cinema_edge.setImageBitmap(bitmap2);
         cinema_edge.setAnimation(animRotate);
         cinema_icon.setImageBitmap(bitmap3);
-
         homeButton = (Button) findViewById(R.id.home_btn);
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,8 +127,6 @@ public class ResionCinemaActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-
         rl = (RelativeLayout) findViewById(R.id.rl);
         setupCustomView();
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -164,18 +164,23 @@ public class ResionCinemaActivity extends AppCompatActivity {
                 }
             }
         });
-        //앱 처음 실행하였을때 디폴트값을 넣어 초기값으로 주기
+
         Settings.System.putInt(getContentResolver(), "screen_brightness",
                 SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "CinemaBrightness"));
         audioManager.setRingerMode(
                 SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "CinemaRingerMode"));
         Log.d("SharedPreferenceUtil 1", "Resion Cinema: " + SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "CinemaBrightness"));
         Log.d("SharedPreferenceUtil 1", "Resion Cinema: " + SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "CinemaRingerMode"));
+        servercall.usersettinginfo(getApplicationContext(),
+                SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "UserNickname", ""),
+                cinema,
+                SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "CinemaBrightness"),
+                SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "CinemaRingerMode"),
+                SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "CinemaChecked")
+        ); //서버에 사용자의 설정값 보내기
+
         SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "CallServiceFrag", 1);
         mCallService = startService(new Intent(this, CallService.class));
-        callFrag = 1;
-
-
     }
 
     protected void onNewIntent(Intent intent) {
@@ -203,8 +208,8 @@ public class ResionCinemaActivity extends AppCompatActivity {
         bitmap.recycle();
         bitmap2.recycle();
         bitmap3.recycle();
-        callFrag = 0;
     }
+
     private void setupCustomView() {
         mSweetSheet3 = new SweetSheet(rl);
         CustomDelegate customDelegate = new CustomDelegate(true,
@@ -215,6 +220,13 @@ public class ResionCinemaActivity extends AppCompatActivity {
         mSweetSheet3.setDelegate(customDelegate);
         mSweetSheet3.setBackgroundEffect(new BlurEffect(8));
         mSweetSheet3.setBackgroundClickEnable(false);
+
+        ringSeekBar = (SeekBar) view.findViewById(R.id.ringSeekBar);
+        mWifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        wifiSwitchBtn = (Switch) view.findViewById(R.id.switch3);
+
+        wifiSwitchBtn.setChecked(mWifiManager.isWifiEnabled());
+
         view.findViewById(R.id.triToggleButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -249,14 +261,17 @@ public class ResionCinemaActivity extends AppCompatActivity {
                 WindowManager.LayoutParams params = getWindow().getAttributes();
                 params.screenBrightness = (float) progress / 100;
                 brightness = params.screenBrightness;
-                SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "CinemaBrightness", (int) brightness);
                 getWindow().setAttributes(params);
                 Log.d("SharedPreferenceUtil 3", "Resion Cinema: " + SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "CinemaBrightness"));
                 Log.d("SharedPreferenceUtil 3", "Resion Cinema: " + SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "CinemaRingerMode"));
+
             }
+
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
+
             }
+
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 brightness = brightness * 255;
@@ -273,19 +288,17 @@ public class ResionCinemaActivity extends AppCompatActivity {
         if (SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "CinemaChecked") == 1)
             callServiceSwitchBtn.setChecked(true);
         else callServiceSwitchBtn.setChecked(false);
+
         callServiceSwitchBtn.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    if (callFrag == 0) {
-                        initiateService();
-                    }
-                    callFrag = 1;
+                    initiateService();
                     SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "CinemaChecked", 1);
                     messgeSwitchBtn.setEnabled(true);
+
                 } else {
                     terminateService();
-                    callFrag = 0;
                     SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "CinemaChecked", 0);
                     messgeSwitchBtn.setEnabled(false);
                 }
@@ -302,8 +315,7 @@ public class ResionCinemaActivity extends AppCompatActivity {
                 }
             }
         });
-        mWifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-        wifiSwitchBtn = (Switch) view.findViewById(R.id.switch3);
+
         wifiSwitchBtn.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -314,10 +326,127 @@ public class ResionCinemaActivity extends AppCompatActivity {
                 }
             }
         });
+        mediaSeekBar = (SeekBar) view.findViewById(R.id.mediaSeekBar);
+        alertSeekBar = (SeekBar) view.findViewById(R.id.alertSeekBar);
+        sysSeekBar = (SeekBar) view.findViewById(R.id.sysSeekBar);
 
+        final AudioManager audioManager3 = (AudioManager) getSystemService(AUDIO_SERVICE);
+        int mMax = audioManager3.getStreamMaxVolume(AudioManager.STREAM_NOTIFICATION);
+        int mCurrentRing = audioManager3.getStreamVolume(AudioManager.STREAM_NOTIFICATION);
+        alertSeekBar.setMax(mMax);
+        alertSeekBar.setProgress(mCurrentRing);
+        alertSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                audioManager3.setStreamVolume(AudioManager.STREAM_NOTIFICATION, progress, 0);
+            }
 
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        final AudioManager audioManager4 = (AudioManager) getSystemService(AUDIO_SERVICE);
+        mMax = audioManager4.getStreamMaxVolume(AudioManager.STREAM_SYSTEM);
+        mCurrentRing = audioManager4.getStreamVolume(AudioManager.STREAM_SYSTEM);
+        sysSeekBar.setMax(mMax);
+        sysSeekBar.setProgress(mCurrentRing);
+        sysSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                audioManager4.setStreamVolume(AudioManager.STREAM_SYSTEM, progress, 0);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        final AudioManager audioManager1 = (AudioManager) getSystemService(AUDIO_SERVICE);
+        mMax = audioManager1.getStreamMaxVolume(AudioManager.STREAM_RING);
+        mCurrentRing = audioManager1.getStreamVolume(AudioManager.STREAM_RING);
+        ringSeekBar.setMax(mMax);
+        ringSeekBar.setProgress(mCurrentRing);
+        ringSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                                /*if(progress <= 0) {
+                                        saveCurrentAlert = audioManager1.getStreamVolume(AudioManager.STREAM_NOTIFICATION);
+                                        saveCurrentSys = audioManager1.getStreamVolume(AudioManager.STREAM_SYSTEM);
+                                        alertSeekBar.setEnabled(false);
+
+                                        sysSeekBar.setEnabled(false);
+                                }
+                                else {
+                                        alertSeekBar.setEnabled(true);
+                                        AudioManager audioManager1 = (AudioManager)getSystemService(AUDIO_SERVICE);
+                                        int current = audioManager1.getStreamVolume(AudioManager.STREAM_NOTIFICATION );
+                                        if(saveCurrentAlert<=0) {
+                                                alertSeekBar.setProgress(current);
+                                        }
+                                        else {
+                                                alertSeekBar.setProgress(saveCurrentAlert);
+                                                saveCurrentAlert=0;
+                                        }
+                                        if(saveCurrentSys<=0) {
+                                                alertSeekBar.setProgress(current);
+
+                                        }
+                                        else {
+                                                alertSeekBar.setProgress(saveCurrentSys);
+                                                saveCurrentSys=0;
+                                        }
+
+                                        sysSeekBar.setEnabled(true);
+                                        current = audioManager1.getStreamVolume(AudioManager.STREAM_SYSTEM );
+                                        sysSeekBar.setProgress(current);
+
+                                }*/
+                audioManager1.setStreamVolume(AudioManager.STREAM_RING, progress, 0);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        final AudioManager audioManager2 = (AudioManager) getSystemService(AUDIO_SERVICE);
+        mMax = audioManager2.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        mCurrentRing = audioManager2.getStreamVolume(AudioManager.STREAM_MUSIC);
+        mediaSeekBar.setMax(mMax);
+        mediaSeekBar.setProgress(mCurrentRing);
+        mediaSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                audioManager2.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
     }
-
     public void initiateService() {
         SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "CallServiceFrag", 1);
         mCallService = startService(new Intent(this, CallService.class));
@@ -331,11 +460,13 @@ public class ResionCinemaActivity extends AppCompatActivity {
         i.setComponent(mCallService);
         stopService(i);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
     @Override
     public void onBackPressed() {
         if (mSweetSheet3.isShow()) {
@@ -345,6 +476,7 @@ public class ResionCinemaActivity extends AppCompatActivity {
         }
         bottomToggleButton.setChecked(false);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);

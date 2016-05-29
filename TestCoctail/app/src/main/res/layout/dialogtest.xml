@@ -32,8 +32,8 @@
             android:layout_alignTop="@+id/Greenbackground"
             android:gravity="center"
             android:text="COCKTAIL"
-            android:textColor="#000000"
-            android:textSize="35dp"
+            android:textColor="#00020e"
+            android:textSize="30dp"
             android:textStyle="bold"
             />
     </RelativeLayout>

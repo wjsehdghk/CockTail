@@ -21,6 +21,7 @@ import android.widget.ToggleButton;
 
 import com.mingle.entity.MenuEntity;
 import com.mingle.myapplication.R;
+import com.mingle.myapplication.model.SharedPreferenceUtil;
 import com.mingle.myapplication.severcall.Servercall;
 import com.mingle.sweetpick.BlurEffect;
 import com.mingle.sweetpick.CustomDelegate;
@@ -58,25 +59,19 @@ public class RegionLibraryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_resion_library);
 
         final Animation animRotate = AnimationUtils.loadAnimation(this, R.anim.anim_rotate);
-
         servercall=new Servercall();
         library="library";
         servercall.postResioninfo(getApplicationContext(), library);
-
         bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.library);
         bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.library_edge);
         bitmap3 = BitmapFactory.decodeResource(getResources(), R.drawable.library_icon);
-
         library_back = (ImageView) findViewById(R.id.library_back);
         library_edge = (ImageView) findViewById(R.id.library_edge);
-        library_icon = (ImageView)findViewById(R.id.library_icon);
-
+        library_icon = (ImageView) findViewById(R.id.library_icon);
         library_back.setImageBitmap(bitmap);
         library_edge.setImageBitmap(bitmap2);
         library_edge.setAnimation(animRotate);
         library_icon.setImageBitmap(bitmap3);
-
-
         homeButton = (Button) findViewById(R.id.home_btn);
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,6 +145,7 @@ public class RegionLibraryActivity extends AppCompatActivity {
                 }
             }
         });
+        SharedPreferenceUtil.putSharedPreference(getApplicationContext(),"CallServiceFlag", 0);
     }
 
     protected void onNewIntent(Intent intent) {

@@ -43,7 +43,7 @@ public class CallService extends Service {
                             if (call == true) {
                                 mAudioManager.setRingerMode(mAudioManager.RINGER_MODE_VIBRATE);
                                 if(SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "MessageChecked")==1) {
-                                    SendSMS(incomingNumber, "죄송합니다. 지금 전화를 받을 수 없습니다.");
+                                    //SendSMS(incomingNumber, "죄송합니다. 지금 전화를 받을 수 없습니다.");
                                 }
                                 Toast.makeText(getApplicationContext(), "죄송합니다. 지금 전화를 받을 수 없습니다."
                                         , Toast.LENGTH_SHORT).show();
@@ -53,7 +53,7 @@ public class CallService extends Service {
                         case TelephonyManager.CALL_STATE_OFFHOOK: //통화중
                             break;
                         case TelephonyManager.CALL_STATE_RINGING: //전화벨 울리는 중
-                            if (true) call = true;
+                            call = true;
                             mAudioManager.setRingerMode(mAudioManager.RINGER_MODE_SILENT);
                             break;
                         default:
