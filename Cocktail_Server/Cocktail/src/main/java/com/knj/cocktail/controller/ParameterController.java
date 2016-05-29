@@ -56,23 +56,26 @@ public class ParameterController {
 	
 	@RequestMapping("insertSector")
 	public String insertSector( HttpServletRequest request){
+		System.out.println("here0");
 		String sectorId = request.getParameter("sectorId");
 		String brightness = request.getParameter("brightness");
 		String modeId = request.getParameter("modeId");
 		String callId = request.getParameter("callId");
-		
-		
+		System.out.println("here1");
+		System.out.println("11111"+sectorId);
 
 		if(sectorId !="" && brightness != "" && modeId != "" && callId != ""){
+			System.out.println("here1-1");
 			Parameter parameter = parameterService.selectDefault(sectorId);
-			System.out.println("hihi");
-			if(parameter!= null && parameter.getSectorId()==sectorId){
-				
+			System.out.println("here1-2");
+			if(parameter!= null && parameter.getSectorId().equals(sectorId)){
+				System.out.println("overlap");
 				return "insertOverlap";
 			}
 			
+			
 			parameterService.doAdd(sectorId, brightness, modeId, callId);
-			System.out.println("here");
+			System.out.println("here3");
 			return "redirect:showSector";
 		}
 		else {
