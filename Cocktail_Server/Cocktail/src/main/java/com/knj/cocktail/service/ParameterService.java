@@ -62,7 +62,13 @@ public class ParameterService {
 		int cmodeId=0, emodeId=0, lmodeId=0;
 		int ccallId=0, ecallId=0, lcallId=0;
 		
-		
+		if(ctotal == 0 && etotal ==0 && ltotal==0){
+			custom.clear();
+			Custom a = new Custom("cinema",0,0,0);
+			custom.add(a);
+			return custom;
+		}
+		else{
 		for(int i=0;i<custom.size();i++){
 			customs[i] = custom.get(i);
 			if(customs[i].getSectorId().equals("cinema")){
@@ -86,7 +92,7 @@ public class ParameterService {
 			}
 			
 		}
-
+		
 		custom.clear();
 		Custom c = new Custom("cinema",cbrightness/ctotal,cmodeId/ctotal,ccallId/ctotal);
 		Custom e = new Custom("exhibition",ebrightness/etotal,emodeId/etotal,ecallId/etotal);
@@ -95,6 +101,7 @@ public class ParameterService {
 		custom.add(e);
 		custom.add(l);
 		return custom; 
+		}
 	}
 
 	public void addCustom(Custom custom) {

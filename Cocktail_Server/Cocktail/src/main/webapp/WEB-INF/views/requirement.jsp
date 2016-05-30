@@ -1,3 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"%>
+<%
+    request.setCharacterEncoding("utf-8");
+%>
+
+
 <!DOCTYPE html>
 <html class="no-js">
 
@@ -66,12 +72,15 @@
 					<li ><a href="showSector"><i
 							class="icon-chevron-right"></i> Sector</a></li>
 					
-					<li class="active"><a href="showBeacon"><i class="icon-chevron-right"></i>
+					<li ><a href="showBeacon"><i class="icon-chevron-right"></i>
 							Beacon</a></li>
 					<li><a href="users"><i class="icon-chevron-right"></i>
 							Users</a></li>
-					<li ><a href="showRequirement"><i class="icon-chevron-right"></i>
+							<li class="active"><a href="showRequirement"><i class="icon-chevron-right"></i>
 							Requirement</a></li>
+							
+							
+							
 
 				</ul>
 			</div>
@@ -84,7 +93,7 @@
 						<!-- block -->
 						<div class="block">
 							<div class="navbar navbar-inner block-header">
-								<div class="muted pull-left"><h3>Beacon Table</h3></div>
+								<div class="muted pull-left"><h3>User Requirement</h3></div>
 
 							</div>
 							
@@ -93,73 +102,41 @@
 									<thead>
 										<tr>
 											<th>#</th>
-											<th>BeaconId</th>
-											<th>sectorId</th>
-											<th>distance</th>
-											<th>delete</th>
+											<th>userId</th>
+											<th>context</th>
 										</tr>
 									</thead>
 									<tbody>
 										<%
 											int i = 1;
 										%>
-										<c:choose>
-											<c:when test="${fn:length(beaconList) > 0}">
-												<c:forEach items="${beaconList}" var="row">
+										
+											
+												<c:forEach items="${requirementList}" var="row">
 													<tr>
 														<th><%=i++%></th>
-														<th>${row.beaconId}</th>
-														<th>${row.sectorId}</th>
-														<th>${row.distance}</th>
-														<th class="btn-group"><a href="${row.beaconId}Remove"><button
-																	class="btn btn-danger btn-mini">delete</button></a></th>
+														<th>${row.userId}</th>
+														<th>${row.context}</th>
+														
 													</tr>
 												</c:forEach>
 										
-											</c:when>
-											<c:otherwise>
-												<tr>
-													<th colspan="6">조회된 결과가 없습니다.</th>
-												</tr>
-											</c:otherwise>
-										</c:choose>
+											
+											
 										
 							
 									</tbody>
 								</table>
 
 							</div>
-							  <div class="block-content collapse in">
-							<form  method="post" action="insertBeacon">
-								<table class="table table-striped " >
-									
-												<tr>
-												
-													<th> </th>
-													<th><input class="input-small focused" type="text"
-														name="beaconId"></th>
-													<th><input class="input-small" type="text"
-														name="sectorId"></th>
-													<th><input class="input-small focused" type="text"
-														name="distance"></th>
-													<th>
-													<div class="btn-group">
-													
-                                         <button class="btn btn-success" type="submit">Add New <i class="icon-plus icon-white"></i></button></a>
-                                  
-                                      </div>
-													</th>	
-												</tr>
-												 
-								</table>
-								</form>
-								</div> 
+							  
 
 						</div>
 						<!-- /block -->
 					</div>
 
 				</div>
+				
 			</div>
 		</div>
 		<hr>
