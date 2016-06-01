@@ -8,9 +8,6 @@ import android.graphics.drawable.Drawable;
 public class Resion {
     private int image1;
     private Drawable image2;
-
-
-
     private String resion;
 
     public Resion (int image1, Drawable image2, String resion) {

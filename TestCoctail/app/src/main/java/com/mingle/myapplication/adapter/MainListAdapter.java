@@ -45,7 +45,6 @@ public class MainListAdapter extends ArrayAdapter<Resion> {
             ImageView imageView1 = (ImageView)itemView.findViewById(R.id.resion_ic);
             TextView textView = (TextView) itemView.findViewById(R.id.resion_txt);
 
-
             imageView1.setImageResource(item.getImage1());
             imageView.setBackground(item.getImage2());
             textView.setText(item.getResion());

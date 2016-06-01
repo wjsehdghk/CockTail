@@ -69,6 +69,8 @@
 							Beacon</a></li>
 					<li><a href="users"><i class="icon-chevron-right"></i>
 							Users</a></li>
+					<li ><a href="showRequirement"><i class="icon-chevron-right"></i>
+							Requirement</a></li>
 
 				</ul>
 			</div>
@@ -118,7 +120,7 @@
 											</c:when>
 											<c:otherwise>
 												<tr>
-													<th colspan="6">조회된 결과가 없습니다.</th>
+													<th colspan="6">Not Found Result</th>
 												</tr>
 											</c:otherwise>
 										</c:choose>

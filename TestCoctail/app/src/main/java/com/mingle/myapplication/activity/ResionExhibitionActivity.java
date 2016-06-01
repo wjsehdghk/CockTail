@@ -223,9 +223,6 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         itemIcon.setImageDrawable(getResources().getDrawable(R.mipmap.ic_message, null));
         SubActionButton button1 = itemBuilder.setContentView(itemIcon).build();
         FloatingActionMenu actionMenu = new FloatingActionMenu.Builder(this).attachTo(actionButton).build();
-
-
-
     }
 
     public void initDialog() {
@@ -253,7 +250,6 @@ public class ResionExhibitionActivity extends AppCompatActivity {
                 setDismiss(mDialog);
             }
         });
-
         ab.show();
     }
 
@@ -389,7 +385,6 @@ public class ResionExhibitionActivity extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 audioManager3.setStreamVolume(AudioManager.STREAM_NOTIFICATION, progress, 0);
             }
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {}
             @Override

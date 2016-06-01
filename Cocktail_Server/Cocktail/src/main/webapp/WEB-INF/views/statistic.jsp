@@ -66,6 +66,8 @@
 
 					<li><a href="showBeacon"><i class="icon-chevron-right"></i>Beacon</a></li>
 					<li><a href="users"><i class="icon-chevron-right"></i>Users</a></li>
+					<li ><a href="showRequirement"><i class="icon-chevron-right"></i>
+							Requirement</a></li>
 
 				</ul>
 			</div>
