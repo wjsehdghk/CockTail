@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.AudioManager;
+import android.media.Image;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,12 +16,15 @@ import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Layout;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -35,16 +39,22 @@ import android.widget.Switch;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.bumptech.glide.Glide;
 import com.mingle.myapplication.R;
+import com.mingle.myapplication.ScalableLayout;
 import com.mingle.myapplication.TriToggleButton;
 import com.mingle.myapplication.model.SharedPreferenceUtil;
 import com.mingle.myapplication.severcall.Servercall;
 import com.mingle.sweetpick.BlurEffect;
 import com.mingle.sweetpick.CustomDelegate;
 import com.mingle.sweetpick.SweetSheet;
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
+import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
 import java.io.InputStream;
 import java.net.URL;
+import java.util.zip.Inflater;
 
 public class ResionExhibitionActivity extends AppCompatActivity {
     private SweetSheet mSweetSheet3;
@@ -202,10 +212,24 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         Log.d("SharedPreferenceUtil 1", "Resion Exhibition: " + SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionRingerMode"));
 
         SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "CallServiceFrag", 0); // 다른 지역에서 callservice 사용 안함
+
+        //floating Button
+        ImageView icon = new ImageView(this);
+        icon.setImageDrawable(getResources().getDrawable(R.mipmap.ic_message, null));
+        FloatingActionButton actionButton = new FloatingActionButton.Builder(this).setContentView(icon).build();
+
+        SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
+        ImageView itemIcon = new ImageView(this);
+        itemIcon.setImageDrawable(getResources().getDrawable(R.mipmap.ic_message, null));
+        SubActionButton button1 = itemBuilder.setContentView(itemIcon).build();
+        FloatingActionMenu actionMenu = new FloatingActionMenu.Builder(this).attachTo(actionButton).build();
+
+
+
     }
 
     public void initDialog() {
-        final Handler handler = new Handler();
+        //final Handler handler = new Handler();
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View dialogView = inflater.inflate(R.layout.dialog_layout, null);
 
@@ -214,28 +238,8 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         ab.setCancelable(false);
         ab.setView(dialogView);
 
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    final ImageView iv = (ImageView) dialogView.findViewById(R.id.webImage);
-
-                    URL url = new URL("https://scontent.xx.fbcdn.net/t31.0-8/13248551_1711638399105324_4905597678629514614_o.jpg");
-                    InputStream is = url.openStream();
-                    final Bitmap bm = BitmapFactory.decodeStream(is);
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            iv.setImageBitmap(bm);
-                        }
-                    }, 30);
-                    iv.setImageBitmap(bm);
-                } catch (Exception e) {
-
-                }
-            }
-        });
-        t.start();
+        ImageView imageView = (ImageView)dialogView.findViewById(R.id.webImage);
+        Glide.with(this).load("https://goo.gl/QI7IDh").into(imageView);
 
         ab.setPositiveButton("확인", new DialogInterface.OnClickListener() {
             @Override
@@ -252,6 +256,7 @@ public class ResionExhibitionActivity extends AppCompatActivity {
 
         ab.show();
     }
+
     private void setDismiss(Dialog dialog) {
         if (dialog != null && dialog.isShowing())
             dialog.dismiss();
@@ -452,11 +457,6 @@ public class ResionExhibitionActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-    @Override
     public void onBackPressed() {
         if (mSweetSheet3.isShow()) {
             mSweetSheet3.dismiss();
@@ -465,8 +465,16 @@ public class ResionExhibitionActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //getMenuInflater().inflate(R.menu.menu_with_fab, menu);
+        return true;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         return super.onOptionsItemSelected(item);
     }
 }

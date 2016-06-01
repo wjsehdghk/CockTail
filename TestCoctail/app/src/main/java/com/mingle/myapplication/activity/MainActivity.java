@@ -265,9 +265,9 @@ public class MainActivity extends AppCompatActivity
         BitmapDrawable blurDrawCin=new BitmapDrawable(getResources(), blurCin);
         BitmapDrawable blurDrawLib=new BitmapDrawable(getResources(), blurLib);
         BitmapDrawable blurDrawExh=new BitmapDrawable(getResources(), blurExh);
-        adapter.add(new Resion(R.mipmap.ic_cinema, blurDrawCin));
-        adapter.add(new Resion(R.mipmap.ic_library, blurDrawLib));
-        adapter.add(new Resion(R.mipmap.ic_exhibition, blurDrawExh));
+        adapter.add(new Resion(R.mipmap.ic_cinema, blurDrawCin, "영화관"));
+        adapter.add(new Resion(R.mipmap.ic_library, blurDrawLib, "도서관"));
+        adapter.add(new Resion(R.mipmap.ic_exhibition, blurDrawExh, "전시장"));
     }
 
     public Bitmap blur(Bitmap image) {
@@ -277,7 +277,7 @@ public class MainActivity extends AppCompatActivity
         Allocation tmpIn = Allocation.createFromBitmap(renderScript, image);
         Allocation tmpOut = Allocation.createFromBitmap(renderScript, outputBitmap);
         ScriptIntrinsicBlur theIntrinsic = ScriptIntrinsicBlur.create(renderScript, Element.U8_4(renderScript));
-        theIntrinsic.setRadius(10f);
+        theIntrinsic.setRadius(8f);
         theIntrinsic.setInput(tmpIn);
         theIntrinsic.forEach(tmpOut);
         tmpOut.copyTo(outputBitmap);

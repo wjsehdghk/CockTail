@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mingle.myapplication.R;
@@ -41,9 +42,14 @@ public class MainListAdapter extends ArrayAdapter<Resion> {
 
         if(item != null) {
             ImageView imageView = (ImageView) itemView.findViewById(R.id.mainImage);
+            ImageView imageView1 = (ImageView)itemView.findViewById(R.id.resion_ic);
+            TextView textView = (TextView) itemView.findViewById(R.id.resion_txt);
 
-            imageView.setImageResource(item.getImage1());
+
+            imageView1.setImageResource(item.getImage1());
             imageView.setBackground(item.getImage2());
+            textView.setText(item.getResion());
+
         }
         return itemView;
     }
