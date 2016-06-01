@@ -103,7 +103,9 @@
 										<tr>
 											<th>#</th>
 											<th>userId</th>
+											<th>sectorId</th>
 											<th>context</th>
+											<th>Date</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -116,7 +118,9 @@
 													<tr>
 														<th><%=i++%></th>
 														<th>${row.userId}</th>
+														<th>${row.sectorId}</th>
 														<th>${row.context}</th>
+														<th>${row.date}</th>
 														
 													</tr>
 												</c:forEach>

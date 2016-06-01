@@ -22,8 +22,8 @@ private JdbcTemplate jdbcTemplateObject;
 	
 	public void insertRequirement(Requirement requirement) {
 		
-		String sqlStatement = "insert into requirement(userId,context) values(?,?)  ";
-		jdbcTemplateObject.update(sqlStatement, new Object[] {requirement.getUserId(),requirement.getContext()});
+		String sqlStatement = "insert into requirement(userId,sectorId,context) values(?,?,?)  ";
+		jdbcTemplateObject.update(sqlStatement, new Object[] {requirement.getUserId(),requirement.getSectorId(),requirement.getContext()});
 		
 	}
 
