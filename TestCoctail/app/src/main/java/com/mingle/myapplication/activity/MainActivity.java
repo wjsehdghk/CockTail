@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity
             Manifest.permission.READ_PHONE_STATE};
 
     private boolean isExitResion = false; // 장소에서 나왔다면 메인 실행
+
     private BluetoothManager mBluetoothManager;
     private BluetoothAdapter mBluetoothAdapter;
 
@@ -93,15 +94,21 @@ public class MainActivity extends AppCompatActivity
     List<Resion> list;
     MainListAdapter adapter;
     ListView listView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         showDialog(); //닉네임 입력 팝업창 불러오기. UserNickname 입력후 SharedPreference에 저장.
-        servercall = new Servercall();
+
+        servercall=new Servercall();
         servercall.customizeset(getApplicationContext()); //서버에서 디폴트값 얻어오기 . SharedPreference에 값 저장
+
         audioManager = (AudioManager) getBaseContext().getSystemService(Context.AUDIO_SERVICE);
+
         m_checkPermission();
+
         try {
             SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "PresentBrightness", Settings.System.getInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS));
             SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "PresentMode", audioManager.getRingerMode());
@@ -110,6 +117,7 @@ public class MainActivity extends AppCompatActivity
             e.printStackTrace();
         }
         /*
+
         Intent monitorService = new Intent(this, RECOBackgroundRangingService.class);
         startService(monitorService);
         cinemaButton=(Button)findViewById(R.id.cinema_h_icon);
@@ -200,8 +208,8 @@ public class MainActivity extends AppCompatActivity
                         exhibition.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(exhibition);
                         break;
-                    default:
-                        break;
+
+                    default:break;
                 }
             }
         });
@@ -252,30 +260,31 @@ public class MainActivity extends AppCompatActivity
         Bitmap bitmapCin = BitmapFactory.decodeResource(getResources(), R.drawable.cinema);
         Bitmap bitmapLib = BitmapFactory.decodeResource(getResources(), R.drawable.library);
         Bitmap bitmapExh = BitmapFactory.decodeResource(getResources(), R.drawable.exhibition);
-        Bitmap blurCin = blur(bitmapCin);
-        Bitmap blurLib = blur(bitmapLib);
-        Bitmap blurExh = blur(bitmapExh);
-        BitmapDrawable blurDrawCin = new BitmapDrawable(getResources(), blurCin);
-        BitmapDrawable blurDrawLib = new BitmapDrawable(getResources(), blurLib);
-        BitmapDrawable blurDrawExh = new BitmapDrawable(getResources(), blurExh);
-        adapter.add(new Resion(R.mipmap.ic_cinema, blurDrawCin));
-        adapter.add(new Resion(R.mipmap.ic_library, blurDrawLib));
-        adapter.add(new Resion(R.mipmap.ic_exhibition, blurDrawExh));
+        Bitmap blurCin=blur(bitmapCin);
+        Bitmap blurLib=blur(bitmapLib);
+        Bitmap blurExh=blur(bitmapExh);
+        BitmapDrawable blurDrawCin=new BitmapDrawable(getResources(), blurCin);
+        BitmapDrawable blurDrawLib=new BitmapDrawable(getResources(), blurLib);
+        BitmapDrawable blurDrawExh=new BitmapDrawable(getResources(), blurExh);
+        adapter.add(new Resion(R.mipmap.ic_cinema, blurDrawCin, "영화관"));
+        adapter.add(new Resion(R.mipmap.ic_library, blurDrawLib, "도서관"));
+        adapter.add(new Resion(R.mipmap.ic_exhibition, blurDrawExh, "전시장"));
     }
 
     public Bitmap blur(Bitmap image) {
-        if (null == image) return null;
+        if(null == image) return null;
         Bitmap outputBitmap = Bitmap.createBitmap(image);
         final RenderScript renderScript = RenderScript.create(this);
         Allocation tmpIn = Allocation.createFromBitmap(renderScript, image);
         Allocation tmpOut = Allocation.createFromBitmap(renderScript, outputBitmap);
         ScriptIntrinsicBlur theIntrinsic = ScriptIntrinsicBlur.create(renderScript, Element.U8_4(renderScript));
-        theIntrinsic.setRadius(10f);
+        theIntrinsic.setRadius(8f);
         theIntrinsic.setInput(tmpIn);
         theIntrinsic.forEach(tmpOut);
         tmpOut.copyTo(outputBitmap);
         return outputBitmap;
     }
+
     public void showDialog() {
         dialogCall = new DialogCall();
         dialogCall.show(getFragmentManager(), "NickName");
@@ -317,6 +326,7 @@ public class MainActivity extends AppCompatActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -358,7 +368,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void updateThread() {
-        if (selectBeaconMajor !=
+
+        if(selectBeaconMajor !=
                 SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ResionMajor")) {
             difResionNum++;
             if (difResionNum == 3) {
@@ -373,6 +384,7 @@ public class MainActivity extends AppCompatActivity
                     //intent3.setAction(Intent.ACTION_MAIN);
                     //intent3.addCategory(Intent.CATEGORY_HOME);
                     //startActivity(intent3);
+
                     isExitResion = true;
                 } else if (SharedPreferenceUtil.getSharedPreference(this, "ResionMajor") == 18249) { // 노란색
                     audioManager.setRingerMode(
@@ -385,6 +397,7 @@ public class MainActivity extends AppCompatActivity
                     //intent3.setAction(Intent.ACTION_MAIN);
                     //intent3.addCategory(Intent.CATEGORY_HOME);
                     //startActivity(intent3);
+
                     isExitResion = true;
                 } else if (SharedPreferenceUtil.getSharedPreference(this, "ResionMajor") == 0) {
                     if (isExitResion) {

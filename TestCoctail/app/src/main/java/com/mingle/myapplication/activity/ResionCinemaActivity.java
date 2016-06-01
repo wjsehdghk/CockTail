@@ -93,6 +93,7 @@ public class ResionCinemaActivity extends AppCompatActivity {
 
         cinema_back.setImageBitmap(bitmap);
         cinema_edge.setImageBitmap(bitmap2);
+
         if (SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ResionMajor") == 18243) {
             cinema_edge.setAnimation(animRotate);
         }
@@ -189,7 +190,6 @@ public class ResionCinemaActivity extends AppCompatActivity {
         mCallService = startService(new Intent(this, CallService.class));
     }
 
-
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
     }
@@ -273,14 +273,11 @@ public class ResionCinemaActivity extends AppCompatActivity {
                 Log.d("SharedPreferenceUtil 3", "Resion Cinema: " + SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "CinemaRingerMode"));
 
             }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
+            public void onStopTrackingTouch(SeekBar seekBar) {}
         });
         seekBar.setProgress(
                 SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "CinemaBrightness") * 100 / 255);
@@ -347,12 +344,11 @@ public class ResionCinemaActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
+            public void onStartTrackingTouch(SeekBar seekBar) {}
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+
         });
 
         final AudioManager audioManager4 = (AudioManager) getSystemService(AUDIO_SERVICE);
@@ -367,12 +363,11 @@ public class ResionCinemaActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
+            public void onStartTrackingTouch(SeekBar seekBar) {}
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+
         });
 
 
@@ -389,12 +384,10 @@ public class ResionCinemaActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
+            public void onStartTrackingTouch(SeekBar seekBar) {}
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
+            public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
         final AudioManager audioManager2 = (AudioManager) getSystemService(AUDIO_SERVICE);
@@ -409,12 +402,10 @@ public class ResionCinemaActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
+            public void onStartTrackingTouch(SeekBar seekBar) {}
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
+            public void onStopTrackingTouch(SeekBar seekBar) {}
         });
     }
 
