@@ -21,6 +21,7 @@ import android.widget.ToggleButton;
 
 import com.mingle.entity.MenuEntity;
 import com.mingle.myapplication.R;
+import com.mingle.myapplication.WebDialog;
 import com.mingle.myapplication.model.SharedPreferenceUtil;
 import com.mingle.myapplication.severcall.Servercall;
 import com.mingle.sweetpick.BlurEffect;
@@ -58,6 +59,8 @@ public class RegionLibraryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resion_library);
 
+        Intent intent=new Intent(getApplicationContext(), WebDialog.class);
+        startActivity(intent);
         final Animation animRotate = AnimationUtils.loadAnimation(this, R.anim.anim_rotate);
 
         servercall=new Servercall();

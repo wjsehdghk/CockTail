@@ -20,6 +20,7 @@ import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -56,21 +57,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mingle.myapplication.severcall.Servercall;
+
 public class MainActivity extends AppCompatActivity
-        implements ActivityCompat.OnRequestPermissionsResultCallback{
+        implements ActivityCompat.OnRequestPermissionsResultCallback {
     public static final String RECO_UUID = "24DDF411-8CF1-440C-87CD-E368DAF9C93E";
     private static final int REQUEST_ENABLE_BT = 1;
     private static final int ACCESS_FINE_LOCATION_REQUEST_CODE = 1;
     private static final int PERMISSIONS_REQ_NUM = 100;
     // 필요한 권한들
-    private static  String[] PERMISSIONS_CONTACT = {
+    private static String[] PERMISSIONS_CONTACT = {
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.SEND_SMS,
             Manifest.permission.READ_PHONE_STATE};
 
     private boolean isExitResion = false; // 장소에서 나왔다면 메인 실행
-
     private BluetoothManager mBluetoothManager;
     private BluetoothAdapter mBluetoothAdapter;
 
@@ -84,34 +85,31 @@ public class MainActivity extends AppCompatActivity
     Toolbar bottombar;
     Handler handler;
     AudioManager audioManager;
-    int selectBeaconMajor=0;
-    int difResionNum=0;
+    int selectBeaconMajor = 0;
+    int difResionNum = 0;
     DialogCall dialogCall;
     Servercall servercall;
 
     List<Resion> list;
     MainListAdapter adapter;
     ListView listView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-
         showDialog(); //닉네임 입력 팝업창 불러오기. UserNickname 입력후 SharedPreference에 저장.
-
-        servercall=new Servercall();
+        servercall = new Servercall();
         servercall.customizeset(getApplicationContext()); //서버에서 디폴트값 얻어오기 . SharedPreference에 값 저장
-
         audioManager = (AudioManager) getBaseContext().getSystemService(Context.AUDIO_SERVICE);
-
-
         m_checkPermission();
+        try {
+            SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "PresentBrightness", Settings.System.getInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS));
+            SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "PresentMode", audioManager.getRingerMode());
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         /*
-
         Intent monitorService = new Intent(this, RECOBackgroundRangingService.class);
         startService(monitorService);
         cinemaButton=(Button)findViewById(R.id.cinema_h_icon);
@@ -178,7 +176,6 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
-
         */
         list = new ArrayList<Resion>();
         adapter = new MainListAdapter(this, R.layout.layout_main_list, list);
@@ -203,13 +200,12 @@ public class MainActivity extends AppCompatActivity
                         exhibition.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(exhibition);
                         break;
-                    default:break;
+                    default:
+                        break;
                 }
             }
         });
         addData();
-
-
         SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "ISRESIONSET", 0);
         Intent monitorService = new Intent(this, RECOBackgroundRangingService.class);
         startService(monitorService);
@@ -249,29 +245,26 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
-
-
         SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "ResionMajor", 0);
-
         SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "CallServiceFrag", 0); // 다른 지역에서 callservice 사용 안함
     }
     public void addData() {
         Bitmap bitmapCin = BitmapFactory.decodeResource(getResources(), R.drawable.cinema);
         Bitmap bitmapLib = BitmapFactory.decodeResource(getResources(), R.drawable.library);
         Bitmap bitmapExh = BitmapFactory.decodeResource(getResources(), R.drawable.exhibition);
-        Bitmap blurCin=blur(bitmapCin);
-        Bitmap blurLib=blur(bitmapLib);
-        Bitmap blurExh=blur(bitmapExh);
-        BitmapDrawable blurDrawCin=new BitmapDrawable(getResources(), blurCin);
-        BitmapDrawable blurDrawLib=new BitmapDrawable(getResources(), blurLib);
-        BitmapDrawable blurDrawExh=new BitmapDrawable(getResources(), blurExh);
+        Bitmap blurCin = blur(bitmapCin);
+        Bitmap blurLib = blur(bitmapLib);
+        Bitmap blurExh = blur(bitmapExh);
+        BitmapDrawable blurDrawCin = new BitmapDrawable(getResources(), blurCin);
+        BitmapDrawable blurDrawLib = new BitmapDrawable(getResources(), blurLib);
+        BitmapDrawable blurDrawExh = new BitmapDrawable(getResources(), blurExh);
         adapter.add(new Resion(R.mipmap.ic_cinema, blurDrawCin));
         adapter.add(new Resion(R.mipmap.ic_library, blurDrawLib));
         adapter.add(new Resion(R.mipmap.ic_exhibition, blurDrawExh));
     }
 
     public Bitmap blur(Bitmap image) {
-        if(null == image) return null;
+        if (null == image) return null;
         Bitmap outputBitmap = Bitmap.createBitmap(image);
         final RenderScript renderScript = RenderScript.create(this);
         Allocation tmpIn = Allocation.createFromBitmap(renderScript, image);
@@ -283,9 +276,8 @@ public class MainActivity extends AppCompatActivity
         tmpOut.copyTo(outputBitmap);
         return outputBitmap;
     }
-
-    public void showDialog(){
-        dialogCall=new DialogCall();
+    public void showDialog() {
+        dialogCall = new DialogCall();
         dialogCall.show(getFragmentManager(), "NickName");
         dialogCall.setCancelable(true);
     }
@@ -294,25 +286,22 @@ public class MainActivity extends AppCompatActivity
     private void m_checkPermission() {
         mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = mBluetoothManager.getAdapter();
-
-        if(mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
+        if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
             Intent enableBTIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBTIntent, REQUEST_ENABLE_BT);
         }
-
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             //권한이 없을 경우
-
             //최초 인지, 재요청인지 확인
-            if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION) ||
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION) ||
                     ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION) ||
                     ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.SEND_SMS) ||
                     ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_PHONE_STATE)) {
                 // 임의로 취소 시킨 경우 권한 재요청
-                ActivityCompat.requestPermissions(this, PERMISSIONS_CONTACT,  ACCESS_FINE_LOCATION_REQUEST_CODE);
+                ActivityCompat.requestPermissions(this, PERMISSIONS_CONTACT, ACCESS_FINE_LOCATION_REQUEST_CODE);
             } else {
                 //최초로 권한을 요청하는 경우
                 ActivityCompat.requestPermissions(this, PERMISSIONS_CONTACT, ACCESS_FINE_LOCATION_REQUEST_CODE);
@@ -320,19 +309,14 @@ public class MainActivity extends AppCompatActivity
         } else {
             //사용 권한이 있음 확인
         }
-
         try {
             //Settings.System.canWrite(this);
             Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS,
                     Uri.parse("package:" + getPackageName()));
             startActivityForResult(intent, PERMISSIONS_REQ_NUM);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -371,55 +355,50 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
-
     }
 
-
     private void updateThread() {
-        if(selectBeaconMajor !=
+        if (selectBeaconMajor !=
                 SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ResionMajor")) {
             difResionNum++;
-            if(difResionNum == 3) {
+            if (difResionNum == 3) {
                 difResionNum = 0;
                 selectBeaconMajor = SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ResionMajor");
-
                 if (SharedPreferenceUtil.getSharedPreference(this, "ResionMajor") == 18243) { // 초록색
                     Intent intent = new Intent(getApplicationContext(), ResionCinemaActivity.class);
                     startActivity(intent);
                     //moveTaskToBack(SharedPreferenceUtil.isResionSet);
-
                     SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "ISRESIONSET", 0);
                     //Intent intent3 = new Intent();
                     //intent3.setAction(Intent.ACTION_MAIN);
                     //intent3.addCategory(Intent.CATEGORY_HOME);
                     //startActivity(intent3);
-                    isExitResion=true;
-                }
-                else if(SharedPreferenceUtil.getSharedPreference(this, "ResionMajor") == 18249) { // 노란색
+                    isExitResion = true;
+                } else if (SharedPreferenceUtil.getSharedPreference(this, "ResionMajor") == 18249) { // 노란색
                     audioManager.setRingerMode(
                             SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "ExhibitionRingerMode"));
-
                     Intent intent = new Intent(getApplicationContext(), ResionExhibitionActivity.class);
                     startActivity(intent);
                     //moveTaskToBack(SharedPreferenceUtil.isResionSet);
-
                     SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "ISRESIONSET", 0);
                     //Intent intent3 = new Intent();
                     //intent3.setAction(Intent.ACTION_MAIN);
                     //intent3.addCategory(Intent.CATEGORY_HOME);
                     //startActivity(intent3);
-                    isExitResion=true;
-                }
-                else if(SharedPreferenceUtil.getSharedPreference(this, "ResionMajor") == 0) {
-                    if(isExitResion) {
+                    isExitResion = true;
+                } else if (SharedPreferenceUtil.getSharedPreference(this, "ResionMajor") == 0) {
+                    if (isExitResion) {
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        Settings.System.putInt(getContentResolver(), "screen_brightness",
+                                SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "PresentBrightness"));
+                        audioManager.setRingerMode(
+                                SharedPreferenceUtil.getSharedPreference(getApplicationContext(), "PresentMode"));
+                        Toast.makeText(this, "MainResume", Toast.LENGTH_SHORT).show();
                         startActivity(intent);
-                        isExitResion=false;
+                        isExitResion = false;
                     }
-                }
-
-                else {
+                } else {
                     Log.d("RESION: ", "알수없는 비콘");
                 }
             }
@@ -430,23 +409,21 @@ public class MainActivity extends AppCompatActivity
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case ACCESS_FINE_LOCATION_REQUEST_CODE: {
-                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was granted
                 } else {
-                   // permissions denied
+                    // permissions denied
                 }
                 return;
             }
         }
     }
-
-    protected void onNewIntent(Intent intent){
+    protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
     }
     @Override
     protected void onResume() {
         super.onResume();
-        Toast.makeText(this, "MainResume", Toast.LENGTH_SHORT);
         SharedPreferenceUtil.putSharedPreference(getApplicationContext(), "CallServiceFrag", 0);
     }
 
@@ -468,31 +445,22 @@ public class MainActivity extends AppCompatActivity
         });*/
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
     @Override
     public void onBackPressed() {
-
         if (mSweetSheet3.isShow()) {
             mSweetSheet3.dismiss();
             bottomToggleButton.setChecked(false);
         } else {
             super.onBackPressed();
         }
-
     }
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         return super.onOptionsItemSelected(item);
     }
-
-
 }

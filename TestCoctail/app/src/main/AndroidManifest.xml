@@ -45,7 +45,11 @@
         <activity android:name=".activity.RegionLibraryActivity"></activity>
         <activity android:name=".activity.ResionExhibitionActivity"></activity>
         <activity android:name=".activity.IntroActivity"></activity>
-
+        <activity android:name=".WebDialog"
+                  android:theme="@android:style/Theme.Dialog"
+                  android:windowSoftInputMode="stateHidden"
+                  >
+        </activity>
         <activity
             android:name=".activity.AlertDialogActivity"
             android:theme="@android:style/Theme.Dialog">

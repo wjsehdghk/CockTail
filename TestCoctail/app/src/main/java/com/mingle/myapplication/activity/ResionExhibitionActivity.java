@@ -213,13 +213,11 @@ public class ResionExhibitionActivity extends AppCompatActivity {
         ab.setTitle("전시장");
         ab.setCancelable(false);
         ab.setView(dialogView);
-
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     final ImageView iv = (ImageView) dialogView.findViewById(R.id.webImage);
-
                     URL url = new URL("https://scontent.xx.fbcdn.net/t31.0-8/13248551_1711638399105324_4905597678629514614_o.jpg");
                     InputStream is = url.openStream();
                     final Bitmap bm = BitmapFactory.decodeStream(is);
@@ -236,7 +234,6 @@ public class ResionExhibitionActivity extends AppCompatActivity {
             }
         });
         t.start();
-
         ab.setPositiveButton("확인", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
@@ -249,7 +246,6 @@ public class ResionExhibitionActivity extends AppCompatActivity {
                 setDismiss(mDialog);
             }
         });
-
         ab.show();
     }
     private void setDismiss(Dialog dialog) {
