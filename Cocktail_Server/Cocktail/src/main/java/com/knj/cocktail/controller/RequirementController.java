@@ -35,10 +35,12 @@ public class RequirementController {
 
 	@RequestMapping("app/insertRequirement")
 	public String insertRequirement(HttpServletRequest request) {
+		System.out.println("test requirement");
 		String userId = request.getParameter("userId");
+		String sectorId =request.getParameter("sectorId");
 		String context = request.getParameter("context");
 		
-		Requirement requirement = new Requirement(userId,context);
+		Requirement requirement = new Requirement(userId,sectorId,context);
 		requirementService.addRequirement(requirement);
 		
 		return "defaultTransport";

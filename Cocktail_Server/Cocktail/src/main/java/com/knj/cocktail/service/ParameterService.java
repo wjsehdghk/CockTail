@@ -62,10 +62,14 @@ public class ParameterService {
 		int cmodeId=0, emodeId=0, lmodeId=0;
 		int ccallId=0, ecallId=0, lcallId=0;
 		
-		if(ctotal == 0 && etotal ==0 && ltotal==0){
+		if(custom.size()==0){
 			custom.clear();
-			Custom a = new Custom("cinema",0,0,0);
-			custom.add(a);
+			Custom c = new Custom("cinema",0,0,0);
+			Custom e = new Custom("exhibition",0,0,0);
+			Custom l = new Custom("library",0,0,0);
+			custom.add(c);
+			custom.add(e);
+			custom.add(l);
 			return custom;
 		}
 		else{

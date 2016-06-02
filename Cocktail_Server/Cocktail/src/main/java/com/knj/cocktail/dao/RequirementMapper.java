@@ -15,7 +15,9 @@ public class RequirementMapper implements RowMapper<Requirement> {
 	
 		Requirement requirement = new Requirement();
 		requirement.setUserId((rs.getString("userId")));
+		requirement.setSectorId((rs.getString("sectorId")));
 		requirement.setContext((rs.getString("context")));
+		requirement.setDate((rs.getString("date")));
 		return requirement;
 	
 }
